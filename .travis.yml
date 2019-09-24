@@ -1,0 +1,21 @@
+﻿language: csharp
+sudo: required
+dist: xenial
+services:
+  - docker
+solution: CreditRisks.sln
+mono: none
+dotnet: 2.2.104
+before_script:
+  - dotnet restore
+script:
+  - dotnet test
+  - docker build -t app .
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+  script: make docker-deploy
