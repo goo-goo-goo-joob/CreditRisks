@@ -11,7 +11,11 @@ before_script:
 script:
   - dotnet test
   - docker build -t app .
-  - docker login docker.pkg.github.com --username asciishell -p $TOKEN
-  - docker tag app docker.pkg.github.com/goo-goo-goo-joob/creditrisks/app:1.0
-  - docker push docker.pkg.github.com/goo-goo-goo-joob/creditrisks/app:1.0
-  - docker logout
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+  script: make docker-deploy
