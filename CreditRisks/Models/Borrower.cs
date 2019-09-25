@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CreditRisks.Models
 {
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class Borrower
     {
         // Нефинансовые показатели кредитного риска
-        
+
         /// <summary>
         /// Макроэкономический риск
         /// </summary>
@@ -113,5 +115,92 @@ namespace CreditRisks.Models
         /// </summary>
         [Range(-1, 1)]
         public float RelevantRepayment { get; set; }
+
+        // Финансовые показатели кредитного риска
+
+        /// <summary>
+        /// Кредитноеое плечо
+        /// </summary>
+        public float CreditLeverage { get; set; }
+
+        /// <summary>
+        /// Финансовая независимость
+        /// </summary>
+        public float FinancialIndependence { get; set; }
+
+        /// <summary>
+        /// Долговая нагрузка
+        /// </summary>
+        public float DebtBurden { get; set; }
+
+        /// <summary>
+        /// Покрытие финансового долга накопленной прибылью
+        /// </summary>
+        public float CoverageDebtWithAccumulatedProfit { get; set; }
+
+        /// <summary>
+        /// Рентабельность активов по чистой прибыли
+        /// </summary>
+        public float ReturnAssetsNetProfit { get; set; }
+
+        /// <summary>
+        /// Рентабельность активов по операционной прибыли
+        /// </summary>
+        public float ReturnAssetsOperatingProfit { get; set; }
+
+        /// <summary>
+        /// операционная рентабельность
+        /// </summary>
+        public float OperatingMargin { get; set; }
+
+        /// <summary>
+        /// рентабельность деятельности по чистой прибыли
+        /// </summary>
+        public float NetProfitMargin { get; set; }
+
+        /// <summary>
+        /// покрытие обязательств операционной прибылью
+        /// </summary>
+        public float LiabilityCoverageOperatingProfit { get; set; }
+
+        /// <summary>
+        /// соотношение операционной прибыли и финансового долга
+        /// </summary>
+        public float OperatingProfitFinancialDebtRatio { get; set; }
+
+        /// <summary>
+        /// соотношение финансового долга и выручки
+        /// </summary>
+        public float FinancialDebtRevenueRatio { get; set; }
+
+        /// <summary>
+        /// текущая ликвидность
+        /// </summary>
+        public float CurrentLiquidity { get; set; }
+
+        /// <summary>
+        /// быстрая ликвидность
+        /// </summary>
+        public float QuickLiquidity { get; set; }
+
+        /// <summary>
+        /// мгновенная ликвидность
+        /// </summary>
+        public float InstantLiquidity { get; set; }
+
+        /// <summary>
+        /// уровень работающих активов
+        /// </summary>
+        public float LevelOfOperatingAssets { get; set; }
+
+        /// <summary>
+        /// финансовый цикл
+        /// </summary>
+        public float FinancialCycle { get; set; }
+
+        /// <summary>
+        /// оборачиваемость активов
+        /// </summary>
+        public float AssetTurnover { get; set; }
     }
 }
