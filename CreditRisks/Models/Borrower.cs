@@ -6,6 +6,11 @@ namespace CreditRisks.Models
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class Borrower
     {
+        /// <summary>
+        /// ИНН
+        /// </summary>
+        [StringLength(10, MinimumLength = 10)]
+        public string INN { get; set; }
         // Нефинансовые показатели кредитного риска
 
         /// <summary>
