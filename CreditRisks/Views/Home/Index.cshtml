@@ -1,8 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ввод данных о заемщике";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model Borrower
+<form asp-controller="Home" asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for="INN">ИНН</label>
+        <input type="text" class="form-control" placeholder="ИНН" asp-for="INN">
+    </div>
+    <p>Нефинансовые показатели кредитного риска</p>
+    <div class="form-group">
+        <label asp-for="MacroeconomicRisk">Макроэкономический риск</label>
+        <select class="form-control" asp-for="MacroeconomicRisk">
+            <option value="0">Высокий</option>
+            <option value="0,5">Средний</option>
+            <option value="1">Низкий</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="IndustryRating">Рейтинг отрасли</label>
+        <select class="form-control" asp-for="IndustryRating">
+            <option value="1">Высокий</option>
+            <option value="2">Выше среднего</option>
+            <option value="3">Средний</option>
+            <option value="4">Ниже среднего</option>
+            <option value="5">Низкий</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="BusinessModelRisk">Риск бизнес-модели</label>
+        <select class="form-control" asp-for="BusinessModelRisk">
+            <option value="0">Высокий</option>
+            <option value="1">Низкий</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="OrganizationStructureRisk">Риск организацнонной структуры</label>
+        <select class="form-control" asp-for="OrganizationStructureRisk">
+            <option value="-1">Нет</option>
+            <option value="1">Да</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Submit" asp-action="Index"/>
+    </div>
+</form>

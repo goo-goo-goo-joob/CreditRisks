@@ -5,14 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CreditRisks.Models;
+using Microsoft.AspNetCore.JsonPatch.Operations;
 
 namespace CreditRisks.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(Borrower model)
+        {
+            return View(model);
         }
 
         public IActionResult Privacy()
