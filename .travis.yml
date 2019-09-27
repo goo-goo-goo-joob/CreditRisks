@@ -23,5 +23,5 @@
         provider: script
         skip_cleanup: true
         on:
-          condition:  "$TRAVIS_BRANCH" = "master" || ! "$TRAVIS_TAG"
+          condition:  "$TRAVIS_BRANCH = master || ! $TRAVIS_TAG"
         script: make docker-deploy
