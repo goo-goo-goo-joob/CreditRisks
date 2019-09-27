@@ -16,7 +16,7 @@
       script:
         - dotnet test
 
-    - stage: deploy
+    - stage: build_and_deploy
       language: bash
       before_script:
         - cd CreditRisks

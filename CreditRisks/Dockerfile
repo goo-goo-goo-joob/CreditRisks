@@ -3,6 +3,7 @@ WORKDIR /app
 
 # Copy csproj and restore as distinct layers
 COPY *.sln .
+COPY calc_service.proto /
 COPY CreditRisks/. ./CreditRisks/
 COPY PythonService/. ./PythonService/
 RUN dotnet restore
