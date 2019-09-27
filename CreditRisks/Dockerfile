@@ -4,6 +4,8 @@ WORKDIR /app
 # Copy csproj and restore as distinct layers
 COPY CreditRisks/ .
 COPY calc_service.proto .
+WORKDIR /app/CreditRisks
+COPY *.sln .
 RUN dotnet restore
 
 # Copy everything else and build
