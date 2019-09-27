@@ -5,13 +5,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Google.Protobuf" Version="3.9.2" />
-      <PackageReference Include="Grpc" Version="2.24.0" />
-      <PackageReference Include="Grpc.Tools" Version="2.24.0" />
+        <PackageReference Include="Google.Protobuf" Version="3.9.2"/>
+        <PackageReference Include="Grpc" Version="2.24.0"/>
+        <PackageReference Include="Grpc.Tools" Version="2.24.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="../calc_service.proto" Link="calc_service.proto" />
+        <Protobuf Include="../../calc_service.proto" Link="calc_service.proto"/>
     </ItemGroup>
 
 </Project>
