@@ -3,10 +3,6 @@
     - stage: test
       name: "C# test"
       language: csharp
-      sudo: required
-      dist: xenial
-      services:
-        - docker
       solution: CreditRisks/CreditRisks.sln
       mono: none
       dotnet: 2.2.104
@@ -18,10 +14,12 @@
 
     - stage: build_and_deploy
       language: bash
-      before_script:
-        - cd CreditRisks
+      sudo: required
+      dist: xenial
+      services:
+        - docker
       script:
-        - docker build -t app .
+        - docker build -t app CreditRisks/Dockerfile .
       deploy:
         provider: script
         skip_cleanup: true
