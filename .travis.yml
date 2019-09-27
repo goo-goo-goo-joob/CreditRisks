@@ -15,10 +15,13 @@
         - dotnet restore
       script:
         - dotnet test
-        - docker build -t app .
 
     - stage: deploy
-      script: cd CreditRisks
+      language: bash
+      before_script:
+        - cd CreditRisks
+      script:
+        - docker build -t app .
       deploy:
         provider: script
         skip_cleanup: true

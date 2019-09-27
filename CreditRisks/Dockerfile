@@ -4,6 +4,7 @@ WORKDIR /app
 # Copy csproj and restore as distinct layers
 COPY *.sln .
 COPY CreditRisks/. ./CreditRisks/
+COPY PythonService/. ./PythonService/
 RUN dotnet restore
 
 # Copy everything else and build
