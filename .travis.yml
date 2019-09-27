@@ -1,21 +1,27 @@
-﻿language: csharp
-sudo: required
-dist: xenial
-services:
-  - docker
-solution: CreditRisks/CreditRisks.sln
-mono: none
-dotnet: 2.2.104
-before_script:
-  - dotnet restore
-script:
-  - dotnet test
-  - docker build -t app CreditRisks/
+﻿jobs:
+  include:
+    - stage: test
+      name: "C# test"
+      language: csharp
+      sudo: required
+      dist: xenial
+      services:
+        - docker
+      solution: CreditRisks/CreditRisks.sln
+      mono: none
+      dotnet: 2.2.104
+      before_script:
+        - cd CreditRisks
+        - dotnet restore
+      script:
+        - dotnet test
+        - docker build -t app .
 
-deploy:
-  provider: script
-  skip_cleanup: true
-  on:
-    tags: true
-    branch: master
-  script: make docker-deploy
+    - stage: deploy
+      script: cd CreditRisks
+      deploy:
+        provider: script
+        skip_cleanup: true
+        on:
+          condition:  "$TRAVIS_BRANCH" = "master" || ! "$TRAVIS_TAG"
+        script: make docker-deploy
