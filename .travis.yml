@@ -3,14 +3,14 @@ sudo: required
 dist: xenial
 services:
   - docker
-solution: CreditRisks.sln
+solution: CreditRisks/CreditRisks.sln
 mono: none
 dotnet: 2.2.104
 before_script:
   - dotnet restore
 script:
   - dotnet test
-  - docker build -t app .
+  - docker build -t app CreditRisks/
 
 deploy:
   provider: script
