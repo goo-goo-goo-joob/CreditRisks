@@ -19,7 +19,7 @@
       services:
         - docker
       script:
-        - docker build -t app CreditRisks/Dockerfile .
+        - docker build -t app --file CreditRisks/Dockerfile .
       deploy:
         provider: script
         skip_cleanup: true
