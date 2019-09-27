@@ -49,6 +49,7 @@ namespace CreditRisks
                 app.UseHsts();
             }
 
+            PythonService.Program.Main(null);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
