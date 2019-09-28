@@ -12,6 +12,23 @@
       script:
         - dotnet test
 
+    - stage: test
+      name: "Python test"
+      dist: bionic
+      language: python
+      sudo: true
+      cache: pip
+      python:
+        - '3.7'
+      before_install:
+        - cd PythonBackend
+      install:
+        - pip install -r requirements.txt
+        - pip install -r requirements_dev.txt
+      script:
+        - make lint
+        - make test
+
     - stage: build_and_deploy
       language: bash
       sudo: required
