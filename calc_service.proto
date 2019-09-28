@@ -2,15 +2,22 @@
 
 package calcservice;
 
-service Greeter {
-    rpc SayHello (HelloRequest) returns (HelloReply) {
+service CalcService {
+    rpc CalcProbability (CalcRequest) returns (CalcReply) {
     }
 }
 
-message HelloRequest {
-    string name = 1;
+enum AlgorithmType {
+    DEFAULT_HAND = 0;
+    DECISION_TREE = 1;
 }
 
-message HelloReply {
-    string message = 1;
+message CalcRequest {
+    string INN = 1;
+    AlgorithmType algorithm = 2;
+
+}
+
+message CalcReply {
+    float Probability = 1;
 }

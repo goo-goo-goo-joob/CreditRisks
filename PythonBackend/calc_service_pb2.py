@@ -4,6 +4,7 @@
 
 import sys
 _b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
@@ -20,23 +21,55 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='calcservice',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t2K\n\x07Greeter\x12@\n\x08SayHello\x12\x19.calcservice.HelloRequest\x1a\x17.calcservice.HelloReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"I\n\x0b\x43\x61lcRequest\x12\x0b\n\x03INN\x18\x01 \x01(\t\x12-\n\talgorithm\x18\x02 \x01(\x0e\x32\x1a.calcservice.AlgorithmType\" \n\tCalcReply\x12\x13\n\x0bProbability\x18\x01 \x01(\x02*4\n\rAlgorithmType\x12\x10\n\x0c\x44\x45\x46\x41ULT_HAND\x10\x00\x12\x11\n\rDECISION_TREE\x10\x01\x32T\n\x0b\x43\x61lcService\x12\x45\n\x0f\x43\x61lcProbability\x12\x18.calcservice.CalcRequest\x1a\x16.calcservice.CalcReply\"\x00\x62\x06proto3')
 )
 
+_ALGORITHMTYPE = _descriptor.EnumDescriptor(
+  name='AlgorithmType',
+  full_name='calcservice.AlgorithmType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='DEFAULT_HAND', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='DECISION_TREE', index=1, number=1,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=144,
+  serialized_end=196,
+)
+_sym_db.RegisterEnumDescriptor(_ALGORITHMTYPE)
+
+AlgorithmType = enum_type_wrapper.EnumTypeWrapper(_ALGORITHMTYPE)
+DEFAULT_HAND = 0
+DECISION_TREE = 1
 
 
 
-_HELLOREQUEST = _descriptor.Descriptor(
-  name='HelloRequest',
-  full_name='calcservice.HelloRequest',
+_CALCREQUEST = _descriptor.Descriptor(
+  name='CalcRequest',
+  full_name='calcservice.CalcRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='calcservice.HelloRequest.name', index=0,
+      name='INN', full_name='calcservice.CalcRequest.INN', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='algorithm', full_name='calcservice.CalcRequest.algorithm', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -53,21 +86,21 @@ _HELLOREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=35,
-  serialized_end=63,
+  serialized_end=108,
 )
 
 
-_HELLOREPLY = _descriptor.Descriptor(
-  name='HelloReply',
-  full_name='calcservice.HelloReply',
+_CALCREPLY = _descriptor.Descriptor(
+  name='CalcReply',
+  full_name='calcservice.CalcReply',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='message', full_name='calcservice.HelloReply.message', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      name='Probability', full_name='calcservice.CalcReply.Probability', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -83,51 +116,53 @@ _HELLOREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=65,
-  serialized_end=94,
+  serialized_start=110,
+  serialized_end=142,
 )
 
-DESCRIPTOR.message_types_by_name['HelloRequest'] = _HELLOREQUEST
-DESCRIPTOR.message_types_by_name['HelloReply'] = _HELLOREPLY
+_CALCREQUEST.fields_by_name['algorithm'].enum_type = _ALGORITHMTYPE
+DESCRIPTOR.message_types_by_name['CalcRequest'] = _CALCREQUEST
+DESCRIPTOR.message_types_by_name['CalcReply'] = _CALCREPLY
+DESCRIPTOR.enum_types_by_name['AlgorithmType'] = _ALGORITHMTYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-HelloRequest = _reflection.GeneratedProtocolMessageType('HelloRequest', (_message.Message,), {
-  'DESCRIPTOR' : _HELLOREQUEST,
+CalcRequest = _reflection.GeneratedProtocolMessageType('CalcRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CALCREQUEST,
   '__module__' : 'calc_service_pb2'
-  # @@protoc_insertion_point(class_scope:calcservice.HelloRequest)
+  # @@protoc_insertion_point(class_scope:calcservice.CalcRequest)
   })
-_sym_db.RegisterMessage(HelloRequest)
+_sym_db.RegisterMessage(CalcRequest)
 
-HelloReply = _reflection.GeneratedProtocolMessageType('HelloReply', (_message.Message,), {
-  'DESCRIPTOR' : _HELLOREPLY,
+CalcReply = _reflection.GeneratedProtocolMessageType('CalcReply', (_message.Message,), {
+  'DESCRIPTOR' : _CALCREPLY,
   '__module__' : 'calc_service_pb2'
-  # @@protoc_insertion_point(class_scope:calcservice.HelloReply)
+  # @@protoc_insertion_point(class_scope:calcservice.CalcReply)
   })
-_sym_db.RegisterMessage(HelloReply)
+_sym_db.RegisterMessage(CalcReply)
 
 
 
-_GREETER = _descriptor.ServiceDescriptor(
-  name='Greeter',
-  full_name='calcservice.Greeter',
+_CALCSERVICE = _descriptor.ServiceDescriptor(
+  name='CalcService',
+  full_name='calcservice.CalcService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=96,
-  serialized_end=171,
+  serialized_start=198,
+  serialized_end=282,
   methods=[
   _descriptor.MethodDescriptor(
-    name='SayHello',
-    full_name='calcservice.Greeter.SayHello',
+    name='CalcProbability',
+    full_name='calcservice.CalcService.CalcProbability',
     index=0,
     containing_service=None,
-    input_type=_HELLOREQUEST,
-    output_type=_HELLOREPLY,
+    input_type=_CALCREQUEST,
+    output_type=_CALCREPLY,
     serialized_options=None,
   ),
 ])
-_sym_db.RegisterServiceDescriptor(_GREETER)
+_sym_db.RegisterServiceDescriptor(_CALCSERVICE)
 
-DESCRIPTOR.services_by_name['Greeter'] = _GREETER
+DESCRIPTOR.services_by_name['CalcService'] = _CALCSERVICE
 
 # @@protoc_insertion_point(module_scope)

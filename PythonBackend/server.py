@@ -1,22 +1,23 @@
-from concurrent import futures
-import time
 import logging
+import random
+import time
+from concurrent import futures
 
 import grpc
 
-import calc_service_pb2_grpc
 import calc_service_pb2
+import calc_service_pb2_grpc
 
 
-class Greeter(calc_service_pb2_grpc.GreeterServicer):
+class Handler(calc_service_pb2_grpc.CalcServiceServicer):
 
-    def SayHello(self, request, context):
-        return calc_service_pb2.HelloReply(message='Hello, %s!' % request.name)
+    def CalcProbability(self, request, context):
+        return calc_service_pb2.CalcReply(Probability=random.random())
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    calc_service_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+    calc_service_pb2_grpc.add_CalcServiceServicer_to_server(Handler(), server)
     server.add_insecure_port('[::]:50051')
     server.start()
     try:

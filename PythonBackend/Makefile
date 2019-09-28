@@ -1,6 +1,6 @@
 .PHONY: lint
 lint:
-	pycodestyle.exe --exclude=venv,.git,*pb2* .
+	pycodestyle --exclude=venv,.git,*pb2* .
 
 .PHONY: test
 test:

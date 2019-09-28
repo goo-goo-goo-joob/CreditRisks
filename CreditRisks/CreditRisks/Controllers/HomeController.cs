@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Calcservice;
 using Microsoft.AspNetCore.Mvc;
 using CreditRisks.Models;
 using Microsoft.AspNetCore.JsonPatch.Operations;
+using PythonService;
 
 namespace CreditRisks.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPythonBackend _backend;
+
+        public HomeController(IPythonBackend backend)
+        {
+            _backend = backend;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -20,6 +29,8 @@ namespace CreditRisks.Controllers
         [HttpPost]
         public IActionResult Index(Borrower model)
         {
+            var r = _backend.Client.CalcProbability(new CalcRequest {INN = "asd"});
+            model.DefaultProbability = r.Probability;
             return View(model);
         }
 

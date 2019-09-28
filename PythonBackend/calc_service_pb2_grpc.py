@@ -4,7 +4,7 @@ import grpc
 import calc_service_pb2 as calc__service__pb2
 
 
-class GreeterStub(object):
+class CalcServiceStub(object):
   # missing associated documentation comment in .proto file
   pass
 
@@ -14,18 +14,18 @@ class GreeterStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.SayHello = channel.unary_unary(
-        '/calcservice.Greeter/SayHello',
-        request_serializer=calc__service__pb2.HelloRequest.SerializeToString,
-        response_deserializer=calc__service__pb2.HelloReply.FromString,
+    self.CalcProbability = channel.unary_unary(
+        '/calcservice.CalcService/CalcProbability',
+        request_serializer=calc__service__pb2.CalcRequest.SerializeToString,
+        response_deserializer=calc__service__pb2.CalcReply.FromString,
         )
 
 
-class GreeterServicer(object):
+class CalcServiceServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def SayHello(self, request, context):
+  def CalcProbability(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -33,14 +33,14 @@ class GreeterServicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_GreeterServicer_to_server(servicer, server):
+def add_CalcServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'SayHello': grpc.unary_unary_rpc_method_handler(
-          servicer.SayHello,
-          request_deserializer=calc__service__pb2.HelloRequest.FromString,
-          response_serializer=calc__service__pb2.HelloReply.SerializeToString,
+      'CalcProbability': grpc.unary_unary_rpc_method_handler(
+          servicer.CalcProbability,
+          request_deserializer=calc__service__pb2.CalcRequest.FromString,
+          response_serializer=calc__service__pb2.CalcReply.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'calcservice.Greeter', rpc_method_handlers)
+      'calcservice.CalcService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

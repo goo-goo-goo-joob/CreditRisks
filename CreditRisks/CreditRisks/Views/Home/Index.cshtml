@@ -8,6 +8,10 @@
         <label asp-for="INN">ИНН</label>
         <input type="text" class="form-control" placeholder="ИНН" asp-for="INN">
     </div>
+    <div class="form-group">
+        <label asp-for="DefaultProbability">Вероятность дефолта</label>
+        <input type="text" class="form-control" disabled asp-for="DefaultProbability">
+    </div>
     <p>Нефинансовые показатели кредитного риска</p>
     <div class="form-group">
         <label asp-for="MacroeconomicRisk">Макроэкономический риск</label>
