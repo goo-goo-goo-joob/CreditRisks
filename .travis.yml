@@ -39,7 +39,7 @@
       services:
         - docker
       script:
-        - docker build -t $(APP_NAME) --file CreditRisks/Dockerfile .
+        - docker build -t $APP_NAME --file CreditRisks/Dockerfile .
       deploy:
         provider: script
         skip_cleanup: true
@@ -55,7 +55,7 @@
       services:
         - docker
       script:
-        - docker build -t $(APP_NAME) --file PythonBackend/Dockerfile .
+        - docker build -t $APP_NAME --file PythonBackend/Dockerfile .
       deploy:
         provider: script
         skip_cleanup: true
