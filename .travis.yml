@@ -30,13 +30,32 @@
         - make test
 
     - stage: build_and_deploy
+      name: "C# docker build"
       language: bash
       sudo: required
       dist: xenial
+      env:
+        - APP_NAME=netcore-frontend
       services:
         - docker
       script:
-        - docker build -t app --file CreditRisks/Dockerfile .
+        - docker build -t $(APP_NAME) --file CreditRisks/Dockerfile .
+      deploy:
+        provider: script
+        skip_cleanup: true
+        on:
+          condition:  "$TRAVIS_BRANCH = master || ! $TRAVIS_TAG"
+        script: make docker-deploy
+
+    - stage: build_and_deploy
+      name: "Python docker build"
+      sudo: required
+      env:
+        - APP_NAME=python-backend
+      services:
+        - docker
+      script:
+        - docker build -t $(APP_NAME) --file PythonBackend/Dockerfile .
       deploy:
         provider: script
         skip_cleanup: true

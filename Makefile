@@ -1,6 +1,6 @@
 DOCKER_REGISTRY = docker.pkg.github.com
 DOCKER_IMAGE = $(DOCKER_REGISTRY)/goo-goo-goo-joob/creditrisks
-APP_NAME = app
+APP_NAME ?= app
 
 ifeq ($(TRAVIS_BRANCH), master)
 	DOCKER_TAG = latest
