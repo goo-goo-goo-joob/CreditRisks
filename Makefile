@@ -5,7 +5,9 @@ APP_NAME ?= app
 ifeq ($(TRAVIS_BRANCH), master)
 	DOCKER_TAG = latest
 else
-	DOCKER_TAG = $(TRAVIS_BRANCH)
+	ifdef TRAVIS_TAG
+		DOCKER_TAG = $(TRAVIS_TAG)
+	endif
 endif
 
 all:
@@ -20,3 +22,9 @@ docker-deploy:
 	docker tag $(APP_NAME) $(DOCKER_IMAGE)/$(APP_NAME):$(DOCKER_TAG)
 	docker push $(DOCKER_IMAGE)/$(APP_NAME):$(DOCKER_TAG)
 	docker logout
+
+.PHONY: docker-deploy-ci
+docker-deploy-ci:
+	if [ "$(DOCKER_TAG)" != "" ]; then \
+		make docker-deploy; \
+	fi
