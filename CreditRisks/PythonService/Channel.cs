@@ -15,9 +15,9 @@ namespace PythonService
         private Channel _channel;
         public CalcService.CalcServiceClient Client { get; }
 
-        public PythonBackend()
+        public PythonBackend(string serverAddress)
         {
-            _channel = new Channel("127.0.0.1:50051", ChannelCredentials.Insecure);
+            _channel = new Channel(serverAddress, ChannelCredentials.Insecure);
             Client = new CalcService.CalcServiceClient(_channel);
         }
 

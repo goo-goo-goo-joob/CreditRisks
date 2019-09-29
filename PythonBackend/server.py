@@ -1,4 +1,5 @@
 import logging
+import os
 import random
 import time
 from concurrent import futures
@@ -8,6 +9,9 @@ import grpc
 import calc_service_pb2
 import calc_service_pb2_grpc
 
+LISTEN_ADDR = os.getenv("LISTEN_ADDR", "[::]:9000")
+MAX_WORKERS = int(os.getenv("MAX_WORKERS", "10"))
+
 
 class Handler(calc_service_pb2_grpc.CalcServiceServicer):
 
@@ -16,13 +20,13 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
 
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=MAX_WORKERS))
     calc_service_pb2_grpc.add_CalcServiceServicer_to_server(Handler(), server)
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port(LISTEN_ADDR)
     server.start()
     try:
         while True:
-            time.sleep(1000)
+            time.sleep(1)
     except KeyboardInterrupt:
         server.stop(0)
 

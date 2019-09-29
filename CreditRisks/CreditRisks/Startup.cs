@@ -32,7 +32,9 @@ namespace CreditRisks
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddSingleton<IPythonBackend, PythonBackend>();
+
+            var backendAddr = Environment.GetEnvironmentVariable("PYTHON_BACKEND_ADDR");
+            services.AddSingleton<IPythonBackend>(new PythonBackend(backendAddr));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
