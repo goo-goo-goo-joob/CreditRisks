@@ -1,21 +1,64 @@
-﻿language: csharp
-sudo: required
-dist: xenial
-services:
-  - docker
-solution: CreditRisks.sln
-mono: none
-dotnet: 2.2.104
-before_script:
-  - dotnet restore
-script:
-  - dotnet test
-  - docker build -t app .
+﻿jobs:
+  include:
+    - stage: test
+      name: "C# test"
+      language: csharp
+      solution: CreditRisks/CreditRisks.sln
+      mono: none
+      dotnet: 2.2.104
+      before_script:
+        - cd CreditRisks
+        - dotnet restore
+      script:
+        - dotnet test
 
-deploy:
-  provider: script
-  skip_cleanup: true
-  on:
-    tags: true
-    branch: master
-  script: make docker-deploy
+    - stage: test
+      name: "Python test"
+      dist: bionic
+      language: python
+      sudo: true
+      cache: pip
+      python:
+        - '3.7'
+      before_install:
+        - cd PythonBackend
+      install:
+        - pip install -r requirements.txt
+        - pip install -r requirements_dev.txt
+      script:
+        - make lint
+        - make test
+
+    - stage: build_and_deploy
+      name: "C# docker build"
+      language: bash
+      sudo: required
+      dist: xenial
+      env:
+        - APP_NAME=netcore-frontend
+      services:
+        - docker
+      script:
+        - docker build -t $APP_NAME --file CreditRisks/Dockerfile .
+      deploy:
+        provider: script
+        skip_cleanup: true
+        on:
+          all_branches: true
+        script: make docker-deploy-ci
+
+    - stage: build_and_deploy
+      name: "Python docker build"
+      sudo: required
+      env:
+        - APP_NAME=python-backend
+      services:
+        - docker
+      script:
+        - docker build -t $APP_NAME --file PythonBackend/Dockerfile .
+      deploy:
+        provider: script
+        skip_cleanup: true
+        on:
+          all_branches: true
+        script: make docker-deploy-ci

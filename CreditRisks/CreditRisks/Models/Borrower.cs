@@ -11,6 +11,12 @@ namespace CreditRisks.Models
         /// </summary>
         [StringLength(10, MinimumLength = 10)]
         public string INN { get; set; }
+
+        /// <summary>
+        /// Вероятность дефолта
+        /// </summary>
+        [Range(0, 1)]
+        public float DefaultProbability { get; set; }
         // Нефинансовые показатели кредитного риска
 
         /// <summary>

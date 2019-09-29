@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+
+package calcservice;
+
+service CalcService {
+    rpc CalcProbability (CalcRequest) returns (CalcReply) {
+    }
+}
+
+enum AlgorithmType {
+    DEFAULT_HAND = 0;
+    DECISION_TREE = 1;
+}
+
+message CalcRequest {
+    string INN = 1;
+    AlgorithmType algorithm = 2;
+
+}
+
+message CalcReply {
+    float Probability = 1;
+}
