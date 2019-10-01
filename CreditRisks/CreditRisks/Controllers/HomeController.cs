@@ -27,10 +27,9 @@ namespace CreditRisks.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Borrower model)
+        public IActionResult Index(Company model)
         {
-            var r = _backend.Client.CalcProbability(new CalcRequest {INN = "asd"});
-            model.DefaultProbability = r.Probability;
+            model.DefaultProbability = (float) 0.5;
             return View(model);
         }
 
