@@ -29,7 +29,9 @@ namespace CreditRisks.Controllers
         [HttpPost]
         public IActionResult Index(Company model)
         {
-            model.DefaultProbability = (float) 0.5;
+            Borrower borrower = new Borrower(model);
+            borrower.CalcDefault();
+            model.DefaultProbability = borrower.CalcDefault();
             return View(model);
         }
 
