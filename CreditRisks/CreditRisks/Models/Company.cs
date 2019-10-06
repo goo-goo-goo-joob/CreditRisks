@@ -64,127 +64,127 @@ namespace CreditRisks.Models
         /// <summary>
         /// Наличие споров по доле в собственном капитале или активам компании между собственниками
         /// </summary>
-        public bool OwnershipConflict { get; set; }
+        public int OwnershipConflict { get; set; }
 
         /// <summary>
         /// Наличие конфликтов между руководством и акционерами компании
         /// </summary>
-        public bool ManagementShareholdersConflict { get; set; }
+        public int ManagementShareholdersConflict { get; set; }
 
         /// <summary>
         /// Продуктовая концентрация
         /// </summary>
-        public bool ProductConcentration { get; set; }
+        public int ProductConcentration { get; set; }
 
         /// <summary>
         /// Наличие у компании нерыночных преимуществ, дающих особый статус или положение на рынке
         /// </summary>
-        public bool NonMarketAdvantages { get; set; }
+        public int NonMarketAdvantages { get; set; }
 
         /// <summary>
         /// Переговорная позиция с поставщиками
         /// </summary>
-        public bool PositiveWithSuppliers { get; set; }
+        public int PositiveWithSuppliers { get; set; }
 
         /// <summary>
         /// Концентрация поставщиков
         /// </summary>
-        public bool ConcentrationOfSuppliers { get; set; }
+        public int ConcentrationOfSuppliers { get; set; }
 
         /// <summary>
         /// Переговорная позиция с покупателями
         /// </summary>
-        public bool PositiveWithBuyers { get; set; }
+        public int PositiveWithBuyers { get; set; }
 
         /// <summary>
         /// Концентрация покупателей
         /// </summary>
-        public bool ConcentrationOfBuyers { get; set; }
+        public int ConcentrationOfBuyers { get; set; }
 
         /// <summary>
         /// Участие в финансировании сделки собственными средствами
         /// </summary>
-        public bool OwnFundsTransaction { get; set; }
+        public int OwnFundsTransaction { get; set; }
 
         /// <summary>
         /// Адекватность источников погашения
         /// </summary>
-        public bool RelevantRepayment { get; set; }
+        public int RelevantRepayment { get; set; }
 
         // Данные бух учета
         /// <summary>
         /// Запасы
         /// </summary>
-        public float Code_12103 { get; set;  }
-        
+        public float Code_12103 { get; set; }
+
         /// <summary>
         /// Запасы - на 31 декабря предыдущего года
         /// </summary>
-        public float Code_12104 { get; set;  }
-        
+        public float Code_12104 { get; set; }
+
         /// <summary>
         /// Дебиторская задолженность
         /// </summary>
-        public float Code_12303 { get; set;  }
-        
+        public float Code_12303 { get; set; }
+
         /// <summary>
         /// Дебиторская задолженность - на 31 декабря предыдущего года
         /// </summary>
-        public float Code_12304 { get; set;  }
-        
+        public float Code_12304 { get; set; }
+
         /// <summary>
         /// Денежные средства и денежные эквиваленты
         /// </summary>
-        public float Code_12503 { get; set;  }
-        
+        public float Code_12503 { get; set; }
+
         /// <summary>
         /// Итого оборотных активов
         /// </summary>
-        public float Code_12003 { get; set;  }
-        
+        public float Code_12003 { get; set; }
+
         /// <summary>
         /// Баланс
         /// </summary>
-        public float Code_16003 { get; set;  }
-        
+        public float Code_16003 { get; set; }
+
         /// <summary>
         /// Итого капитала и резервов
         /// </summary>
-        public float Code_13003 { get; set;  }
-        
+        public float Code_13003 { get; set; }
+
         /// <summary>
         /// Итого долгосрочных обязательств
         /// </summary>
-        public float Code_14003 { get; set;  }
-        
+        public float Code_14003 { get; set; }
+
         /// <summary>
         /// Кредиторская задолженность
         /// </summary>
-        public float Code_15203 { get; set;  }
-        
+        public float Code_15203 { get; set; }
+
         /// <summary>
         /// Кредиторская задолженность - на 31 декабря предыдущего года
         /// </summary>
-        public float Code_15204 { get; set;  }
-        
+        public float Code_15204 { get; set; }
+
         /// <summary>
         /// Итого краткосрочных обязательств
         /// </summary>
-        public float Code_15003 { get; set;  }
-        
+        public float Code_15003 { get; set; }
+
         /// <summary>
         /// Чистая прибыль (убыток) - за последние 4 квартала
         /// </summary>
-        public float Code_24003 { get; set;  }
-        
+        public float Code_24003 { get; set; }
+
         /// <summary>
         /// Прибыль (убыток) от продаж - за последние 4 квартала
         /// </summary>
-        public float Code_22003 { get; set;  }
-        
+        public float Code_22003 { get; set; }
+
         /// <summary>
         /// Выручка - за последние 4 квартала
         /// </summary>
-        public float Code_21103 { get; set;  }
+        public float Code_21103 { get; set; }
     }
 }
