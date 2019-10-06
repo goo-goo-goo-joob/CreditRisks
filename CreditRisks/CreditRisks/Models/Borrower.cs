@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CreditRisks.Models
@@ -17,6 +18,9 @@ namespace CreditRisks.Models
         /// </summary>
         [Range(0, 1)]
         public float DefaultProbability { get; set; }
+
+        #region Params
+
         // Нефинансовые показатели кредитного риска
 
         /// <summary>
@@ -213,5 +217,52 @@ namespace CreditRisks.Models
         /// оборачиваемость активов
         /// </summary>
         public float AssetTurnover { get; set; }
+
+        #endregion
+
+        public Borrower(Company company)
+        {
+            float financialDebt = company.Code_15003 + company.Code_14003 - company.Code_12503;
+            this.INN = company.INN;
+            this.DefaultProbability = company.DefaultProbability;
+            this.MacroeconomicRisk = company.MacroeconomicRisk;
+            this.IndustryRating = company.IndustryRating;
+            this.BusinessModelRisk = company.BusinessModelRisk;
+            this.OrganizationStructureRisk = company.OrganizationStructureRisk;
+            this.PositiveShareholders = company.PositiveShareholders;
+            this.NegativeShareholders = company.NegativeShareholders;
+            this.DesireToInvest = company.DesireToInvest;
+            this.WithdrawalFunds = company.WithdrawalFunds;
+            this.OwnershipConflict = company.OwnershipConflict;
+            this.ManagementShareholdersConflict = company.ManagementShareholdersConflict;
+            this.ProductConcentration = company.ProductConcentration;
+            this.NonMarketAdvantages = company.NonMarketAdvantages;
+            this.PositiveWithSuppliers = company.PositiveWithSuppliers;
+            this.ConcentrationOfSuppliers = company.ConcentrationOfSuppliers;
+            this.PositiveWithBuyers = company.PositiveWithBuyers;
+            this.ConcentrationOfBuyers = company.ConcentrationOfBuyers;
+            this.OwnFundsTransaction = company.OwnFundsTransaction;
+            this.RelevantRepayment = company.RelevantRepayment;
+            this.CreditLeverage = company.Code_13003 / company.Code_15003;
+            this.FinancialIndependence = company.Code_13003 / company.Code_16003;
+            this.DebtBurden = financialDebt / company.Code_16003;
+            this.CoverageDebtWithAccumulatedProfit = company.Code_13003 / financialDebt;
+            this.ReturnAssetsNetProfit = company.Code_24003 / company.Code_16003;
+            this.ReturnAssetsOperatingProfit = company.Code_22003 / company.Code_16003;
+            this.OperatingMargin = company.Code_22003 / Math.Max(company.Code_21103, financialDebt);
+            this.NetProfitMargin = company.Code_24003 / Math.Max(company.Code_21103, financialDebt);
+            this.LiabilityCoverageOperatingProfit = company.Code_22003 / (company.Code_14003 + company.Code_15003);
+            this.OperatingProfitFinancialDebtRatio = company.Code_22003 / financialDebt;
+            this.FinancialDebtRevenueRatio = financialDebt / company.Code_21103;
+            this.CurrentLiquidity = company.Code_12003 / company.Code_15003;
+            this.QuickLiquidity = (company.Code_12003 - company.Code_12103) / company.Code_15003;
+            this.InstantLiquidity = company.Code_12503 / company.Code_15003;
+            this.LevelOfOperatingAssets = (company.Code_12103 + company.Code_12303 - company.Code_15203) / company.Code_21103;
+            float turnoverDebtorDebt = 365 * (company.Code_12303 + company.Code_12304) / (2 * company.Code_21103);
+            float turnoverReserves = 365 * (company.Code_12103 + company.Code_12104) / (2 * company.Code_21103);
+            float turnoverCreditDebt = 365 * (company.Code_15203 + company.Code_15204) / (2 * company.Code_21103);
+            this.FinancialCycle = turnoverDebtorDebt + turnoverReserves - turnoverCreditDebt;
+            this.AssetTurnover = company.Code_21103 / company.Code_16003;
+        }
     }
 }
