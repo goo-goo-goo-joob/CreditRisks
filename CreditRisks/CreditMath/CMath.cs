@@ -17,5 +17,10 @@ namespace CreditMath
         {
             return (value - left) / (right - left);
         }
+
+        public static float Sigmoid(float value)
+        {
+            return (float) (1.0F / (1.0F + Math.Exp(-value)));
+        }
     }
 }
