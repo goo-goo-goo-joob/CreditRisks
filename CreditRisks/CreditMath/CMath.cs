@@ -2,7 +2,7 @@
 
 namespace CreditMath
 {
-    public class Math
+    public abstract class CMath
     {
         public static float Winsorization(float value, float left, float right)
         {
