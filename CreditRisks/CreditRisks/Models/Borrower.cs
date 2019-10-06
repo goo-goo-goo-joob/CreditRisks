@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using CreditMath;
+using static CreditMath.CMath;
 
 namespace CreditRisks.Models
 {
@@ -263,6 +265,60 @@ namespace CreditRisks.Models
             float turnoverCreditDebt = 365 * (company.Code_15203 + company.Code_15204) / (2 * company.Code_21103);
             this.FinancialCycle = turnoverDebtorDebt + turnoverReserves - turnoverCreditDebt;
             this.AssetTurnover = company.Code_21103 / company.Code_16003;
+        }
+
+        public WeightTuple MacroeconomicRiskP = new WeightTuple {Weight = -2.18F};
+        public WeightTuple IndustryRatingP = new WeightTuple {Weight = -0.393F, NormLeft = 2, NormRight = 3};
+        public WeightTuple BusinessModelRiskP = new WeightTuple {Weight = -0.656F};
+
+        public WeightTuple ReturnAssetsNetProfitP = new WeightTuple
+        {
+            Weight = -0.379F, NormLeft = 0.001F, NormRight = 0.025F, WinsLeft = -0.049F, WinsRight = 0.082F,
+        };
+
+        public WeightTuple FinancialDebtRevenueRatioP = new WeightTuple
+        {
+            Weight = -0.369F, NormLeft = 0.322F, NormRight = 2.684F, WinsRight = 3.842F, Transform = f => (float) Math.Log(f + 0.0001F),
+        };
+
+        public WeightTuple InstantLiquidityP = new WeightTuple
+        {
+            Weight = -0.734F, NormLeft = 0.002F, NormRight = 0.048F, WinsRight = 0.068F,
+        };
+
+        public WeightTuple ManagementsScoreP = new WeightTuple
+        {
+            Weight = -0.371F, NormRight = 0.167F, WinsRight = 0.068F,
+        };
+
+        public WeightTuple DealRatioP = new WeightTuple {Weight = -0.812F,};
+
+        public const float Bias = 0.257F;
+
+        public float CalcDefault()
+        {
+            float sum = Bias;
+            sum += MacroeconomicRiskP.Calc(MacroeconomicRisk);
+            sum += IndustryRatingP.Calc(IndustryRating);
+            sum += BusinessModelRiskP.Calc(BusinessModelRisk);
+            sum += ReturnAssetsNetProfitP.Calc(ReturnAssetsNetProfit);
+            sum += FinancialDebtRevenueRatioP.Calc(FinancialDebtRevenueRatio);
+            sum += InstantLiquidityP.Calc(InstantLiquidity);
+            float managementScoreSum = (PositiveShareholders +
+                                        NegativeShareholders +
+                                        DesireToInvest +
+                                        WithdrawalFunds +
+                                        OwnershipConflict +
+                                        ManagementShareholdersConflict) / 6;
+            sum += ManagementsScoreP.Calc(managementScoreSum);
+            float dealRatioSum = (ProductConcentration +
+                                  NonMarketAdvantages +
+                                  PositiveWithSuppliers +
+                                  ConcentrationOfSuppliers +
+                                  PositiveWithBuyers +
+                                  ConcentrationOfBuyers) / 6;
+            sum += DealRatioP.Calc(dealRatioSum);
+            return Sigmoid(sum);
         }
     }
 }
