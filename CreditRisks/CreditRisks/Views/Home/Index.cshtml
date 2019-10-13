@@ -12,7 +12,7 @@
     <label asp-for="DefaultProbability">Вероятность дефолта</label>
     <input type="text" class="form-control" disabled asp-for="DefaultProbability">
 </div>
-<p>Нефинансовые показатели кредитного риска</p>
+<p><b>Нефинансовые показатели кредитного риска</b></p>
 <div class="form-group">
     <label asp-for="MacroeconomicRisk">Макроэкономический риск</label>
     <select class="form-control" asp-for="MacroeconomicRisk">
@@ -223,68 +223,69 @@
     </div>
 </div>
 
-<p>Финансовые показатели кредитного риска</p>
-<p>Все значения указываются в тысячах рублей и за последний отчётный период, если не указано иное</p>
-<p>Заполняется по бухгалтерсому балансу:</p>
+<p><b>Финансовые показатели кредитного риска</b></p>
+<p><i>Все значения указываются в тысячах рублей и за последний отчётный период, если не указано иное. В скобках указан
+    соответствующий бухгалтерский код, а также номер графы отчёта: 3 - за отчётный период, 4 - за предыдущий год.</p>
+<p>Заполняется по бухгалтерсому балансу:</i></p>
 <div class="form-group">
-    <label asp-for="Code_12103">Запасы</label>
+    <label asp-for="Code_12103">Запасы (1210 3)</label>
     <input type="number" class="form-control" placeholder="Запасы" asp-for="Code_12103">
 </div>
 <div class="form-group">
-    <label asp-for="Code_12104">Запасы - на 31 декабря предыдущего года</label>
+    <label asp-for="Code_12104">Запасы - на 31 декабря предыдущего года (1210 4)</label>
     <input type="number" class="form-control" placeholder="Запасы - на 31 декабря предыдущего года" asp-for="Code_12104">
 </div>
 <div class="form-group">
-    <label asp-for="Code_12303">Дебиторская задолженность</label>
+    <label asp-for="Code_12303">Дебиторская задолженность (1230 3)</label>
     <input type="number" class="form-control" placeholder="Дебиторская задолженность" asp-for="Code_12303">
 </div>
 <div class="form-group">
-    <label asp-for="Code_12304">Дебиторская задолженность - на 31 декабря предыдущего года</label>
+    <label asp-for="Code_12304">Дебиторская задолженность - на 31 декабря предыдущего года (1230 4)</label>
     <input type="number" class="form-control" placeholder="Дебиторская задолженность - на 31 декабря предыдущего года" asp-for="Code_12304">
 </div>
 <div class="form-group">
-    <label asp-for="Code_12503">Денежные средства и денежные эквиваленты</label>
+    <label asp-for="Code_12503">Денежные средства и денежные эквиваленты (1250 3)</label>
     <input type="number" class="form-control" placeholder="Денежные средства и денежные эквиваленты" asp-for="Code_12503">
 </div>
 <div class="form-group">
-    <label asp-for="Code_12003">Итого оборотных активов</label>
+    <label asp-for="Code_12003">Итого оборотных активов (1200 3)</label>
     <input type="number" class="form-control" placeholder="Итого оборотных активов" asp-for="Code_12003">
 </div>
 <div class="form-group">
-    <label asp-for="Code_16003">Баланс</label>
+    <label asp-for="Code_16003">Баланс (1600 3)</label>
     <input type="number" class="form-control" placeholder="Баланс" asp-for="Code_16003">
 </div>
 <div class="form-group">
-    <label asp-for="Code_13003">Итого капитала и резервов</label>
+    <label asp-for="Code_13003">Итого капитала и резервов (1300 3)</label>
     <input type="number" class="form-control" placeholder="Итого капитала и резервов" asp-for="Code_13003">
 </div>
 <div class="form-group">
-    <label asp-for="Code_14003">Итого долгосрочных обязательств</label>
+    <label asp-for="Code_14003">Итого долгосрочных обязательств (1400 3)</label>
     <input type="number" class="form-control" placeholder="Итого долгосрочных обязательств" asp-for="Code_14003">
 </div>
 <div class="form-group">
-    <label asp-for="Code_15203">Кредиторская задолженность</label>
+    <label asp-for="Code_15203">Кредиторская задолженность (1520 3)</label>
     <input type="number" class="form-control" placeholder="Кредиторская задолженность" asp-for="Code_15203">
 </div>
 <div class="form-group">
-    <label asp-for="Code_15204">Кредиторская задолженность - на 31 декабря предыдущего года</label>
+    <label asp-for="Code_15204">Кредиторская задолженность - на 31 декабря предыдущего года (1520 4)</label>
     <input type="number" class="form-control" placeholder="Кредиторская задолженность - на 31 декабря предыдущего года" asp-for="Code_15204">
 </div>
 <div class="form-group">
-    <label asp-for="Code_15003">Итого краткосрочных обязательств</label>
+    <label asp-for="Code_15003">Итого краткосрочных обязательств (1500 3)</label>
     <input type="number" class="form-control" placeholder="Итого краткосрочных обязательств" asp-for="Code_15003">
 </div>
 <p>Заполняется по отчёту о финансовых результатах:</p>
 <div class="form-group">
-    <label asp-for="Code_24003">Чистая прибыль (убыток) - за последние 4 квартала</label>
+    <label asp-for="Code_24003">Чистая прибыль (убыток) - за последние 4 квартала (2400 3)</label>
     <input type="number" class="form-control" placeholder="Чистая прибыль (убыток) - за последние 4 квартала" asp-for="Code_24003">
 </div>
 <div class="form-group">
-    <label asp-for="Code_22003">Прибыль (убыток) от продаж - за последние 4 квартала</label>
+    <label asp-for="Code_22003">Прибыль (убыток) от продаж - за последние 4 квартала (2200 3)</label>
     <input type="number" class="form-control" placeholder="Прибыль (убыток) от продаж - за последние 4 квартала" asp-for="Code_22003">
 </div>
 <div class="form-group">
-    <label asp-for="Code_21103">Выручка - за последние 4 квартала</label>
+    <label asp-for="Code_21103">Выручка - за последние 4 квартала (2110 3)</label>
     <input type="number" class="form-control" placeholder="Выручка - за последние 4 квартала" asp-for="Code_21103">
 </div>
 
