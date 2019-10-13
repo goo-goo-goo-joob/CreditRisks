@@ -30,7 +30,6 @@ namespace CreditRisks.Controllers
         public IActionResult Index(Company model)
         {
             Borrower borrower = new Borrower(model);
-            borrower.CalcDefault();
             model.DefaultProbability = borrower.CalcDefault();
             return View(model);
         }

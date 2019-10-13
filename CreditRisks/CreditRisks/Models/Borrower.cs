@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using CreditMath;
@@ -311,12 +311,8 @@ namespace CreditRisks.Models
                                         OwnershipConflict +
                                         ManagementShareholdersConflict) / 6;
             sum += ManagementsScoreP.Calc(managementScoreSum);
-            float dealRatioSum = (ProductConcentration +
-                                  NonMarketAdvantages +
-                                  PositiveWithSuppliers +
-                                  ConcentrationOfSuppliers +
-                                  PositiveWithBuyers +
-                                  ConcentrationOfBuyers) / 6;
+            float dealRatioSum = (OwnFundsTransaction +
+                                  RelevantRepayment) / 2;
             sum += DealRatioP.Calc(dealRatioSum);
             return Calibration(Sigmoid(sum), 0.528F, -1.014F) * 100.0F;
         }
