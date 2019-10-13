@@ -22,5 +22,10 @@ namespace CreditMath
         {
             return (float) (1.0F / (1.0F + Math.Exp(-value)));
         }
+
+        public static float Calibration(float value, float alpha, float beta)
+        {
+            return (float) Math.Min(1F, Math.Exp(alpha * value + beta));
+        }
     }
 }

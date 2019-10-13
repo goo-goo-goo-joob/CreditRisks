@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using CreditMath;
@@ -318,7 +318,7 @@ namespace CreditRisks.Models
                                   PositiveWithBuyers +
                                   ConcentrationOfBuyers) / 6;
             sum += DealRatioP.Calc(dealRatioSum);
-            return Sigmoid(sum);
+            return Calibration(Sigmoid(sum), 0.528F, -1.014F) * 100.0F;
         }
     }
 }
