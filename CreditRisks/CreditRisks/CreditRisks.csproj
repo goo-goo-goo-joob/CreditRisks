@@ -13,6 +13,7 @@
 
 
     <ItemGroup>
+      <ProjectReference Include="..\CreditMath\CreditMath.csproj" />
       <ProjectReference Include="..\PythonService\PythonService.csproj" />
     </ItemGroup>
 
