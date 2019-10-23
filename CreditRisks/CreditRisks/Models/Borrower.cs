@@ -226,7 +226,6 @@ namespace CreditRisks.Models
         {
             float financialDebt = company.Code_15003 + company.Code_14003 - company.Code_12503;
             this.INN = company.INN;
-            this.DefaultProbability = company.DefaultProbability;
             this.MacroeconomicRisk = company.MacroeconomicRisk;
             this.IndustryRating = company.IndustryRating;
             this.BusinessModelRisk = company.BusinessModelRisk;
@@ -314,7 +313,7 @@ namespace CreditRisks.Models
             float dealRatioSum = (OwnFundsTransaction +
                                   RelevantRepayment) / 2;
             sum += DealRatioP.Calc(dealRatioSum);
-            return Calibration(Sigmoid(sum), 0.528F, -1.014F) * 100.0F;
+            return Calibration(Sigmoid(sum), 0.528F, -1.014F);
         }
     }
 }
