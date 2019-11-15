@@ -8,15 +8,20 @@ import grpc
 
 import calc_service_pb2
 import calc_service_pb2_grpc
+from calc_model import RandomModel
 
 LISTEN_ADDR = os.getenv("LISTEN_ADDR", "[::]:9000")
 MAX_WORKERS = int(os.getenv("MAX_WORKERS", "10"))
 
 
 class Handler(calc_service_pb2_grpc.CalcServiceServicer):
+    model = None
+
+    def __init__(self):
+        self.model = RandomModel('test_data/data.zip')
 
     def CalcProbability(self, request, context):
-        return calc_service_pb2.CalcReply(Probability=random.random())
+        return calc_service_pb2.CalcReply(Probability=self.model.predict_proba(request))
 
 
 def serve():
