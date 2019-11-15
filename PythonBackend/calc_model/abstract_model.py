@@ -5,10 +5,10 @@ class AbstractModel(object):
     def __init__(self, filename: str):
         """
         Load model from a file
-        
+
         :param filename: model dump
         """
-        raise NotImplementedError()
+        pass
 
     def predict_proba(self, item: pd.Series) -> float:
         """
