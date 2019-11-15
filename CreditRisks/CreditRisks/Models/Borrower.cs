@@ -226,7 +226,6 @@ namespace CreditRisks.Models
         {
             float financialDebt = company.Code_15003 + company.Code_14003 - company.Code_12503;
             this.INN = company.INN;
-            this.DefaultProbability = company.DefaultProbability;
             this.MacroeconomicRisk = company.MacroeconomicRisk;
             this.IndustryRating = company.IndustryRating;
             this.BusinessModelRisk = company.BusinessModelRisk;
@@ -271,14 +270,14 @@ namespace CreditRisks.Models
         public WeightTuple IndustryRatingP = new WeightTuple {Weight = -0.393F, NormLeft = 2, NormRight = 3};
         public WeightTuple BusinessModelRiskP = new WeightTuple {Weight = -0.656F};
 
-        public WeightTuple ReturnAssetsNetProfitP = new WeightTuple
+        public WeightTuple NetProfitMarginP = new WeightTuple
         {
             Weight = -0.379F, NormLeft = 0.001F, NormRight = 0.025F, WinsLeft = -0.049F, WinsRight = 0.082F,
         };
 
         public WeightTuple FinancialDebtRevenueRatioP = new WeightTuple
         {
-            Weight = -0.369F, NormLeft = 0.322F, NormRight = 2.684F, WinsRight = 3.842F, Transform = f => (float) Math.Log(f + 0.0001F),
+            Weight = -0.369F, NormLeft = 0.322F, NormRight = 2.684F, WinsRight = 3.842F, Transform = f => (float) -Math.Log(f + 0.0001F),
         };
 
         public WeightTuple InstantLiquidityP = new WeightTuple
@@ -301,7 +300,7 @@ namespace CreditRisks.Models
             sum += MacroeconomicRiskP.Calc(MacroeconomicRisk);
             sum += IndustryRatingP.Calc(IndustryRating);
             sum += BusinessModelRiskP.Calc(BusinessModelRisk);
-            sum += ReturnAssetsNetProfitP.Calc(ReturnAssetsNetProfit);
+            sum += NetProfitMarginP.Calc(NetProfitMargin);
             sum += FinancialDebtRevenueRatioP.Calc(FinancialDebtRevenueRatio);
             sum += InstantLiquidityP.Calc(InstantLiquidity);
             float managementScoreSum = (PositiveShareholders +
@@ -314,7 +313,7 @@ namespace CreditRisks.Models
             float dealRatioSum = (OwnFundsTransaction +
                                   RelevantRepayment) / 2;
             sum += DealRatioP.Calc(dealRatioSum);
-            return Calibration(Sigmoid(sum), 0.528F, -1.014F) * 100.0F;
+            return Calibration(sum, 0.528F, -1.014F);
         }
     }
 }

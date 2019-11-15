@@ -15,8 +15,7 @@ namespace CreditRisks.Models
         /// <summary>
         /// Вероятность дефолта
         /// </summary>
-        [Range(0, 1)]
-        public float DefaultProbability { get; set; }
+        public string DefaultProbability { get; set; }
         // Нефинансовые показатели кредитного риска
 
         /// <summary>

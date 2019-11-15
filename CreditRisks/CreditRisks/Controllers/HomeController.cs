@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Calcservice;
@@ -30,13 +31,8 @@ namespace CreditRisks.Controllers
         public IActionResult Index(Company model)
         {
             Borrower borrower = new Borrower(model);
-            model.DefaultProbability = borrower.CalcDefault();
+            model.DefaultProbability = borrower.CalcDefault().ToString("P2");
             return View(model);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
