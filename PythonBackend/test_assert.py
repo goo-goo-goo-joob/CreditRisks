@@ -10,7 +10,8 @@ def test_function():
 
 
 def test_random_model():
-    m = RandomModel('test_data/data.zip')
-    for i in range(100):
-        proba = m.predict_proba(None)
-        assert 0 <= proba <= 1
+    with open('test_data/data.zip', 'rb') as f:
+        m = RandomModel('Binomial random generator', f)
+        for i in range(100):
+            proba = m.predict_proba(None)
+            assert 0 <= proba <= 1

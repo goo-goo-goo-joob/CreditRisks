@@ -1,7 +1,8 @@
+import io
 import zipfile
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 from calc_model import AbstractModel
 
@@ -14,9 +15,9 @@ class RandomModel(AbstractModel):
     rand_p = None
     rand_count = None
 
-    def __init__(self, filename: str):
-        super().__init__(filename)
-        with zipfile.ZipFile(filename) as zfile:
+    def __init__(self, name: str, file_stream: io.BytesIO):
+        super().__init__(name, file_stream)
+        with zipfile.ZipFile(file_stream) as zfile:
             with zfile.open('data.txt') as f:
                 self.rand_n, self.rand_p, self.rand_count = map(float, f.readline().split())
                 self.rand_count = int(self.rand_count)

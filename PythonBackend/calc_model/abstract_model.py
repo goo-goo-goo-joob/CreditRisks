@@ -1,14 +1,19 @@
+import io
+
 import pandas as pd
 
 
 class AbstractModel(object):
-    def __init__(self, filename: str):
+    name = None
+
+    def __init__(self, name: str, file_stream: io.BytesIO):
         """
         Load model from a file
 
-        :param filename: model dump
+        :param name: model dump
+        :param file_stream: byte stream with model data
         """
-        pass
+        self.name = name
 
     def predict_proba(self, item: pd.Series) -> float:
         """
