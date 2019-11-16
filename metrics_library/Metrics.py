@@ -122,7 +122,7 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
     plt.xlabel('Параметр разбиения принадлежности к классу')
     plt.ylabel('Прибыль')
     if y_lim is None:
-        plt.ylim([0.001, 1.5])
+        plt.ylim([0.0001, 1.5])
     else:
         plt.ylim(y_lim)
     plt.xlim([threshold_space[0], threshold_space[-1]])
