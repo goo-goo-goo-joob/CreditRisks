@@ -21,10 +21,11 @@ def plt_roc(y_true, y_score, alg_name=None):
     fpr, tpr, _ = roc_curve(y_true, y_score)
     auc1 = roc_auc_score(y_true, y_score)
     plt.figure(figsize=(14, 7))
-    plt.plot(fpr, tpr, label='{} ROC-AUC: {}'.format(alg_name, np.round(auc1, 4)))
     if alg_name is None:
+        plt.plot(fpr, tpr, label='ROC-AUC: {}'.format(np.round(auc1, 4)))
         plt.title('ROC curve')
     else:
+        plt.plot(fpr, tpr, label='{} ROC-AUC: {}'.format(alg_name, np.round(auc1, 4)))
         plt.title('{} ROC curve'.format(alg_name))
     plt.legend(loc='best')
     plt.grid()
@@ -53,10 +54,11 @@ def plt_pr(y_true, y_score, alg_name=None):
     """
     precision, recall, _ = precision_recall_curve(y_true, y_score)
     plt.figure(figsize=(14, 7))
-    plt.plot(precision, recall, label='{} PR-AUC: {}'.format(alg_name, np.round(auc(recall, precision), 4)))
     if alg_name is None:
+        plt.plot(precision, recall, label='PR-AUC: {}'.format(np.round(auc(recall, precision), 4)))
         plt.title('Precision recall curve')
     else:
+        plt.plot(precision, recall, label='{} PR-AUC: {}'.format(alg_name, np.round(auc(recall, precision), 4)))
         plt.title('{} Precision recall curve'.format(alg_name))
     plt.legend(loc='best')
     plt.grid()
@@ -90,11 +92,11 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
         The increasing values of threshold to plot different ones
     """
     if percent_space is None:
-        percent_space=np.linspace(0.05, 0.5, num=10)
+        percent_space = np.linspace(0.05, 0.5, num=10)
     if percent_credit is not None:
         percent_space = np.append(percent_space, percent_credit)
     if threshold_space is None:
-        threshold_space=np.linspace(0.1, 0.5, num=70)
+        threshold_space = np.linspace(0.1, 0.5, num=70)
     plt.figure(figsize=(14, 7))
     for percent in percent_space[1:]:
         profit = []
