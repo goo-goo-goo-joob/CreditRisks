@@ -1,5 +1,5 @@
-DOCKER_REGISTRY = docker.pkg.github.com
-DOCKER_IMAGE = $(DOCKER_REGISTRY)/goo-goo-goo-joob/creditrisks
+DOCKER_REGISTRY = docker-hub.asciishell.ru
+DOCKER_IMAGE = $(DOCKER_REGISTRY)/alex/creditrisks
 APP_NAME ?= app
 
 ifeq ($(TRAVIS_BRANCH), master)
