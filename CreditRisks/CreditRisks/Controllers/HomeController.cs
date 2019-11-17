@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Calcservice;
 using CreditRisks.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -51,9 +52,15 @@ namespace CreditRisks.Controllers
 
             var request = new CalcRequest();
             request.Params.Add(borrowerInfo);
-            request.INN = model.INN;
+            request.INN = model.INN ?? "";
             var reply = _backend.Client.CalcProbability(request);
-            model.DefaultProbability = borrower.CalcDefault().ToString("P2") + '_' + reply.Result;
+            model.DefaultProbability = new Dictionary<string, string>();
+            model.DefaultProbability["Модель из методики"] = borrower.CalcDefault().ToString("P2");
+            foreach (KeyValuePair<string, float> pair in reply.Result)
+            {
+                model.DefaultProbability[pair.Key] = pair.Value.ToString("P2");
+            }
+
             return View(model);
         }
 
