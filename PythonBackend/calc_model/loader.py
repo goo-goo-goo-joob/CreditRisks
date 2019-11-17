@@ -1,19 +1,14 @@
 import base64
 import io
-import os
 
 import mysql.connector as mariadb
 
 import calc_model
 
-mariadb_connection = mariadb.connect(host=os.getenv("DB_HOST"),
-                                     port=int(os.getenv("DB_PORT")),
-                                     user=os.getenv("DB_USER"),
-                                     password=os.getenv("DB_PASSWORD"),
-                                     database=os.getenv("DB_DATABASE"))
-cursor = mariadb_connection.cursor()
 
-if __name__ == '__main__':
+def get_models(host='127.0.0.1', port=3306, user='', password='', database=''):
+    connection = mariadb.connect(host=host, port=port, user=user, password=password, database=database)
+    cursor = connection.cursor()
     models = {}
     for key, value in calc_model.__dict__.items():
         if isinstance(value, type) and \
@@ -21,6 +16,12 @@ if __name__ == '__main__':
                 value != calc_model.AbstractModel:
             models[key] = value
     cursor.execute('''SELECT * FROM risks.calcModelsView''')
-    for r in cursor.fetchall():
-        m = models[r[2]](r[1], io.BytesIO(base64.b64decode(r[3])))
-        print(m.name, m.predict_proba(None))
+    result = []
+    for row in cursor.fetchall():
+        name = row[1]
+        klass = row[2]
+        data = base64.b64decode(row[3])
+        result.append(models[klass](name, io.BytesIO(data)))
+    cursor.close()
+    connection.close()
+    return result

@@ -1,6 +1,5 @@
 import logging
 import os
-import random
 import time
 from concurrent import futures
 
@@ -8,28 +7,38 @@ import grpc
 
 import calc_service_pb2
 import calc_service_pb2_grpc
-from calc_model import RandomModel
+from calc_model import get_models
 
 LISTEN_ADDR = os.getenv("LISTEN_ADDR", "[::]:9000")
 MAX_WORKERS = int(os.getenv("MAX_WORKERS", "10"))
 
 
 class Handler(calc_service_pb2_grpc.CalcServiceServicer):
-    model = None
+    models = None
 
     def __init__(self):
-        self.model = RandomModel('test_data/data.zip')
+        self.models = get_models(host=os.getenv("DB_HOST"),
+                                 port=int(os.getenv("DB_PORT")),
+                                 user=os.getenv("DB_USER"),
+                                 password=os.getenv("DB_PASSWORD"),
+                                 database=os.getenv("DB_DATABASE"))
 
     def CalcProbability(self, request, context):
-        return calc_service_pb2.CalcReply(Probability=self.model.predict_proba(request))
+        result = {}
+        for model in self.models:
+            result[model.name] = model.predict_proba(request.Params)
+        return calc_service_pb2.CalcReply(Result=result)
 
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=MAX_WORKERS))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=MAX_WORKERS), options=(('grpc.so_reuseport', 0),))
     calc_service_pb2_grpc.add_CalcServiceServicer_to_server(Handler(), server)
-    server.add_insecure_port(LISTEN_ADDR)
+    if server.add_insecure_port(LISTEN_ADDR) == 0:
+        print('cannot bind port')
+        exit(1)
     server.start()
     try:
+        print('start serving')
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
