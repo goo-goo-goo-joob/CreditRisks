@@ -6,14 +6,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://82.202.255.170:3307</jdbc-url>
-      <driver-properties>
-        <property name="autoReconnect" value="true" />
-        <property name="zeroDateTimeBehavior" value="convertToNull" />
-        <property name="tinyInt1isBit" value="false" />
-        <property name="characterEncoding" value="utf8" />
-        <property name="characterSetResults" value="utf8" />
-        <property name="yearIsDateType" value="false" />
-      </driver-properties>
     </data-source>
     <data-source source="LOCAL" name="Investore clickhouse" uuid="1182f0db-4825-41b8-8935-1dfc6a110a5d">
       <driver-ref>clickhouse</driver-ref>

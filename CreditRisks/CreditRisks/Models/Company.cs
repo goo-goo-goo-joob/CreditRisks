@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CreditRisks.Models
@@ -15,7 +16,7 @@ namespace CreditRisks.Models
         /// <summary>
         /// Вероятность дефолта
         /// </summary>
-        public string DefaultProbability { get; set; }
+        public Dictionary<string, string> DefaultProbability { get; set; }
         // Нефинансовые показатели кредитного риска
 
         /// <summary>

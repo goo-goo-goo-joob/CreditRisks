@@ -28,8 +28,8 @@ namespace PythonService
 
         public void Say(string message)
         {
-            var reply = Client.CalcProbability(new CalcRequest {INN = message, Algorithm = AlgorithmType.DefaultHand});
-            Console.WriteLine("Greeting: " + reply.Probability);
+            var reply = Client.CalcProbability(new CalcRequest {INN = message});
+            Console.WriteLine("Greeting: " + reply.Result);
         }
     }
 }

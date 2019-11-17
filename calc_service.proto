@@ -7,17 +7,11 @@ service CalcService {
     }
 }
 
-enum AlgorithmType {
-    DEFAULT_HAND = 0;
-    DECISION_TREE = 1;
-}
-
 message CalcRequest {
     string INN = 1;
-    AlgorithmType algorithm = 2;
-
+    map<string, float> Params = 2;
 }
 
 message CalcReply {
-    float Probability = 1;
+    map<string, float> Result = 1;
 }

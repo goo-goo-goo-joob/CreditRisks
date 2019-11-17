@@ -1,6 +1,6 @@
 .PHONY: lint
 lint:
-	pycodestyle --exclude=venv,.git,*pb2* .
+	pycodestyle --max-line-length=120 --exclude=venv,.git,*pb2* .
 
 .PHONY: test
 test:
