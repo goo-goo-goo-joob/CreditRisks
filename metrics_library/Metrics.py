@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import roc_auc_score, roc_curve, precision_recall_curve, auc
+from tqdm import tqdm_notebook
 
 
 def plt_roc(y_true, y_score, alg_name=None):
@@ -137,3 +138,70 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
         plt.ylim(y_lim)
     plt.xlim([threshold_space[0], threshold_space[-1]])
     plt.show()
+
+
+def _empty_iterator(seq):
+    for el in seq:
+        yield el
+
+
+def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
+                      alg_name=None,
+                      percent_space=None,
+                      plot_roc=True,
+                      points_count=100,
+                      progress_bar=True):
+    """
+    Plot profit rate with respect to recall
+
+    :param y_true: array, shape = [n_samples]
+        true binary labels
+    :param y_score: array, shape = [n_samples]
+        target probabilities
+    :param alg_name: str, default None
+        algorithm name for plotting
+    :param percent_space: array
+        percents to plot
+    :param plot_roc: bool, default True
+        Is to plot roc curve
+    :param points_count: int, default 100
+        number of points for calculation
+    :param progress_bar: bool, default True
+        Is to draw progress bar while calculating
+    """
+    if percent_space is None:
+        percent_space = np.linspace(0.05, 0.3, num=6)
+    iterator = tqdm_notebook if progress_bar else _empty_iterator
+    fpr_, tpr_, threshold = roc_curve(y_true, y_score)
+    step = round(len(threshold) / points_count)
+    fpr = []
+    profits = {k: [] for k in percent_space}
+    p = y_true.sum()
+    n = len(y_true) - p
+    for threshold in iterator(threshold[::step]):
+        predict_round = (y_score > threshold).astype(np.uint8)
+        tn = ((y_true == 0) & (predict_round == y_true)).sum()
+        fp = ((y_true == 0) & (predict_round != y_true)).sum()
+        fn = ((y_true == 1) & (predict_round != y_true)).sum()
+
+        fpr.append(fp / n)
+
+        for percent in percent_space:
+            actual_profit = (percent * tn - fn) / (percent * n)
+            profits[percent].append(actual_profit)
+    plt.figure(figsize=(7, 7))
+
+    if plot_roc:
+        plt.plot(fpr_, tpr_, label='ROC')
+
+    plt.plot([0, 1], [0, 1], color='navy', linestyle='--', alpha=0.5)
+    for percent in percent_space:
+        plt.plot(fpr, profits[percent], label='{}%'.format(np.round(percent * 100)))
+
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate/Profit')
+    plt.title('{} Зависимость прибыли от Recall'.format(alg_name if alg_name is not None else ''))
+    plt.grid()
+    plt.legend(loc='best')
