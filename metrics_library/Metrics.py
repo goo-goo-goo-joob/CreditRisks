@@ -1,6 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.metrics import roc_auc_score, roc_curve, precision_recall_curve, auc, confusion_matrix
+import numpy as np
+from sklearn.metrics import roc_auc_score, roc_curve, precision_recall_curve, auc
 
 
 def plt_roc(y_true, y_score, alg_name=None):
@@ -97,19 +97,23 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
         percent_space = np.append(percent_space, percent_credit)
     if threshold_space is None:
         threshold_space = np.linspace(0.1, 0.5, num=70)
+    negative_count = (y_true == 0).sum()
+    percent_profits = {k: [] for k in percent_space}
     plt.figure(figsize=(14, 7))
-    for percent in percent_space[1:]:
-        profit = []
-        for threshold in threshold_space:
-            predict_round = [0 if x < threshold else 1 for x in y_score]
-            tn, fp, fn, tp = confusion_matrix(y_true, predict_round).ravel()
-            actual_profit = (percent * tn - fn) / (percent * tn + percent * fp)
-            profit.append(actual_profit)
+    for threshold in threshold_space:
+        predict_round = (y_score > threshold).astype(np.uint8)
+        # Others params does not calculated because it is useless
+        tn = ((y_true == 0) & (predict_round == y_true)).sum()
+        fn = ((y_true == 1) & (predict_round != y_true)).sum()
+        for percent in percent_space:
+            actual_profit = (percent * tn - fn) / (percent * negative_count)
+            percent_profits[percent].append(actual_profit)
+    for percent, profit in percent_profits.items():
         color = plt.plot(threshold_space, profit, label='{}%'.format(np.round(percent * 100)))[0].get_color()
         max_profit = max(profit)
         if max_profit > 0:
             plt.scatter(threshold_space[profit.index(max_profit)], max_profit, color=color, alpha=0.5)
-            plt.annotate(f'{np.round(max_profit*100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
+            plt.annotate(f'{np.round(max_profit * 100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
                          xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
                          bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
     plt.yscale('log', nonposy='clip')
