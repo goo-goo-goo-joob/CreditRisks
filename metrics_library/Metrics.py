@@ -70,7 +70,7 @@ def plt_pr(y_true, y_score, alg_name=None):
 
 
 def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
-               percent_space=None, threshold_space=None):
+               percent_space=None, threshold_space=None, log_scale=True):
     """Draws metrics based on profit from credit to bank,
     taking the values of threshold and interest on credit.
 
@@ -90,6 +90,8 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
         The values of interest on credit to plot on graph
     threshold_space : array, shape = [>1]
         The increasing values of threshold to plot different ones
+    :param log_scale: bool, default True
+            plot y axis in log scale
     """
     if percent_space is None:
         percent_space = np.linspace(0.05, 0.5, num=10)
@@ -116,7 +118,8 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
             plt.annotate(f'{np.round(max_profit * 100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
                          xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
                          bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
-    plt.yscale('log', nonposy='clip')
+    if log_scale:
+        plt.yscale('log', nonposy='clip')
     if alg_name is None:
         plt.title('Зависимость прибыли от параметра разбиения и процента по кредиту')
     else:
@@ -126,7 +129,10 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
     plt.xlabel('Параметр разбиения принадлежности к классу')
     plt.ylabel('Прибыль')
     if y_lim is None:
-        plt.ylim([0.0001, 1.5])
+        if log_scale:
+            plt.ylim([0.0001, 1.5])
+        else:
+            plt.ylim([0, 1])
     else:
         plt.ylim(y_lim)
     plt.xlim([threshold_space[0], threshold_space[-1]])
