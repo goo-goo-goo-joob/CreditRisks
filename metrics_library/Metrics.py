@@ -71,7 +71,7 @@ def plt_pr(y_true, y_score, alg_name=None):
 
 
 def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
-               percent_space=None, threshold_space=None, log_scale=True):
+               percent_space=None, lgd_space=None, threshold_space=None, progress_bar=False):
     """Draws metrics based on profit from credit to bank,
     taking the values of threshold and interest on credit.
 
@@ -89,38 +89,49 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
         The limits of graph by y-axis
     percent_space : array, shape = [>=1]
         The values of interest on credit to plot on graph
+    lgd_space: array
+        lgd to calculate
     threshold_space : array, shape = [>1]
         The increasing values of threshold to plot different ones
-    :param log_scale: bool, default True
-            plot y axis in log scale
+    progress_bar: bool, default False
+        Is to draw progress bar while calculating
+
     """
     if percent_space is None:
         percent_space = np.linspace(0.05, 0.5, num=10)
     if percent_credit is not None:
         percent_space = np.append(percent_space, percent_credit)
+    if lgd_space is None:
+        lgd_space = np.linspace(0.8, 0.9, num=2)
     if threshold_space is None:
         threshold_space = np.linspace(0.1, 0.5, num=70)
+    iterator = tqdm_notebook if progress_bar else _empty_iterator
     negative_count = (y_true == 0).sum()
-    percent_profits = {k: [] for k in percent_space}
+    profits = {}
+    for percent in percent_space:
+        for lgd in lgd_space:
+            profits[(percent, lgd)] = []
     plt.figure(figsize=(14, 7))
-    for threshold in threshold_space:
+    for threshold in iterator(threshold_space):
         predict_round = (y_score > threshold).astype(np.uint8)
         # Others params does not calculated because it is useless
         tn = ((y_true == 0) & (predict_round == y_true)).sum()
         fn = ((y_true == 1) & (predict_round != y_true)).sum()
         for percent in percent_space:
-            actual_profit = (percent * tn - fn) / (percent * negative_count)
-            percent_profits[percent].append(actual_profit)
-    for percent, profit in percent_profits.items():
-        color = plt.plot(threshold_space, profit, label='{}%'.format(np.round(percent * 100)))[0].get_color()
-        max_profit = max(profit)
-        if max_profit > 0:
-            plt.scatter(threshold_space[profit.index(max_profit)], max_profit, color=color, alpha=0.5)
-            plt.annotate(f'{np.round(max_profit * 100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
-                         xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
-                         bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
-    if log_scale:
-        plt.yscale('log', nonposy='clip')
+            for lgd in lgd_space:
+                actual_profit = (percent * tn - lgd * fn) / (percent * negative_count)
+                profits[(percent, lgd)].append(actual_profit)
+
+    for percent in percent_space:
+        for lgd in lgd_space:
+            profit = profits[(percent, lgd)]
+            color = plt.plot(threshold_space, profit, label='{}% lgd {}%'.format(np.round(percent * 100), np.round(lgd * 100)))[0].get_color()
+            max_profit = max(profit)
+            if max_profit > 0:
+                plt.scatter(threshold_space[profit.index(max_profit)], max_profit, color=color, alpha=0.5)
+                plt.annotate(f'{np.round(max_profit * 100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
+                             xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
+                             bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
     if alg_name is None:
         plt.title('Зависимость прибыли от параметра разбиения и процента по кредиту')
     else:
@@ -130,10 +141,7 @@ def plt_profit(y_true, y_score, alg_name=None, percent_credit=None, y_lim=None,
     plt.xlabel('Параметр разбиения принадлежности к классу')
     plt.ylabel('Прибыль')
     if y_lim is None:
-        if log_scale:
-            plt.ylim([0.0001, 1.5])
-        else:
-            plt.ylim([0, 1])
+        plt.ylim([0, 1])
     else:
         plt.ylim(y_lim)
     plt.xlim([threshold_space[0], threshold_space[-1]])
@@ -148,9 +156,10 @@ def _empty_iterator(seq):
 def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
                       alg_name=None,
                       percent_space=None,
+                      lgd_space=None,
                       plot_roc=True,
                       points_count=100,
-                      progress_bar=True):
+                      progress_bar=False):
     """
     Plot profit rate with respect to recall
 
@@ -162,6 +171,8 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         algorithm name for plotting
     :param percent_space: array
         percents to plot
+    :param lgd_space: array
+        lgd to calculate
     :param plot_roc: bool, default True
         Is to plot roc curve
     :param points_count: int, default 100
@@ -170,12 +181,17 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         Is to draw progress bar while calculating
     """
     if percent_space is None:
-        percent_space = np.linspace(0.05, 0.3, num=6)
+        percent_space = np.linspace(0.15, 0.2, num=3)
+    if lgd_space is None:
+        lgd_space = np.linspace(0.8, 0.9, num=2)
     iterator = tqdm_notebook if progress_bar else _empty_iterator
     fpr_, tpr_, threshold = roc_curve(y_true, y_score)
     step = round(len(threshold) / points_count)
     fpr = []
-    profits = {k: [] for k in percent_space}
+    profits = {}
+    for percent in percent_space:
+        for lgd in lgd_space:
+            profits[(percent, lgd)] = []
     p = y_true.sum()
     n = len(y_true) - p
     for threshold in iterator(threshold[::step]):
@@ -187,8 +203,9 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         fpr.append(fp / n)
 
         for percent in percent_space:
-            actual_profit = (percent * tn - fn) / (percent * n)
-            profits[percent].append(actual_profit)
+            for lgd in lgd_space:
+                actual_profit = (percent * tn - lgd * fn) / (percent * n)
+                profits[(percent, lgd)].append(actual_profit)
     plt.figure(figsize=(7, 7))
 
     if plot_roc:
@@ -196,7 +213,8 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
 
     plt.plot([0, 1], [0, 1], color='navy', linestyle='--', alpha=0.5)
     for percent in percent_space:
-        plt.plot(fpr, profits[percent], label='{}%'.format(np.round(percent * 100)))
+        for lgd in lgd_space:
+            plt.plot(fpr, profits[(percent, lgd)], label='{}% lgd {}%'.format(np.round(percent * 100), np.round(lgd * 100)))
 
     plt.xlim([0, 1])
     plt.ylim([0, 1])
