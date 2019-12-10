@@ -104,7 +104,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         threshold_space = np.linspace(0.1, 0.5, num=200)
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
-    plt.figure(figsize=(14, 7))
+    plt.figure(figsize=(14, 7), facecolor='w')
     total_max_profit = 0.1
     for percent in percent_space:
         for lgd in lgd_space:
@@ -173,7 +173,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     fpr = fpr_[::step]
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold[::step], progress_bar)
-    plt.figure(figsize=(7, 7))
+    plt.figure(figsize=(7, 7), facecolor='w')
 
     if plot_roc:
         plt.plot(fpr_, tpr_, label='ROC')

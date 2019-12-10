@@ -20,7 +20,7 @@ def plt_roc(y_true, y_score, alg_name=None):
     """
     fpr, tpr, _ = roc_curve(y_true, y_score)
     auc1 = roc_auc_score(y_true, y_score)
-    plt.figure(figsize=(14, 7))
+    plt.figure(figsize=(14, 7), facecolor='w')
     if alg_name is None:
         plt.plot(fpr, tpr, label='ROC-AUC: {}'.format(np.round(auc1, 4)))
         plt.title('ROC curve')
@@ -53,7 +53,7 @@ def plt_pr(y_true, y_score, alg_name=None):
     :type alg_name: ``str``
     """
     precision, recall, _ = precision_recall_curve(y_true, y_score)
-    plt.figure(figsize=(14, 7))
+    plt.figure(figsize=(14, 7), facecolor='w')
     if alg_name is None:
         plt.plot(precision, recall, label='PR-AUC: {}'.format(np.round(auc(recall, precision), 4)))
         plt.title('Precision recall curve')
