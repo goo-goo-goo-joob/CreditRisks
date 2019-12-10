@@ -101,7 +101,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
     if lgd_space is None:
         lgd_space = np.linspace(0.8, 0.9, num=2)
     if threshold_space is None:
-        threshold_space = np.linspace(0.1, 0.5, num=200)
+        threshold_space = np.linspace(0.1, 0.5, num=100)
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
     plt.figure(figsize=(14, 7), facecolor='w')
