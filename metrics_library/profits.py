@@ -65,6 +65,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
                alg_name=None,
                percent_credit=None,
                y_lim=None,
+               x_lim=None,
                percent_space=None,
                lgd_space=None,
                threshold_space=None,
@@ -84,6 +85,8 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         If not None, adds a graph corresponding to this parameter
     y_lim : array, shape = [2]
         The limits of graph by y-axis
+    x_lim : array, shape = [2]
+        The limits of graph by x-axis
     percent_space : array, shape = [>=1]
         The values of interest on credit to plot on graph
     lgd_space: array
@@ -92,19 +95,18 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         The increasing values of threshold to plot different ones
     progress_bar: bool, default False
         Is to draw progress bar while calculating
-
     """
     if percent_space is None:
         percent_space = np.linspace(0.15, 0.2, num=3)
     if percent_credit is not None:
         percent_space = np.append(percent_space, percent_credit)
     if lgd_space is None:
-        lgd_space = np.linspace(0.8, 0.9, num=2)
+        lgd_space = np.linspace(0.8, 0.9, num=1)
     if threshold_space is None:
-        threshold_space = np.linspace(0.1, 0.5, num=100)
+        threshold_space = np.linspace(0, 1, num=200)
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
-    plt.figure(figsize=(14, 7), facecolor='w')
+    plt.figure(figsize=(7, 7), facecolor='w')
     total_max_profit = 0.1
     for percent in percent_space:
         for lgd in lgd_space:
@@ -126,10 +128,13 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
     plt.xlabel('Параметр разбиения принадлежности к классу')
     plt.ylabel('Прибыль')
     if y_lim is None:
-        plt.ylim([0, min(total_max_profit * 1.1, 1)])
+        plt.ylim([0, 1])
     else:
         plt.ylim(y_lim)
-    plt.xlim([threshold_space[0], threshold_space[-1]])
+    if x_lim is None:
+        plt.xlim([0, 1])
+    else:
+        plt.xlim(x_lim)
     plt.show()
 
 
@@ -163,7 +168,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     if percent_space is None:
         percent_space = np.linspace(0.15, 0.2, num=3)
     if lgd_space is None:
-        lgd_space = np.linspace(0.8, 0.9, num=2)
+        lgd_space = np.linspace(0.8, 0.9, num=1)
     fpr_, tpr_, threshold = roc_curve(y_true, y_score)
     step = round(len(threshold) / points_count)
     profits = {}
