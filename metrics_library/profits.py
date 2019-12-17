@@ -126,7 +126,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
     else:
         plt.title(title)
     plt.legend(loc='best')
-    plt.grid()
+    plt.grid(True)
     plt.xlabel('Параметр разбиения принадлежности к классу')
     plt.ylabel('Прибыль')
     if y_lim is None:
@@ -197,7 +197,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate/Profit')
     plt.title('Зависимость прибыли от Recall' if title is None else title)
-    plt.grid()
+    plt.grid(True)
     plt.legend(loc='best')
 
 
@@ -240,13 +240,13 @@ def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
 
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
-    plt.plot(thresholds, mcc)
+    plt.plot(thresholds, mcc, label='MCC')
     plt.xlim([0, 1])
     plt.ylim([0, 1])
     plt.xlabel('Threshold')
     plt.ylabel('MCC value')
     plt.title('Зависимость метрики MCC от порога разбиения' if title is None else title)
-    plt.grid()
+    plt.grid(True)
 
 
 def plt_popularity(y_score: np.ndarray,
@@ -271,7 +271,7 @@ def plt_popularity(y_score: np.ndarray,
     plt.xlabel('Threshold')
     plt.ylabel('Доля объектов выше порога')
     plt.title('Распределение объектов по вероятностям' if title is None else title)
-    plt.grid()
+    plt.grid(True)
 
 
 def plt_fp(y_true: np.ndarray, y_score: np.ndarray,
@@ -296,4 +296,4 @@ def plt_fp(y_true: np.ndarray, y_score: np.ndarray,
     plt.xlabel('Threshold')
     plt.ylabel('FP rate')
     plt.title('Зависимость FP от порога разбиения' if title is None else title)
-    plt.grid()
+    plt.grid(True)
