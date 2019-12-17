@@ -272,3 +272,28 @@ def plt_popularity(y_score: np.ndarray,
     plt.ylabel('Доля объектов выше порога')
     plt.title('Распределение объектов по вероятностям' if title is None else title)
     plt.grid()
+
+
+def plt_fp(y_true: np.ndarray, y_score: np.ndarray,
+           ax=None,
+           title=None,
+           thresholds=None,
+           progress_bar=False):
+    iterator = tqdm_notebook if progress_bar else _empty_iterator
+    if thresholds is None:
+        thresholds = np.linspace(0, 1, 200)
+    result = []
+    for threshold in iterator(thresholds):
+        predict_round = (y_score > threshold).astype(np.uint8)
+        fp = ((y_true == 0) & (predict_round != y_true)).mean()
+        result.append(fp)
+
+    if ax is None:
+        plt.figure(figsize=(7, 7), facecolor='w')
+    plt.plot(thresholds, result)
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.xlabel('Threshold')
+    plt.ylabel('FP rate')
+    plt.title('Зависимость FP от порога разбиения' if title is None else title)
+    plt.grid()
