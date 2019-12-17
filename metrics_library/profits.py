@@ -2,7 +2,7 @@ from typing import Iterable, Dict, Tuple, List
 
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_curve, roc_auc_score
 from tqdm import tqdm_notebook
 
 
@@ -140,7 +140,8 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
 
 
 def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
-                      alg_name=None,
+                      ax=None,
+                      title=None,
                       percent_space=None,
                       lgd_space=None,
                       plot_roc=True,
@@ -153,8 +154,8 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         true binary labels
     :param y_score: array, shape = [n_samples]
         target probabilities
-    :param alg_name: str, default None
-        algorithm name for plotting
+    :param title: str, default None
+        The title for plotting
     :param percent_space: array
         percents to plot
     :param lgd_space: array
@@ -171,6 +172,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     if lgd_space is None:
         lgd_space = np.linspace(0.8, 0.9, num=1)
     fpr_, tpr_, threshold = roc_curve(y_true, y_score)
+    auc = roc_auc_score(y_true, y_score)
     step = round(len(threshold) / points_count)
     profits = {}
     for percent in percent_space:
@@ -179,10 +181,11 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     fpr = fpr_[::step]
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold[::step], progress_bar)
-    plt.figure(figsize=(7, 7), facecolor='w')
+    if ax is None:
+        plt.figure(figsize=(7, 7), facecolor='w')
 
     if plot_roc:
-        plt.plot(fpr_, tpr_, label='ROC')
+        plt.plot(fpr_, tpr_, label='ROC AUC={}'.format(float_to_str(auc)))
 
     plt.plot([0, 1], [0, 1], color='navy', linestyle='--', alpha=0.5)
     for percent in percent_space:
@@ -193,7 +196,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     plt.ylim([0, 1])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate/Profit')
-    plt.title('{} Зависимость прибыли от Recall'.format(alg_name if alg_name is not None else ''))
+    plt.title('Зависимость прибыли от Recall' if title is None else title)
     plt.grid()
     plt.legend(loc='best')
 
