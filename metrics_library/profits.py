@@ -202,6 +202,8 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
 
 
 def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
+            ax=None,
+            title=None,
             thresholds=None,
             progress_bar=False):
     """
@@ -236,13 +238,14 @@ def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
             val = (tp * tn - fp * fn) / np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
             mcc.append(val)
 
-    plt.figure(figsize=(7, 7), facecolor='w')
+    if ax is None:
+        plt.figure(figsize=(7, 7), facecolor='w')
     plt.plot(thresholds, mcc)
     plt.xlim([0, 1])
     plt.ylim([0, 1])
     plt.xlabel('Threshold')
     plt.ylabel('MCC value')
-    plt.title('Зависимость метрики MCC от порога разбиения')
+    plt.title('Зависимость метрики MCC от порога разбиения' if title is None else title)
     plt.grid()
 
 
