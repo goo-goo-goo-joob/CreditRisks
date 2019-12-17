@@ -200,6 +200,18 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
 def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
             thresholds=None,
             progress_bar=False):
+    """
+    Plot MCC with respect to recall
+
+    :param y_true: array, shape = [n_samples]
+        true binary labels
+    :param y_score: array, shape = [n_samples]
+        target probabilities
+    :param thresholds: array
+        threshold to calculate
+    :param progress_bar: bool, default True
+        Is to draw progress bar while calculating
+    """
     iterator = tqdm_notebook if progress_bar else _empty_iterator
     if thresholds is None:
         thresholds = np.linspace(0, 1, 200)
