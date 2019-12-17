@@ -62,7 +62,8 @@ def calc_multi_profits(y_true: np.ndarray, y_score: np.ndarray,
 
 
 def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
-               alg_name=None,
+               ax=None,
+               title=None,
                percent_credit=None,
                y_lim=None,
                x_lim=None,
@@ -79,8 +80,8 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         True binary labels
     y_score : array, shape = [n_samples]
         Target scores, probability estimates of the positive class
-    alg_name : str
-        The name of the algorithm to print on the title
+    title : str
+        The title to print
     percent_credit : float > 0 and <= 1, optional
         If not None, adds a graph corresponding to this parameter
     y_lim : array, shape = [2]
@@ -106,7 +107,8 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         threshold_space = np.linspace(0, 1, num=200)
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
-    plt.figure(figsize=(7, 7), facecolor='w')
+    if ax is None:
+        plt.figure(figsize=(7, 7), facecolor='w')
     total_max_profit = 0.1
     for percent in percent_space:
         for lgd in lgd_space:
@@ -119,10 +121,10 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
                 plt.annotate(f'{np.round(max_profit * 100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
                              xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
                              bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
-    if alg_name is None:
+    if title is None:
         plt.title('Зависимость прибыли от параметра разбиения и процента по кредиту')
     else:
-        plt.title('{} Зависимость прибыли от параметра разбиения и процента по кредиту'.format(alg_name))
+        plt.title(title)
     plt.legend(loc='best')
     plt.grid()
     plt.xlabel('Параметр разбиения принадлежности к классу')
@@ -135,7 +137,6 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         plt.xlim([0, 1])
     else:
         plt.xlim(x_lim)
-    plt.show()
 
 
 def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
