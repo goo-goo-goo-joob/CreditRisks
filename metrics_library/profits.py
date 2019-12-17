@@ -195,3 +195,36 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     plt.title('{} Зависимость прибыли от Recall'.format(alg_name if alg_name is not None else ''))
     plt.grid()
     plt.legend(loc='best')
+
+
+def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
+            thresholds=None,
+            progress_bar=False):
+    iterator = tqdm_notebook if progress_bar else _empty_iterator
+    if thresholds is None:
+        thresholds = np.linspace(0, 1, 200)
+    mcc = []
+    y_true_0 = y_true == 0
+    y_true_1 = y_true == 1
+    for threshold in iterator(thresholds):
+        predict_round = (y_score > threshold).astype(np.uint8)
+        eq = predict_round == y_true
+        neq = ~eq
+        tn = (y_true_0 & eq).mean()
+        tp = (y_true_1 & eq).mean()
+        fn = (y_true_1 & neq).mean()
+        fp = (y_true_0 & neq).mean()
+        if (tp + fp == 0) or (tp + fn == 0) or (tn + fp == 0) or (tn + fn == 0):
+            thresholds = np.delete(thresholds, threshold)
+        else:
+            val = (tp * tn - fp * fn) / np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+            mcc.append(val)
+
+    plt.figure(figsize=(7, 7), facecolor='w')
+    plt.plot(thresholds, mcc)
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.xlabel('Threshold')
+    plt.ylabel('MCC value')
+    plt.title('Зависимость метрики MCC от порога разбиения')
+    plt.grid()
