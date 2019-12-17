@@ -240,3 +240,25 @@ def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
     plt.ylabel('MCC value')
     plt.title('Зависимость метрики MCC от порога разбиения')
     plt.grid()
+
+
+def plt_popularity(y_score: np.ndarray,
+                   thresholds=None,
+                   yscale='linear',
+                   progress_bar=False):
+    iterator = tqdm_notebook if progress_bar else _empty_iterator
+    if thresholds is None:
+        thresholds = np.linspace(0, 1, 201)
+    hist = []
+    for i in iterator(range(1, len(thresholds))):
+        val = ((thresholds[i - 1] < y_score) & (y_score <= thresholds[i])).mean()
+        hist.append(val)
+    plt.figure(figsize=(7, 7), facecolor='w')
+    plt.plot(thresholds[1:], hist)
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    # plt.yscale(yscale)
+    plt.xlabel('Threshold')
+    plt.ylabel('Количество элементов в разбиении')
+    plt.title('Распределение вероятностей предсказания. Групп: {}'.format(len(thresholds) - 1))
+    plt.grid()
