@@ -285,7 +285,7 @@ def plt_fp(y_true: np.ndarray, y_score: np.ndarray,
     result = []
     for threshold in iterator(thresholds):
         predict_round = (y_score > threshold).astype(np.uint8)
-        fp = ((y_true == 0) & (predict_round != y_true)).mean()
+        fp = ((y_true == 0) & (predict_round != y_true)).sum()
         right = predict_round.sum()
         result.append(fp / right)
 
