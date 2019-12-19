@@ -61,6 +61,18 @@ def calc_multi_profits(y_true: np.ndarray, y_score: np.ndarray,
     return profits
 
 
+def default_percent_space():
+    return np.linspace(0.15, 0.25, num=3)
+
+
+def default_lgd_space():
+    return np.linspace(0.8, 0.9, num=1)
+
+
+def default_threshold_space():
+    return np.linspace(0, 1, num=200)
+
+
 def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
                ax=None,
                title=None,
@@ -98,11 +110,11 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         Is to draw progress bar while calculating
     """
     if percent_space is None:
-        percent_space = np.linspace(0.15, 0.2, num=3)
+        percent_space = default_percent_space()
     if percent_credit is not None:
         percent_space = np.append(percent_space, percent_credit)
     if lgd_space is None:
-        lgd_space = np.linspace(0.8, 0.9, num=1)
+        lgd_space = default_lgd_space()
     if threshold_space is None:
         threshold_space = np.linspace(0, 1, num=200)
 
@@ -150,11 +162,11 @@ def plt_profit_2_experimental(y_true: np.ndarray, y_score: np.ndarray,
                               threshold_space=None,
                               progress_bar=True):
     if percent_space is None:
-        percent_space = np.linspace(0.15, 0.2, num=3)
+        percent_space = default_percent_space()
     if percent_credit is not None:
         percent_space = np.append(percent_space, percent_credit)
     if lgd_space is None:
-        lgd_space = np.linspace(0.8, 0.9, num=1)
+        lgd_space = default_lgd_space()
     if threshold_space is None:
         threshold_space = np.sort(np.random.choice(y_score, 500))
 
@@ -220,9 +232,9 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         Is to draw progress bar while calculating
     """
     if percent_space is None:
-        percent_space = np.linspace(0.15, 0.2, num=3)
+        percent_space = default_percent_space()
     if lgd_space is None:
-        lgd_space = np.linspace(0.8, 0.9, num=1)
+        lgd_space = default_lgd_space()
     fpr_, tpr_, threshold = roc_curve(y_true, y_score)
     auc = roc_auc_score(y_true, y_score)
     step = round(len(threshold) / points_count)
