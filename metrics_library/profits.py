@@ -121,13 +121,11 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
-    total_max_profit = 0.1
     for percent in percent_space:
         for lgd in lgd_space:
             profit = profits[(percent, lgd)]
             color = plt.plot(threshold_space, profit, label='{}% lgd {}%'.format(float_to_str(percent), float_to_str(lgd)))[0].get_color()
             max_profit = max(profit)
-            total_max_profit = max(total_max_profit, max_profit)
             if max_profit > 0:
                 plt.scatter(threshold_space[profit.index(max_profit)], max_profit, color=color, alpha=0.5)
                 plt.annotate(f'{np.round(max_profit * 100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
@@ -254,7 +252,13 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
     plt.plot([0, 1], [0, 1], color='navy', linestyle='--', alpha=0.5)
     for percent in percent_space:
         for lgd in lgd_space:
-            plt.plot(fpr, profits[(percent, lgd)], label='{}% lgd {}%'.format(float_to_str(percent), float_to_str(lgd)))
+            color = plt.plot(fpr, profits[(percent, lgd)], label='{}% lgd {}%'.format(float_to_str(percent), float_to_str(lgd)))[0].get_color()
+            max_profit = max(profits[(percent, lgd)])
+            if max_profit > 0:
+                plt.scatter(fpr[profits[(percent, lgd)].index(max_profit)], max_profit, color=color, alpha=0.5)
+                plt.annotate(f'{np.round(max_profit * 100, 1)}%', (fpr[profits[(percent, lgd)].index(max_profit)], max_profit),
+                             xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
+                             bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
 
     plt.xlim([0, 1])
     plt.ylim([0, 1])
@@ -304,7 +308,13 @@ def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
 
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
-    plt.plot(thresholds, mcc, label='MCC')
+    color = plt.plot(thresholds, mcc, label='MCC')[0].get_color()
+    max_profit = max(mcc)
+    if max_profit > 0:
+        plt.scatter(thresholds[mcc.index(max_profit)], max_profit, color=color, alpha=0.5)
+        plt.annotate(f'{np.round(max_profit * 100, 1)}%', (thresholds[mcc.index(max_profit)], max_profit),
+                     xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
+                     bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
     plt.xlim([0, 1])
     plt.ylim([0, 1])
     plt.xlabel('Параметр разбиения принадлежности к классу')
