@@ -327,23 +327,21 @@ def plt_popularity(y_score: np.ndarray,
                    ax=None,
                    title=None,
                    thresholds=None,
-                   yscale='linear',
                    progress_bar=False):
     iterator = tqdm_notebook if progress_bar else _empty_iterator
     if thresholds is None:
         thresholds = np.linspace(0, 1, 201)
     hist = []
     for i in iterator(range(1, len(thresholds))):
-        val = ((y_score <= thresholds[i])).mean()
+        val = (y_score < thresholds[i]).mean()
         hist.append(val)
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
     plt.plot(thresholds[1:], hist)
     plt.xlim([0, 1])
     plt.ylim([0, 1])
-    # plt.yscale(yscale)
     plt.xlabel('Параметр разбиения принадлежности к классу')
-    plt.ylabel('Доля объектов выше порога')
+    plt.ylabel('Доля объектов ниже порога')
     plt.title('Распределение объектов по вероятностям' if title is None else title)
     plt.grid(True)
 
