@@ -337,7 +337,7 @@ def plt_popularity(y_score: np.ndarray,
         hist.append(val)
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
-    plt.plot(thresholds[1:], hist)
+    plt.plot(thresholds[1:], hist, label=title)
     plt.xlim([0, 1])
     plt.ylim([0, 1])
     plt.xlabel('Параметр разбиения принадлежности к классу')
