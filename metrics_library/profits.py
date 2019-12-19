@@ -116,7 +116,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
     if lgd_space is None:
         lgd_space = default_lgd_space()
     if threshold_space is None:
-        threshold_space = np.linspace(0, 1, num=200)
+        threshold_space = default_threshold_space()
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
     if ax is None:
@@ -288,7 +288,7 @@ def plt_mcc(y_true: np.ndarray, y_score: np.ndarray,
     """
     iterator = tqdm_notebook if progress_bar else _empty_iterator
     if thresholds is None:
-        thresholds = np.linspace(0, 1, 200)
+        thresholds = default_threshold_space()
     mcc = []
     y_true_0 = y_true == 0
     y_true_1 = y_true == 1
@@ -330,7 +330,7 @@ def plt_popularity(y_score: np.ndarray,
                    progress_bar=False):
     iterator = tqdm_notebook if progress_bar else _empty_iterator
     if thresholds is None:
-        thresholds = np.linspace(0, 1, 201)
+        thresholds = default_threshold_space()
     hist = []
     for i in iterator(range(1, len(thresholds))):
         val = (y_score < thresholds[i]).mean()
@@ -353,7 +353,7 @@ def plt_fp(y_true: np.ndarray, y_score: np.ndarray,
            progress_bar=False):
     iterator = tqdm_notebook if progress_bar else _empty_iterator
     if thresholds is None:
-        thresholds = np.linspace(0, 1, 200)
+        thresholds = default_threshold_space()
     result = []
     for threshold in iterator(thresholds):
         predict_round = (y_score > threshold).astype(np.uint8)
