@@ -1,0 +1,22 @@
+﻿@model CreditRisks.Models.CompanyFile
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Ввод данных о заемщике из файла";
+}
+
+<form asp-controller="CompanyFile" asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for="INN">ИНН</label>
+        <input type="text" class="form-control" placeholder="ИНН" asp-for="INN">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="File">Файл с отчетностью</label>
+        <input type="file" name="files" asp-for="File"/>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Submit" asp-action="Index"/>
+    </div>
+</form>
