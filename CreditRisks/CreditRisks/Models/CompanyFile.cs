@@ -7,7 +7,8 @@ namespace CreditRisks.Models
     public class CompanyFile
     {
         [StringLength(10, MinimumLength = 10)]
-        public string INN { get; set; }
+        public string Inn { get; set; }
+        public Dictionary<string, string> DefaultProbability { get; set; }
         public IFormFile File { set; get; }
     }
 }

@@ -4,7 +4,7 @@ using Calcservice;
 using CreditRisks.Models;
 using Microsoft.AspNetCore.Mvc;
 using PythonService;
-using Dict = System.Collections.Generic.Dictionary<string, float>;
+using Dict = System.Collections.Generic.Dictionary<string, string>;
 
 namespace CreditRisks.Controllers
 {
@@ -35,9 +35,10 @@ namespace CreditRisks.Controllers
             foreach (var prop in obj.GetType().GetProperties())
             {
                 var propValue = prop.GetValue(obj, null);
-                if (prop.PropertyType == typeof(float))
-                    dict[prop.Name] = (float) propValue;
-                else if (prop.PropertyType == typeof(int)) dict[prop.Name] = (int) propValue;
+                if (propValue != null)
+                {
+                    dict[prop.Name] = propValue.ToString();
+                }
             }
 
             return dict;
