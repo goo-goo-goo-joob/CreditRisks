@@ -15,7 +15,7 @@ class AbstractModel(object):
         """
         self.name = name
 
-    def predict_proba(self, item: pd.Series) -> float:
+    def predict_proba(self, item: pd.DataFrame) -> float:
         """
         Calculate default probability of a company using custom model
 
