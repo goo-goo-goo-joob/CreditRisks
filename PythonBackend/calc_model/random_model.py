@@ -4,7 +4,7 @@ import zipfile
 import numpy as np
 import pandas as pd
 
-from calc_model import AbstractModel
+from .abstract_model import AbstractModel
 
 
 class RandomModel(AbstractModel):

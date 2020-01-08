@@ -29,7 +29,13 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
         df = pd.DataFrame(pd.to_numeric(df[0], errors='coerce')).T
         result = {}
         for model in self.models:
-            result[model.name] = model.predict_proba(df)
+            value = None
+            try:
+                value = model.predict_proba(df)
+            except Exception as e:
+                value = float('nan')
+            finally:
+                result[model.name] = value
         return calc_service_pb2.CalcReply(Result=result)
 
 

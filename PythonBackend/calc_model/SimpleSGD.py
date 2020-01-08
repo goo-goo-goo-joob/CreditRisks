@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.linear_model import SGDClassifier
 from sklearn.preprocessing import StandardScaler
 
-from calc_model import AbstractModel
+from .abstract_model import AbstractModel
 
 
 class SimpleSGD(AbstractModel):
