@@ -4,6 +4,7 @@ import time
 from concurrent import futures
 
 import grpc
+import pandas as pd
 
 import calc_service_pb2
 import calc_service_pb2_grpc
@@ -24,9 +25,17 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
                                  database=os.getenv("DB_DATABASE"))
 
     def CalcProbability(self, request, context):
+        df = pd.DataFrame.from_dict(request.Params, orient='index')
+        df = pd.DataFrame(pd.to_numeric(df[0], errors='coerce')).T
         result = {}
         for model in self.models:
-            result[model.name] = model.predict_proba(request.Params)
+            value = None
+            try:
+                value = model.predict_proba(df)
+            except Exception as e:
+                value = float('nan')
+            finally:
+                result[model.name] = value
         return calc_service_pb2.CalcReply(Result=result)
 
 

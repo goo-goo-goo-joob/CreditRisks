@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='calcservice',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"\x7f\n\x0b\x43\x61lcRequest\x12\x0b\n\x03INN\x18\x01 \x01(\t\x12\x34\n\x06Params\x18\x02 \x03(\x0b\x32$.calcservice.CalcRequest.ParamsEntry\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\"n\n\tCalcReply\x12\x32\n\x06Result\x18\x01 \x03(\x0b\x32\".calcservice.CalcReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x32T\n\x0b\x43\x61lcService\x12\x45\n\x0f\x43\x61lcProbability\x12\x18.calcservice.CalcRequest\x1a\x16.calcservice.CalcReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"\x7f\n\x0b\x43\x61lcRequest\x12\x0b\n\x03INN\x18\x01 \x01(\t\x12\x34\n\x06Params\x18\x02 \x03(\x0b\x32$.calcservice.CalcRequest.ParamsEntry\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"n\n\tCalcReply\x12\x32\n\x06Result\x18\x01 \x03(\x0b\x32\".calcservice.CalcReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x32T\n\x0b\x43\x61lcService\x12\x45\n\x0f\x43\x61lcProbability\x12\x18.calcservice.CalcRequest\x1a\x16.calcservice.CalcReply\"\x00\x62\x06proto3')
 )
 
 
@@ -42,8 +42,8 @@ _CALCREQUEST_PARAMSENTRY = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='calcservice.CalcRequest.ParamsEntry.value', index=1,
-      number=2, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),

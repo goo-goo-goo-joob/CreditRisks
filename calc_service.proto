@@ -9,7 +9,7 @@ service CalcService {
 
 message CalcRequest {
     string INN = 1;
-    map<string, float> Params = 2;
+    map<string, string> Params = 2;
 }
 
 message CalcReply {

@@ -1,0 +1,44 @@
+﻿@model CreditRisks.Models.CompanyFile
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Ввод данных о заемщике из файла";
+}
+
+<form asp-controller="CompanyFile" asp-action="Index" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Inn">ИНН</label>
+        <input type="text" class="form-control" placeholder="ИНН" asp-for="Inn">
+    </div>
+<div class="form-group">
+    @if (Model != null)
+    {
+        <table class="table table-striped">
+            <caption style="caption-side: top">Расчет вероятности дефолта</caption>
+            <thead>
+            <tr>
+                <th scope="col">Название модели предсказания</th>
+                <th scope="col">Вероятность дефолта</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var pair in Model.DefaultProbability)
+            {
+                <tr>
+                    <th scope="row"> @pair.Key</th>
+                    <td> @pair.Value</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+    <div class="form-group">
+        <label asp-for="File">Файл с отчетностью</label>
+        <input type="file" asp-for="File"/>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Submit" asp-action="Index"/>
+    </div>
+</form>
