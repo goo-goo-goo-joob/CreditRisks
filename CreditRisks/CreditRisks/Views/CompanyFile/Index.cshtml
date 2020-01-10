@@ -8,7 +8,7 @@
 <form asp-controller="CompanyFile" asp-action="Index" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Inn">ИНН</label>
-        <input type="text" class="form-control" placeholder="ИНН" asp-for="Inn">
+        <input asp-for="Inn" class="form-control" placeholder="ИНН" required type="text">
     </div>
 <div class="form-group">
     @if (Model != null)
@@ -35,7 +35,7 @@
 </div>
     <div class="form-group">
         <label asp-for="File">Файл с отчетностью</label>
-        <input type="file" asp-for="File"/>
+        <input asp-for="File" required type="file">
     </div>
 
     <div class="form-group">
