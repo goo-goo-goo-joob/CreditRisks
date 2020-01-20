@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PythonService;
 
 namespace CreditRisksRestAPI
 {
@@ -25,6 +26,8 @@ namespace CreditRisksRestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var backendAddr = Environment.GetEnvironmentVariable("PYTHON_BACKEND_ADDR");
+            services.AddSingleton<IPythonBackend>(new PythonBackend(backendAddr));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -41,7 +44,6 @@ namespace CreditRisksRestAPI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
