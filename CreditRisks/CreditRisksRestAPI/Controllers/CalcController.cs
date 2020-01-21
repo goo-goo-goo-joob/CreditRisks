@@ -8,7 +8,7 @@ namespace CreditRisksRestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class CalculateController : ControllerBase
     {
         // GET api/values
         [HttpGet]

@@ -1,37 +1,33 @@
-﻿<form method="post" enctype="multipart/form-data">
+﻿<form>
     <div class="form-group">
-        <label for="Inn">ИНН</label>
-        <input id="Inn" class="form-control" placeholder="ИНН" required type="text">
+        <label for="inn">ИНН</label>
+        <input id="inn" class="form-control" placeholder="ИНН" required type="text">
     </div>
     <div class="form-group">
-        @if (Model != null)
-        {
-        <table class="table table-striped">
-            <caption style="caption-side: top">Расчет вероятности дефолта</caption>
-            <thead>
-            <tr>
-                <th scope="col">Название модели предсказания</th>
-                <th scope="col">Вероятность дефолта</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var pair in Model.DefaultProbability)
-            {
-            <tr>
-                <th scope="row"> @pair.Key</th>
-                <td> @pair.Value</td>
-            </tr>
-            }
-            </tbody>
-        </table>
-        }
-    </div>
-    <div class="form-group">
-        <label for="File">Файл с отчетностью</label>
-        <input id="File" required type="file">
+        <label for="file">Файл с отчетностью</label>
+        <input id="file" required type="file">
     </div>
 
-    <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Submit"/>
-    </div>
+    <button class="btn btn-success" id="calculate" type="button">Расчитать</button>
 </form>
+<script>
+    $('#calculate').click(function () {
+        let inn = $('#inn').val();
+        let file = $('#file');
+        let fd = new FormData;
+        fd.append('inn', inn);
+        fd.append('file', file.prop('files'));
+        if (inn && file)
+            $.ajax({
+                url: '/api/calculate', 
+                data: fd,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (data) {
+                },
+                error: error_handler
+            });
+    });
+
+</script>

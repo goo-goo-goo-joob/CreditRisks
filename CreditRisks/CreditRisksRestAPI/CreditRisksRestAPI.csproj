@@ -14,4 +14,10 @@
       <ProjectReference Include="..\PythonService\PythonService.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="Template\site.css">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

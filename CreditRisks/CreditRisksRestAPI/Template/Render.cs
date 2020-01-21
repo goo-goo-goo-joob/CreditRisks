@@ -13,5 +13,10 @@ namespace CreditRisksRestAPI.Template
             string doc = File.ReadAllText(Path + filename);
             return sourceText.Replace(Render.Label, doc);
         }
+
+        public static string RenderPage(string filename)
+        {
+            return File.ReadAllText(Path + filename);
+        }
     }
 }
