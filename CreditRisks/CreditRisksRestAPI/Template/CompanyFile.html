@@ -1,25 +1,26 @@
-﻿<form>
+﻿<form enctype="multipart/form-data" id="generate_params">
     <div class="form-group">
         <label for="inn">ИНН</label>
-        <input id="inn" class="form-control" placeholder="ИНН" required type="text">
+        <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
     </div>
     <div class="form-group">
-        <label for="file">Файл с отчетностью</label>
-        <input id="file" required type="file">
+        <label for="file_report">Файл с отчетностью</label>
+        <input id="file_report" name="file_report" required type="file">
     </div>
 
-    <button class="btn btn-success" id="calculate" type="button">Расчитать</button>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Рассчитать"/>
+    </div>
 </form>
 <script>
-    $('#calculate').click(function () {
+    $("#generate_params").on('submit', function (e) {
+        e.preventDefault();
         let inn = $('#inn').val();
-        let file = $('#file');
-        let fd = new FormData;
-        fd.append('inn', inn);
-        fd.append('file', file.prop('files'));
+        let file = $('#file_report');
+        let fd = new FormData(this);
         if (inn && file)
             $.ajax({
-                url: '/api/calculate', 
+                url: '/api/calculate',
                 data: fd,
                 processData: false,
                 contentType: false,
@@ -28,6 +29,7 @@
                 },
                 error: error_handler
             });
+        return false;
     });
 
 </script>
