@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PythonService;
+using Borrower = CreditRisksRestAPI.Models.Borrower;
+using Company = CreditRisksRestAPI.Models.Company;
+using Dict = System.Collections.Generic.Dictionary<string, string>;
 
 namespace CreditRisksRestAPI.Controllers
 {
@@ -29,6 +32,26 @@ namespace CreditRisksRestAPI.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] {"value1", "value2"};
+        }
+
+        private static Dict ObjectToDict(object obj)
+        {
+            var result = new Dict();
+            return ObjectToDict(obj, result);
+        }
+
+        private static Dict ObjectToDict(object obj, Dict dict)
+        {
+            foreach (var prop in obj.GetType().GetProperties())
+            {
+                var propValue = prop.GetValue(obj, null);
+                if (propValue != null)
+                {
+                    dict[prop.Name] = propValue.ToString();
+                }
+            }
+
+            return dict;
         }
 
         // POST api/values

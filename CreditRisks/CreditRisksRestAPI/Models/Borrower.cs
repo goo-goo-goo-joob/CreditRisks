@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using CreditMath;
 using static CreditMath.CMath;
 
-namespace CreditRisks.Models
+namespace CreditRisksRestAPI.Models
 {
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class Borrower

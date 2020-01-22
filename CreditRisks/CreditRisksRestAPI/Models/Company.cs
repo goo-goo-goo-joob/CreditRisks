@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace CreditRisks.Models
+namespace CreditRisksRestAPI.Models
 {
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class Company
