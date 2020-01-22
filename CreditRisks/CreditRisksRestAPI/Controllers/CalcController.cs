@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Calcservice;
 using CreditRisksRestAPI.Models;
@@ -55,7 +56,7 @@ namespace CreditRisksRestAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public string Post([FromForm] CompanyFileMain model)
+        public ActionResult<string> Post([FromForm] CompanyFileMain model)
         {
             Company obj = new Company();
             Dictionary<string, string> dictCSharp = new Dictionary<string, string>();
@@ -112,7 +113,7 @@ namespace CreditRisksRestAPI.Controllers
                 dictionary[pair.Key] = pair.Value.ToString("P2");
             }
 
-            return JsonConvert.SerializeObject(dictionary);
+            return Content(JsonConvert.SerializeObject(dictionary), "application/json", Encoding.UTF8);
         }
     }
 }

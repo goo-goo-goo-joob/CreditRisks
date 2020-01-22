@@ -12,6 +12,19 @@
         <input type="submit" class="btn btn-primary" value="Рассчитать"/>
     </div>
 </form>
+<div class="form-group">
+    <table class="table table-striped" id="result_table" style="display: none">
+        <caption style="caption-side: top">Расчет вероятности дефолта</caption>
+        <thead>
+        <tr>
+            <th scope="col">Название модели предсказания</th>
+            <th scope="col">Вероятность дефолта</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 <script>
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
@@ -26,6 +39,12 @@
                 contentType: false,
                 type: 'POST',
                 success: function (data) {
+                    let target = $('#result_table');
+                    target.show();
+                    target = target.find('tbody').empty();
+                    for (const [key, value] of Object.entries(data)) {
+                        target.append(`<tr><th scope="row">${key}</th><td>${value}</td></tr>`)
+                    }
                 },
                 error: error_handler
             });
