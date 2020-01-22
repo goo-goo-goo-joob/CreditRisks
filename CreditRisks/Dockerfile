@@ -6,9 +6,9 @@ COPY . .
 WORKDIR /app/CreditRisks
 RUN dotnet restore
 
-WORKDIR /app/CreditRisks/CreditRisks
+WORKDIR /app/CreditRisks/CreditRisksRestAPI
 RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
-COPY --from=build-env /app/CreditRisks/CreditRisks/out .
-ENTRYPOINT ["dotnet", "CreditRisks.dll"]
+COPY --from=build-env /app/CreditRisks/CreditRisksRestAPI/out .
+ENTRYPOINT ["dotnet", "CreditRisksRestAPI.dll"]
