@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CreditRisks\CreditRisks.csproj" />
       <ProjectReference Include="..\PythonService\PythonService.csproj" />
     </ItemGroup>
 
