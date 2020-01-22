@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Calcservice;
 using CreditRisksRestAPI.Models;
+using Google.Protobuf;
+using Google.Protobuf.Collections;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -114,6 +116,32 @@ namespace CreditRisksRestAPI.Controllers
             }
 
             return Content(JsonConvert.SerializeObject(dictionary), "application/json", Encoding.UTF8);
+        }
+    }
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ModelController : ControllerBase
+    {
+        private readonly IPythonBackend _backend;
+
+        public ModelController(IPythonBackend backend)
+        {
+            _backend = backend;
+        }
+
+        [HttpGet("{name}")]
+        public ActionResult<string> Get(string name)
+        {
+            var request = new ModelInfoRequest {ModelName = name};
+            var reply = _backend.Client.GetModelInfo(request);
+            var result = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, ByteString> pair in reply.Result)
+            {
+                result[pair.Key] = pair.Value.ToBase64();
+            }
+
+            return Content(JsonConvert.SerializeObject(result), "application/json", Encoding.UTF8);
         }
     }
 }

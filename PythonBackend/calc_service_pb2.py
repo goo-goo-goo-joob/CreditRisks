@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='calcservice',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"\x7f\n\x0b\x43\x61lcRequest\x12\x0b\n\x03INN\x18\x01 \x01(\t\x12\x34\n\x06Params\x18\x02 \x03(\x0b\x32$.calcservice.CalcRequest.ParamsEntry\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"n\n\tCalcReply\x12\x32\n\x06Result\x18\x01 \x03(\x0b\x32\".calcservice.CalcReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x32T\n\x0b\x43\x61lcService\x12\x45\n\x0f\x43\x61lcProbability\x12\x18.calcservice.CalcRequest\x1a\x16.calcservice.CalcReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"\x7f\n\x0b\x43\x61lcRequest\x12\x0b\n\x03INN\x18\x01 \x01(\t\x12\x34\n\x06Params\x18\x02 \x03(\x0b\x32$.calcservice.CalcRequest.ParamsEntry\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"n\n\tCalcReply\x12\x32\n\x06Result\x18\x01 \x03(\x0b\x32\".calcservice.CalcReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\"%\n\x10ModelInfoRequest\x12\x11\n\tModelName\x18\x01 \x01(\t\"x\n\x0eModelInfoReply\x12\x37\n\x06Result\x18\x01 \x03(\x0b\x32\'.calcservice.ModelInfoReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x32\x9e\x01\n\x0b\x43\x61lcService\x12\x43\n\x0f\x43\x61lcProbability\x12\x18.calcservice.CalcRequest\x1a\x16.calcservice.CalcReply\x12J\n\x0cGetModelInfo\x12\x1d.calcservice.ModelInfoRequest\x1a\x1b.calcservice.ModelInfoReplyb\x06proto3')
 )
 
 
@@ -168,12 +168,115 @@ _CALCREPLY = _descriptor.Descriptor(
   serialized_end=274,
 )
 
+
+_MODELINFOREQUEST = _descriptor.Descriptor(
+  name='ModelInfoRequest',
+  full_name='calcservice.ModelInfoRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ModelName', full_name='calcservice.ModelInfoRequest.ModelName', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=276,
+  serialized_end=313,
+)
+
+
+_MODELINFOREPLY_RESULTENTRY = _descriptor.Descriptor(
+  name='ResultEntry',
+  full_name='calcservice.ModelInfoReply.ResultEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='calcservice.ModelInfoReply.ResultEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='calcservice.ModelInfoReply.ResultEntry.value', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=390,
+  serialized_end=435,
+)
+
+_MODELINFOREPLY = _descriptor.Descriptor(
+  name='ModelInfoReply',
+  full_name='calcservice.ModelInfoReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='Result', full_name='calcservice.ModelInfoReply.Result', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_MODELINFOREPLY_RESULTENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=315,
+  serialized_end=435,
+)
+
 _CALCREQUEST_PARAMSENTRY.containing_type = _CALCREQUEST
 _CALCREQUEST.fields_by_name['Params'].message_type = _CALCREQUEST_PARAMSENTRY
 _CALCREPLY_RESULTENTRY.containing_type = _CALCREPLY
 _CALCREPLY.fields_by_name['Result'].message_type = _CALCREPLY_RESULTENTRY
+_MODELINFOREPLY_RESULTENTRY.containing_type = _MODELINFOREPLY
+_MODELINFOREPLY.fields_by_name['Result'].message_type = _MODELINFOREPLY_RESULTENTRY
 DESCRIPTOR.message_types_by_name['CalcRequest'] = _CALCREQUEST
 DESCRIPTOR.message_types_by_name['CalcReply'] = _CALCREPLY
+DESCRIPTOR.message_types_by_name['ModelInfoRequest'] = _MODELINFOREQUEST
+DESCRIPTOR.message_types_by_name['ModelInfoReply'] = _MODELINFOREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CalcRequest = _reflection.GeneratedProtocolMessageType('CalcRequest', (_message.Message,), {
@@ -206,9 +309,32 @@ CalcReply = _reflection.GeneratedProtocolMessageType('CalcReply', (_message.Mess
 _sym_db.RegisterMessage(CalcReply)
 _sym_db.RegisterMessage(CalcReply.ResultEntry)
 
+ModelInfoRequest = _reflection.GeneratedProtocolMessageType('ModelInfoRequest', (_message.Message,), {
+  'DESCRIPTOR' : _MODELINFOREQUEST,
+  '__module__' : 'calc_service_pb2'
+  # @@protoc_insertion_point(class_scope:calcservice.ModelInfoRequest)
+  })
+_sym_db.RegisterMessage(ModelInfoRequest)
+
+ModelInfoReply = _reflection.GeneratedProtocolMessageType('ModelInfoReply', (_message.Message,), {
+
+  'ResultEntry' : _reflection.GeneratedProtocolMessageType('ResultEntry', (_message.Message,), {
+    'DESCRIPTOR' : _MODELINFOREPLY_RESULTENTRY,
+    '__module__' : 'calc_service_pb2'
+    # @@protoc_insertion_point(class_scope:calcservice.ModelInfoReply.ResultEntry)
+    })
+  ,
+  'DESCRIPTOR' : _MODELINFOREPLY,
+  '__module__' : 'calc_service_pb2'
+  # @@protoc_insertion_point(class_scope:calcservice.ModelInfoReply)
+  })
+_sym_db.RegisterMessage(ModelInfoReply)
+_sym_db.RegisterMessage(ModelInfoReply.ResultEntry)
+
 
 _CALCREQUEST_PARAMSENTRY._options = None
 _CALCREPLY_RESULTENTRY._options = None
+_MODELINFOREPLY_RESULTENTRY._options = None
 
 _CALCSERVICE = _descriptor.ServiceDescriptor(
   name='CalcService',
@@ -216,8 +342,8 @@ _CALCSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=276,
-  serialized_end=360,
+  serialized_start=438,
+  serialized_end=596,
   methods=[
   _descriptor.MethodDescriptor(
     name='CalcProbability',
@@ -226,6 +352,15 @@ _CALCSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_CALCREQUEST,
     output_type=_CALCREPLY,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetModelInfo',
+    full_name='calcservice.CalcService.GetModelInfo',
+    index=1,
+    containing_service=None,
+    input_type=_MODELINFOREQUEST,
+    output_type=_MODELINFOREPLY,
     serialized_options=None,
   ),
 ])

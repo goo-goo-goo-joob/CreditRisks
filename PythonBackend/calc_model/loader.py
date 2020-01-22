@@ -16,12 +16,12 @@ def get_models(host='127.0.0.1', port=3306, user='', password='', database=''):
                 value != calc_model.AbstractModel:
             models[key] = value
     cursor.execute('''SELECT * FROM risks.calcModelsView''')
-    result = []
+    result = {}
     for row in cursor.fetchall():
         name = row[1]
         klass = row[2]
         data = base64.b64decode(row[3])
-        result.append(models[klass](name, io.BytesIO(data)))
+        result[name] = models[klass](name, io.BytesIO(data))
     cursor.close()
     connection.close()
     return result

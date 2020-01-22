@@ -28,15 +28,18 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
         df = pd.DataFrame.from_dict(request.Params, orient='index')
         df = pd.DataFrame(pd.to_numeric(df[0], errors='coerce')).T
         result = {}
-        for model in self.models:
+        for name, model in self.models.items():
             value = None
             try:
                 value = model.predict_proba(df)
             except Exception as e:
                 value = float('nan')
             finally:
-                result[model.name] = value
+                result[name] = value
         return calc_service_pb2.CalcReply(Result=result)
+
+    def GetModelInfo(self, request, context):
+        return calc_service_pb2.ModelInfoReply(Result=self.models[request.ModelName].plots)
 
 
 def serve():
