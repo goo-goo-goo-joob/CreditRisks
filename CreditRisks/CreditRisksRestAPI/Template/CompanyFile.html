@@ -25,6 +25,41 @@
         </tbody>
     </table>
 </div>
+
+<div aria-hidden="true" aria-labelledby="modelModal" class="modal fade" id='modelModal' role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Метрики качества модели</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function prepareModel(name) {
+            $.ajax({
+                url: '/api/model/' + name,
+                type: 'GET',
+                success: function (data) {
+                    let modal = $('#modelModal');
+                    let target = modal.find('.modal-body').empty();
+                    for (const [key, value] of Object.entries(data)) {
+                        target.append(`<img src="data:image/png;base64, ${value}" alt="${key}" />`)
+                    }
+                    modal.modal('show');
+                },
+                error: error_handler
+            });
+        }
+    </script>
+</div>
 <script>
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
@@ -43,7 +78,7 @@
                     target.show();
                     target = target.find('tbody').empty();
                     for (const [key, value] of Object.entries(data)) {
-                        target.append(`<tr><th scope="row">${key}</th><td>${value}</td></tr>`)
+                        target.append(`<tr><th scope="row" onclick="prepareModel('${key}')" >${key}</th><td>${value}</td></tr>`)
                     }
                 },
                 error: error_handler

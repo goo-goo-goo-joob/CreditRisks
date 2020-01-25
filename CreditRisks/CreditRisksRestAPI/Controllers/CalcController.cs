@@ -81,7 +81,7 @@ namespace CreditRisksRestAPI.Controllers
             request.Params.Add(dictPython);
             request.INN = model.Inn ?? "";
             var reply = _backend.Client.CalcProbability(request);
-            var dictionary = new Dictionary<string, string> {["Модель из методики"] = borrower.CalcDefault().ToString("P2")};
+            var dictionary = new Dictionary<string, string> {["Регрессия банка"] = borrower.CalcDefault().ToString("P2")};
             foreach (KeyValuePair<string, float> pair in reply.Result)
             {
                 dictionary[pair.Key] = pair.Value.ToString("P2");
