@@ -11,4 +11,5 @@ RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 COPY --from=build-env /app/CreditRisks/CreditRisksRestAPI/out .
+COPY --from=build-env /app/CreditRisks/CreditRisksRestAPI/Template/ /Template/
 ENTRYPOINT ["dotnet", "CreditRisksRestAPI.dll"]
