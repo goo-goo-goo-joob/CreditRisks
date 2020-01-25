@@ -29,34 +29,6 @@ namespace CreditRisksRestAPI.Controllers
             _backend = backend;
         }
 
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] {"value1", "value2"};
-        }
-
-        private static Dict ObjectToDict(object obj)
-        {
-            var result = new Dict();
-            return ObjectToDict(obj, result);
-        }
-
-        private static Dict ObjectToDict(object obj, Dict dict)
-        {
-            foreach (var prop in obj.GetType().GetProperties())
-            {
-                var propValue = prop.GetValue(obj, null);
-                if (propValue != null)
-                {
-                    dict[prop.Name] = propValue.ToString();
-                }
-            }
-
-            return dict;
-        }
-
-        // POST api/values
         [HttpPost]
         public ActionResult<string> Post([FromForm] CompanyFileMain model)
         {
