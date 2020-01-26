@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='calcservice',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"\x7f\n\x0b\x43\x61lcRequest\x12\x0b\n\x03INN\x18\x01 \x01(\t\x12\x34\n\x06Params\x18\x02 \x03(\x0b\x32$.calcservice.CalcRequest.ParamsEntry\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"n\n\tCalcReply\x12\x32\n\x06Result\x18\x01 \x03(\x0b\x32\".calcservice.CalcReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\"%\n\x10ModelInfoRequest\x12\x11\n\tModelName\x18\x01 \x01(\t\"x\n\x0eModelInfoReply\x12\x37\n\x06Result\x18\x01 \x03(\x0b\x32\'.calcservice.ModelInfoReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\x32\x9e\x01\n\x0b\x43\x61lcService\x12\x43\n\x0f\x43\x61lcProbability\x12\x18.calcservice.CalcRequest\x1a\x16.calcservice.CalcReply\x12J\n\x0cGetModelInfo\x12\x1d.calcservice.ModelInfoRequest\x1a\x1b.calcservice.ModelInfoReplyb\x06proto3')
+  serialized_pb=_b('\n\x12\x63\x61lc_service.proto\x12\x0b\x63\x61lcservice\"\x7f\n\x0b\x43\x61lcRequest\x12\x0b\n\x03INN\x18\x01 \x01(\t\x12\x34\n\x06Params\x18\x02 \x03(\x0b\x32$.calcservice.CalcRequest.ParamsEntry\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"n\n\tCalcReply\x12\x32\n\x06Result\x18\x01 \x03(\x0b\x32\".calcservice.CalcReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\"%\n\x10ModelInfoRequest\x12\x11\n\tModelName\x18\x01 \x01(\t\"x\n\x0eModelInfoReply\x12\x37\n\x06Result\x18\x01 \x03(\x0b\x32\'.calcservice.ModelInfoReply.ResultEntry\x1a-\n\x0bResultEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c:\x02\x38\x01\"\xb0\x01\n\rImpactRequest\x12\x11\n\tModelName\x18\x01 \x01(\t\x12\x32\n\x04\x44\x61ta\x18\x02 \x03(\x0b\x32$.calcservice.ImpactRequest.DataEntry\x12\x0f\n\x07\x46\x65\x61ture\x18\x03 \x01(\t\x12\x0c\n\x04Head\x18\x04 \x01(\x02\x12\x0c\n\x04Tail\x18\x05 \x01(\x02\x1a+\n\tDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x1c\n\x0bImpactReply\x12\r\n\x05Image\x18\x01 \x01(\x0c\x32\xe1\x01\n\x0b\x43\x61lcService\x12\x43\n\x0f\x43\x61lcProbability\x12\x18.calcservice.CalcRequest\x1a\x16.calcservice.CalcReply\x12J\n\x0cGetModelInfo\x12\x1d.calcservice.ModelInfoRequest\x1a\x1b.calcservice.ModelInfoReply\x12\x41\n\tGetImpact\x12\x1a.calcservice.ImpactRequest\x1a\x18.calcservice.ImpactReplyb\x06proto3')
 )
 
 
@@ -267,16 +267,147 @@ _MODELINFOREPLY = _descriptor.Descriptor(
   serialized_end=435,
 )
 
+
+_IMPACTREQUEST_DATAENTRY = _descriptor.Descriptor(
+  name='DataEntry',
+  full_name='calcservice.ImpactRequest.DataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='calcservice.ImpactRequest.DataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='calcservice.ImpactRequest.DataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=571,
+  serialized_end=614,
+)
+
+_IMPACTREQUEST = _descriptor.Descriptor(
+  name='ImpactRequest',
+  full_name='calcservice.ImpactRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ModelName', full_name='calcservice.ImpactRequest.ModelName', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='Data', full_name='calcservice.ImpactRequest.Data', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='Feature', full_name='calcservice.ImpactRequest.Feature', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='Head', full_name='calcservice.ImpactRequest.Head', index=3,
+      number=4, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='Tail', full_name='calcservice.ImpactRequest.Tail', index=4,
+      number=5, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_IMPACTREQUEST_DATAENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=438,
+  serialized_end=614,
+)
+
+
+_IMPACTREPLY = _descriptor.Descriptor(
+  name='ImpactReply',
+  full_name='calcservice.ImpactReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='Image', full_name='calcservice.ImpactReply.Image', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=616,
+  serialized_end=644,
+)
+
 _CALCREQUEST_PARAMSENTRY.containing_type = _CALCREQUEST
 _CALCREQUEST.fields_by_name['Params'].message_type = _CALCREQUEST_PARAMSENTRY
 _CALCREPLY_RESULTENTRY.containing_type = _CALCREPLY
 _CALCREPLY.fields_by_name['Result'].message_type = _CALCREPLY_RESULTENTRY
 _MODELINFOREPLY_RESULTENTRY.containing_type = _MODELINFOREPLY
 _MODELINFOREPLY.fields_by_name['Result'].message_type = _MODELINFOREPLY_RESULTENTRY
+_IMPACTREQUEST_DATAENTRY.containing_type = _IMPACTREQUEST
+_IMPACTREQUEST.fields_by_name['Data'].message_type = _IMPACTREQUEST_DATAENTRY
 DESCRIPTOR.message_types_by_name['CalcRequest'] = _CALCREQUEST
 DESCRIPTOR.message_types_by_name['CalcReply'] = _CALCREPLY
 DESCRIPTOR.message_types_by_name['ModelInfoRequest'] = _MODELINFOREQUEST
 DESCRIPTOR.message_types_by_name['ModelInfoReply'] = _MODELINFOREPLY
+DESCRIPTOR.message_types_by_name['ImpactRequest'] = _IMPACTREQUEST
+DESCRIPTOR.message_types_by_name['ImpactReply'] = _IMPACTREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CalcRequest = _reflection.GeneratedProtocolMessageType('CalcRequest', (_message.Message,), {
@@ -331,10 +462,33 @@ ModelInfoReply = _reflection.GeneratedProtocolMessageType('ModelInfoReply', (_me
 _sym_db.RegisterMessage(ModelInfoReply)
 _sym_db.RegisterMessage(ModelInfoReply.ResultEntry)
 
+ImpactRequest = _reflection.GeneratedProtocolMessageType('ImpactRequest', (_message.Message,), {
+
+  'DataEntry' : _reflection.GeneratedProtocolMessageType('DataEntry', (_message.Message,), {
+    'DESCRIPTOR' : _IMPACTREQUEST_DATAENTRY,
+    '__module__' : 'calc_service_pb2'
+    # @@protoc_insertion_point(class_scope:calcservice.ImpactRequest.DataEntry)
+    })
+  ,
+  'DESCRIPTOR' : _IMPACTREQUEST,
+  '__module__' : 'calc_service_pb2'
+  # @@protoc_insertion_point(class_scope:calcservice.ImpactRequest)
+  })
+_sym_db.RegisterMessage(ImpactRequest)
+_sym_db.RegisterMessage(ImpactRequest.DataEntry)
+
+ImpactReply = _reflection.GeneratedProtocolMessageType('ImpactReply', (_message.Message,), {
+  'DESCRIPTOR' : _IMPACTREPLY,
+  '__module__' : 'calc_service_pb2'
+  # @@protoc_insertion_point(class_scope:calcservice.ImpactReply)
+  })
+_sym_db.RegisterMessage(ImpactReply)
+
 
 _CALCREQUEST_PARAMSENTRY._options = None
 _CALCREPLY_RESULTENTRY._options = None
 _MODELINFOREPLY_RESULTENTRY._options = None
+_IMPACTREQUEST_DATAENTRY._options = None
 
 _CALCSERVICE = _descriptor.ServiceDescriptor(
   name='CalcService',
@@ -342,8 +496,8 @@ _CALCSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=438,
-  serialized_end=596,
+  serialized_start=647,
+  serialized_end=872,
   methods=[
   _descriptor.MethodDescriptor(
     name='CalcProbability',
@@ -361,6 +515,15 @@ _CALCSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_MODELINFOREQUEST,
     output_type=_MODELINFOREPLY,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetImpact',
+    full_name='calcservice.CalcService.GetImpact',
+    index=2,
+    containing_service=None,
+    input_type=_IMPACTREQUEST,
+    output_type=_IMPACTREPLY,
     serialized_options=None,
   ),
 ])
