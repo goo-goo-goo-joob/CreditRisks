@@ -1,4 +1,5 @@
 import io
+import os
 import zipfile
 
 import numpy as np
@@ -21,6 +22,7 @@ class CatBModel(AbstractModel):
             with zfile.open('model4_1') as f, open(CatBModel.filename, 'wb') as cf:
                 cf.write(f.read())
             self.clf.load_model(CatBModel.filename)
+            os.remove(CatBModel.filename)
 
     def predict_proba(self, item: pd.DataFrame) -> float:
         obj = item[self.cols]
