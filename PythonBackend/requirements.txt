@@ -1,3 +1,4 @@
+catboost==0.20.2
 cycler==0.10.0
 grpcio==1.26.0
 joblib==0.14.1
@@ -13,4 +14,3 @@ scikit-learn==0.22.1
 scipy==1.4.1
 six==1.13.0
 zipp==0.6.0
-catboost==0.20.0

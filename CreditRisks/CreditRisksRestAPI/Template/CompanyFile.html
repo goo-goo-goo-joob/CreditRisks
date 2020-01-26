@@ -91,7 +91,7 @@
                 let modal = $('#modelModal');
                 let target = modal.find('.modal-body').empty();
                 for (const [key, value] of Object.entries(data)) {
-                    target.append(`<img src="data:image/png;base64, ${value}" alt="${key}" style="width: 100%"/>`)
+                    target.append(`<img src="data:image/png;base64, ${value}" alt="${key}"/>`)
                 }
                 modal.modal('show');
             },
@@ -103,6 +103,7 @@
         let modal = $(this);
         let sender = $(e.relatedTarget);
         modal.find("input[name='model_name']").val(sender.data('model'));
+        $('#image_out').empty();
     });
     $("#impact_param").on('submit', function (e) {
         e.preventDefault();
