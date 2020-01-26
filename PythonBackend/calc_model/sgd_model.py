@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from .abstract_model import AbstractModel
 
 
-class SimpleSGD(AbstractModel):
+class SGDModel(AbstractModel):
     cols = None
     sc = StandardScaler()
     lr = SGDClassifier()

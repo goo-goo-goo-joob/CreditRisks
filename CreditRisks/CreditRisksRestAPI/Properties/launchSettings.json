@@ -19,9 +19,9 @@
     },
     "CreditRisksRestAPI": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "api/values",
-      "applicationUrl": "http://localhost:5000",
+      "launchBrowser": false,
+      "launchUrl": "",
+      "applicationUrl": "http://::5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PYTHON_BACKEND_ADDR": "127.0.0.1:9000"

@@ -38,7 +38,7 @@
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
@@ -78,7 +78,11 @@
                     target.show();
                     target = target.find('tbody').empty();
                     for (const [key, value] of Object.entries(data)) {
-                        target.append(`<tr><th scope="row" onclick="prepareModel('${key}')" >${key}</th><td>${value}</td></tr>`)
+                        target.append(`<tr><th scope="row">
+<button type="button" class="btn btn-primary" onclick="prepareModel('${key}')">
+Модель "${key}"
+</button>
+</th><td>${value}</td></tr>`)
                     }
                 },
                 error: error_handler
