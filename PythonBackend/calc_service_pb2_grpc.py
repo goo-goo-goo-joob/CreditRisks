@@ -19,6 +19,11 @@ class CalcServiceStub(object):
         request_serializer=calc__service__pb2.CalcRequest.SerializeToString,
         response_deserializer=calc__service__pb2.CalcReply.FromString,
         )
+    self.GetModelInfo = channel.unary_unary(
+        '/calcservice.CalcService/GetModelInfo',
+        request_serializer=calc__service__pb2.ModelInfoRequest.SerializeToString,
+        response_deserializer=calc__service__pb2.ModelInfoReply.FromString,
+        )
 
 
 class CalcServiceServicer(object):
@@ -32,6 +37,13 @@ class CalcServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetModelInfo(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_CalcServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -39,6 +51,11 @@ def add_CalcServiceServicer_to_server(servicer, server):
           servicer.CalcProbability,
           request_deserializer=calc__service__pb2.CalcRequest.FromString,
           response_serializer=calc__service__pb2.CalcReply.SerializeToString,
+      ),
+      'GetModelInfo': grpc.unary_unary_rpc_method_handler(
+          servicer.GetModelInfo,
+          request_deserializer=calc__service__pb2.ModelInfoRequest.FromString,
+          response_serializer=calc__service__pb2.ModelInfoReply.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

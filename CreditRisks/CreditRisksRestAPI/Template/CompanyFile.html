@@ -1,0 +1,93 @@
+﻿<form enctype="multipart/form-data" id="generate_params">
+    <div class="form-group">
+        <label for="inn">ИНН</label>
+        <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
+    </div>
+    <div class="form-group">
+        <label for="file_report">Файл с отчетностью</label>
+        <input id="file_report" name="file_report" required type="file">
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Рассчитать"/>
+    </div>
+</form>
+<div class="form-group">
+    <table class="table table-striped" id="result_table" style="display: none">
+        <caption style="caption-side: top">Расчет вероятности дефолта</caption>
+        <thead>
+        <tr>
+            <th scope="col">Название модели предсказания</th>
+            <th scope="col">Вероятность дефолта</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div aria-hidden="true" aria-labelledby="modelModal" class="modal fade" id='modelModal' role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Метрики качества модели</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function prepareModel(name) {
+            $.ajax({
+                url: '/api/model/' + name,
+                type: 'GET',
+                success: function (data) {
+                    let modal = $('#modelModal');
+                    let target = modal.find('.modal-body').empty();
+                    for (const [key, value] of Object.entries(data)) {
+                        target.append(`<img src="data:image/png;base64, ${value}" alt="${key}" />`)
+                    }
+                    modal.modal('show');
+                },
+                error: error_handler
+            });
+        }
+    </script>
+</div>
+<script>
+    $("#generate_params").on('submit', function (e) {
+        e.preventDefault();
+        let inn = $('#inn').val();
+        let file = $('#file_report');
+        let fd = new FormData(this);
+        if (inn && file)
+            $.ajax({
+                url: '/api/calculate',
+                data: fd,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (data) {
+                    let target = $('#result_table');
+                    target.show();
+                    target = target.find('tbody').empty();
+                    for (const [key, value] of Object.entries(data)) {
+                        target.append(`<tr><th scope="row">
+<button type="button" class="btn btn-primary" onclick="prepareModel('${key}')">
+Модель "${key}"
+</button>
+</th><td>${value}</td></tr>`)
+                    }
+                },
+                error: error_handler
+            });
+        return false;
+    });
+
+</script>

@@ -3,8 +3,8 @@
 package calcservice;
 
 service CalcService {
-    rpc CalcProbability (CalcRequest) returns (CalcReply) {
-    }
+    rpc CalcProbability (CalcRequest) returns (CalcReply);
+    rpc GetModelInfo (ModelInfoRequest) returns (ModelInfoReply);
 }
 
 message CalcRequest {
@@ -14,4 +14,12 @@ message CalcRequest {
 
 message CalcReply {
     map<string, float> Result = 1;
+}
+
+message ModelInfoRequest {
+    string ModelName = 1;
+}
+
+message ModelInfoReply {
+    map<string, bytes> Result = 1;
 }

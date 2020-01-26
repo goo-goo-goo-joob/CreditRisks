@@ -1,4 +1,5 @@
 import io
+import zipfile
 
 import pandas as pd
 
@@ -14,6 +15,13 @@ class AbstractModel(object):
         :param file_stream: byte stream with model data
         """
         self.name = name
+        self.plots = {}
+        with zipfile.ZipFile(file_stream) as zfile:
+            for file in zfile.filelist:
+                if file.filename.startswith('plots/') and file.file_size > 0:
+                    file_name = file.filename.split('/')[1].split('.')[0]
+                    with zfile.open(file) as f:
+                        self.plots[file_name] = f.read()
 
     def predict_proba(self, item: pd.DataFrame) -> float:
         """
