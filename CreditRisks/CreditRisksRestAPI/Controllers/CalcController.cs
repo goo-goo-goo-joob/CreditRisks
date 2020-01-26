@@ -86,6 +86,7 @@ namespace CreditRisksRestAPI.Controllers
             {
                 dictionary[pair.Key] = pair.Value.ToString("P2");
             }
+
             dictionary["Регрессия банка"] = borrower.CalcDefault().ToString("P2");
             return Content(JsonConvert.SerializeObject(dictionary), "application/json", Encoding.UTF8);
         }
@@ -114,6 +115,49 @@ namespace CreditRisksRestAPI.Controllers
             }
 
             return Content(JsonConvert.SerializeObject(result), "application/json", Encoding.UTF8);
+        }
+    }
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ImpactController : ControllerBase
+    {
+        private readonly IPythonBackend _backend;
+
+        public ImpactController(IPythonBackend backend)
+        {
+            _backend = backend;
+        }
+
+        [HttpPost]
+        public ActionResult<string> Post([FromForm] CompanyFileImpact model)
+        {
+            Dictionary<string, string> dictPython = new Dictionary<string, string>();
+            TextReader tr = new StreamReader(model.FileReport.OpenReadStream());
+            string line = tr.ReadLine();
+            while (line != null)
+            {
+                var pair = line.Split('\t');
+                string name = pair[0];
+                string value = pair[1];
+
+                if (name.StartsWith("year_0_"))
+                {
+                    dictPython[name] = value;
+                }
+                else if (name.StartsWith("year_-1_") || Array.IndexOf(new[] {"year_-1", "year_0", "region"}, name) >= 0)
+                {
+                    dictPython[name] = value;
+                }
+                line = tr.ReadLine();
+            }
+
+
+            var request = new ImpactRequest {ModelName = model.ModelName, Feature = model.Feature, Head = model.Head, Tail = model.Tail};
+            request.Data.Add(dictPython);
+
+            var reply = _backend.Client.GetImpact(request);
+            return Content(JsonConvert.SerializeObject(reply.Image.ToBase64()), "application/json", Encoding.UTF8);
         }
     }
 }

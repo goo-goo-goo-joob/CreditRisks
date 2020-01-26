@@ -19,6 +19,7 @@
         <tr>
             <th scope="col">Название модели предсказания</th>
             <th scope="col">Вероятность дефолта</th>
+            <th scope="col">Влияние параметров</th>
         </tr>
         </thead>
         <tbody>
@@ -42,25 +43,86 @@
             </div>
         </div>
     </div>
-    <script>
-        function prepareModel(name) {
-            $.ajax({
-                url: '/api/model/' + name,
-                type: 'GET',
-                success: function (data) {
-                    let modal = $('#modelModal');
-                    let target = modal.find('.modal-body').empty();
-                    for (const [key, value] of Object.entries(data)) {
-                        target.append(`<img src="data:image/png;base64, ${value}" alt="${key}" />`)
-                    }
-                    modal.modal('show');
-                },
-                error: error_handler
-            });
-        }
-    </script>
+</div>
+<div aria-hidden="true" aria-labelledby="impactModal" class="modal fade" id='impactModal' role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Расчет влияния параметра</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="impact_param">
+                    <input type="hidden" name="model_name">
+                    <div class="form-group">
+                        <label for="feature">Параметр</label>
+                        <input class="form-control" id="feature" name="feature" placeholder="Параметр" required type="text" value="year_-1_15004">
+                    </div>
+                    <div class="form-group">
+                        <label for="tail">Левая граница моделирования</label>
+                        <input class="form-control" id="tail" name="tail" placeholder="Левая граница моделирования" required type="number" value="-100">
+                    </div>
+                    <div class="form-group">
+                        <label for="head">Правая граница моделирования</label>
+                        <input class="form-control" id="head" name="head" placeholder="Правая граница моделирования" required type="number" value="100">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Рассчитать"/>
+                    </div>
+                </form>
+                <div id="image_out">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
+    function prepareModel(name) {
+        $.ajax({
+            url: '/api/model/' + name,
+            type: 'GET',
+            success: function (data) {
+                let modal = $('#modelModal');
+                let target = modal.find('.modal-body').empty();
+                for (const [key, value] of Object.entries(data)) {
+                    target.append(`<img src="data:image/png;base64, ${value}" alt="${key}" style="width: 100%"/>`)
+                }
+                modal.modal('show');
+            },
+            error: error_handler
+        });
+    }
+
+    $('#impactModal').on('show.bs.modal', function (e) {
+        let modal = $(this);
+        let sender = $(e.relatedTarget);
+        modal.find("input[name='model_name']").val(sender.data('model'));
+    });
+    $("#impact_param").on('submit', function (e) {
+        e.preventDefault();
+        let fd = new FormData(this);
+        let file = $('#file_report');
+        fd.append('file_report', file[0].files[0]);
+        $.ajax({
+            url: '/api/impact',
+            data: fd,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (data) {
+                let target = $('#image_out').empty();
+                target.append(`<img src="data:image/png;base64, ${data}" alt="Влияние параметра"  style="width: 100%"/>`)
+            },
+            error: error_handler
+        });
+        return false;
+    });
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
         let inn = $('#inn').val();
@@ -78,11 +140,19 @@
                     target.show();
                     target = target.find('tbody').empty();
                     for (const [key, value] of Object.entries(data)) {
-                        target.append(`<tr><th scope="row">
+                        target.append(`<tr>
+<th scope="row">
 <button type="button" class="btn btn-primary" onclick="prepareModel('${key}')">
 Модель "${key}"
 </button>
-</th><td>${value}</td></tr>`)
+</th>
+<td>${value}</td>
+<th scope="row">
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#impactModal" data-model="${key}">
+Влияние параметра "${key}"
+</button>
+</th>
+</tr>`)
                     }
                 },
                 error: error_handler

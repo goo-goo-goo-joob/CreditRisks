@@ -29,4 +29,6 @@ class SGDModel(AbstractModel):
         obj = item[self.cols]
         scaled_data = self.sc.transform(obj)
         proba = self.lr.predict_proba(scaled_data)[:, 1]
-        return proba[0]
+        if len(proba) == 1:
+            return proba[0]
+        return proba

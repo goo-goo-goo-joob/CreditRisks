@@ -8,6 +8,7 @@ import pandas as pd
 
 import calc_service_pb2
 import calc_service_pb2_grpc
+import feature_impact
 from calc_model import get_models
 
 LISTEN_ADDR = os.getenv("LISTEN_ADDR", "[::]:9000")
@@ -24,9 +25,12 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
                                  password=os.getenv("DB_PASSWORD"),
                                  database=os.getenv("DB_DATABASE"))
 
+    def _dict_to_df(self, data):
+        df = pd.DataFrame.from_dict(data, orient='index')
+        return pd.DataFrame(pd.to_numeric(df[0], errors='coerce')).T
+
     def CalcProbability(self, request, context):
-        df = pd.DataFrame.from_dict(request.Params, orient='index')
-        df = pd.DataFrame(pd.to_numeric(df[0], errors='coerce')).T
+        df = self._dict_to_df(request.Params)
         result = {}
         for name, model in self.models.items():
             value = None
@@ -40,6 +44,16 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
 
     def GetModelInfo(self, request, context):
         return calc_service_pb2.ModelInfoReply(Result=self.models[request.ModelName].plots)
+
+    def GetImpact(self, request, context):
+        image = feature_impact.plt_graph_to_base64(
+            model=self.models[request.ModelName],
+            data=self._dict_to_df(request.Data),
+            feature=request.Feature,
+            head=request.Head,
+            tail=request.Tail
+        )
+        return calc_service_pb2.ImpactReply(Image=image)
 
 
 def serve():
