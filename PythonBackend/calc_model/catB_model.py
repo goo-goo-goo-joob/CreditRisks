@@ -8,7 +8,7 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.preprocessing import StandardScaler
 
 from .abstract_model import AbstractModel
-
+from catboost import CatBoostClassifier
 
 class CatBModel(AbstractModel):
     cols = None
