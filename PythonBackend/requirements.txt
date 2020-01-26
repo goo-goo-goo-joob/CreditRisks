@@ -13,3 +13,4 @@ scikit-learn==0.22.1
 scipy==1.4.1
 six==1.13.0
 zipp==0.6.0
+catboost==0.20.0
