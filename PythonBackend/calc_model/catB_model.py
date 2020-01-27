@@ -17,9 +17,9 @@ class CatBModel(AbstractModel):
     def __init__(self, name: str, file_stream: io.BytesIO):
         super().__init__(name, file_stream)
         with zipfile.ZipFile(file_stream) as zfile:
-            with zfile.open('colsC.npy') as f:
+            with zfile.open('cols.npy') as f:
                 self.cols = np.load(f, allow_pickle=True)
-            with zfile.open('model4_1') as f, open(CatBModel.filename, 'wb') as cf:
+            with zfile.open('model') as f, open(CatBModel.filename, 'wb') as cf:
                 cf.write(f.read())
             self.clf.load_model(CatBModel.filename)
             os.remove(CatBModel.filename)
