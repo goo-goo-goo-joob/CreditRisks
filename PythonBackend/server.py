@@ -1,5 +1,10 @@
+import contextlib
+import datetime
 import logging
+import multiprocessing
 import os
+import socket
+import sys
 import time
 from concurrent import futures
 
@@ -12,8 +17,16 @@ import calc_service_pb2_grpc
 import feature_impact
 from calc_model import get_models
 
-LISTEN_ADDR = os.getenv("LISTEN_ADDR", "[::]:9000")
-MAX_WORKERS = int(os.getenv("MAX_WORKERS", "10"))
+LOGGER = logging.getLogger(__name__)
+LISTEN_PORT = os.getenv("LISTEN_PORT", 9000)
+ONE_DAY = datetime.timedelta(days=1)
+if sys.platform.startswith('linux'):
+    _PROCESS_COUNT = multiprocessing.cpu_count()
+elif sys.platform.startswith('win32'):
+    _PROCESS_COUNT = 1
+else:
+    raise Exception("Unsupported OS")
+_THREAD_CONCURRENCY = _PROCESS_COUNT
 RESULT_DTYPES = {'region': np.uint8, 'year_-1': np.uint16, 'year_-1_11003': np.int64, 'year_-1_11004': np.int64,
                  'year_-1_11103': np.int64, 'year_-1_11104': np.int64, 'year_-1_11203': np.int32,
                  'year_-1_11204': np.int32, 'year_-1_11303': np.int32, 'year_-1_11304': np.int32,
@@ -210,21 +223,58 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
         return calc_service_pb2.ImpactReply(Image=image)
 
 
-def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=MAX_WORKERS), options=(('grpc.so_reuseport', 0),))
-    calc_service_pb2_grpc.add_CalcServiceServicer_to_server(Handler(), server)
-    if server.add_insecure_port(LISTEN_ADDR) == 0:
-        print('cannot bind port')
-        exit(1)
-    server.start()
+def _wait_forever(server):
     try:
-        print('start serving')
         while True:
-            time.sleep(1)
+            time.sleep(ONE_DAY.total_seconds())
     except KeyboardInterrupt:
-        server.stop(0)
+        server.stop(None)
+
+
+def _run_server(bind_address):
+    """Start a server in a subprocess."""
+    LOGGER.info('Starting new server.')
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=_THREAD_CONCURRENCY),
+                         options=(('grpc.so_reuseport', 1),))
+    calc_service_pb2_grpc.add_CalcServiceServicer_to_server(Handler(), server)
+    server.add_insecure_port(bind_address)
+    server.start()
+    _wait_forever(server)
+
+
+@contextlib.contextmanager
+def _reserve_port():
+    """Find and reserve a port for all subprocesses to use."""
+    sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+    if sys.platform.startswith('linux'):
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
+            raise RuntimeError("Failed to set SO_REUSEPORT.")
+    sock.bind(('', LISTEN_PORT))
+    try:
+        yield sock.getsockname()[1]
+    finally:
+        sock.close()
+
+
+def main():
+    with _reserve_port() as port:
+        bind_address = '[::]:{}'.format(port)
+        LOGGER.info("Binding to '%s'", bind_address)
+        sys.stdout.flush()
+        workers = []
+        for _ in range(_PROCESS_COUNT):
+            worker = multiprocessing.Process(target=_run_server, args=(bind_address,))
+            worker.start()
+            workers.append(worker)
+        for worker in workers:
+            worker.join()
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    serve()
+    handler = logging.StreamHandler(sys.stdout)
+    formatter = logging.Formatter('[PID %(process)d] %(message)s')
+    handler.setFormatter(formatter)
+    LOGGER.addHandler(handler)
+    LOGGER.setLevel(logging.INFO)
+    main()
