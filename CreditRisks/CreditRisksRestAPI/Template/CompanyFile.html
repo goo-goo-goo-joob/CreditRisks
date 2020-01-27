@@ -88,13 +88,16 @@
 <script>
 	function addElToSelector(){
 		select = document.getElementById('feature');
+		features = getFeatures();
 		for (let i of features) {
 		var opt = document.createElement('option');
 			opt.value = i;
 			opt.innerHTML = i;
 			select.appendChild(opt);
-		}			
+		}	
+		select.value = "year_0_12503";
 	}
+	addElToSelector()
 
     function prepareModel(name) {
         $.ajax({
@@ -180,8 +183,8 @@
     });
 	
 	
-	
-features = { 'year_-1_11003' , 'year_-1_11004' ,
+function getFeatures(){
+return [ 'year_-1_11003' , 'year_-1_11004' ,
                      'year_-1_11103' , 'year_-1_11104' , 'year_-1_11203' ,
                      'year_-1_11204' , 'year_-1_11303' , 'year_-1_11304' ,
                      'year_-1_11403' , 'year_-1_11404' , 'year_-1_11503' ,
@@ -332,5 +335,6 @@ features = { 'year_-1_11003' , 'year_-1_11004' ,
                      'year_0_63203' , 'year_0_63213' , 'year_0_63223' , 'year_0_63233' ,
                      'year_0_63243' , 'year_0_63253' , 'year_0_63263' , 'year_0_63303' ,
                      'year_0_63503' , 'year_0_64003'                      ]
-	addElToSelector()
+					 }
+	
 </script>
