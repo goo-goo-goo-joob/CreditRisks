@@ -42,18 +42,16 @@ namespace CreditRisksRestAPI.Controllers
                 var pair = line.Split('\t');
                 string name = pair[0];
                 string value = pair[1];
-
+                dictPython[name] = value;
                 if (name.StartsWith("year_0_"))
                 {
                     // Данные отчтетности за текущий год
                     var parts = name.Split('_');
                     dictCSharp[String.Join('_', "Code", parts[2])] = value;
-                    dictPython[name] = value;
                 }
                 else if (name.StartsWith("year_-1_") || Array.IndexOf(new[] {"year_-1", "year_0", "region"}, name) >= 0)
                 {
                     // Данные отчетности за предыдущий год
-                    dictPython[name] = value;
                 }
                 else
                 {
@@ -87,7 +85,7 @@ namespace CreditRisksRestAPI.Controllers
                 dictionary[pair.Key] = pair.Value.ToString("P2");
             }
 
-            dictionary["Регрессия банка"] = borrower.CalcDefault().ToString("P2");
+//            dictionary["Регрессия банка"] = borrower.CalcDefault().ToString("P2");
             return Content(JsonConvert.SerializeObject(dictionary), "application/json", Encoding.UTF8);
         }
     }
@@ -141,14 +139,8 @@ namespace CreditRisksRestAPI.Controllers
                 string name = pair[0];
                 string value = pair[1];
 
-                if (name.StartsWith("year_0_"))
-                {
-                    dictPython[name] = value;
-                }
-                else if (name.StartsWith("year_-1_") || Array.IndexOf(new[] {"year_-1", "year_0", "region"}, name) >= 0)
-                {
-                    dictPython[name] = value;
-                }
+                dictPython[name] = value;
+
                 line = tr.ReadLine();
             }
 
