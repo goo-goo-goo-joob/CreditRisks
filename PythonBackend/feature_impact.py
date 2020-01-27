@@ -1,5 +1,4 @@
 import io
-import matplotlib.ticker as mtick
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -31,6 +30,7 @@ def prnt(mas, sm, logx, feature):
     plt.grid(True)
     plt.xlabel('Значение параметра', fontsize=16)
     plt.ylabel('Вероятность дефолта', fontsize=16)
+    plt.ylim([0, 1])
     plt.title(feature, fontsize=20)
 
 

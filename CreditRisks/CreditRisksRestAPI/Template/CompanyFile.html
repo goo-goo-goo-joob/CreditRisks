@@ -1,4 +1,7 @@
-﻿<form enctype="multipart/form-data" id="generate_params">
+﻿<p>
+    <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Пример документов</a>
+</p>
+<form enctype="multipart/form-data" id="generate_params">
     <div class="form-group">
         <label for="inn">ИНН</label>
         <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
@@ -58,15 +61,15 @@
                     <input type="hidden" name="model_name">
                     <div class="form-group">
                         <label for="feature">Параметр</label>
-                        <input class="form-control" id="feature" name="feature" placeholder="Параметр" required type="text" value="year_-1_15004">
+                        <input class="form-control" id="feature" name="feature" placeholder="Параметр" required type="text" value="year_0_12003">
                     </div>
                     <div class="form-group">
                         <label for="tail">Левая граница моделирования</label>
-                        <input class="form-control" id="tail" name="tail" placeholder="Левая граница моделирования" required type="number" value="-100">
+                        <input class="form-control" id="tail" name="tail" placeholder="Левая граница моделирования" required type="number" value="0">
                     </div>
                     <div class="form-group">
                         <label for="head">Правая граница моделирования</label>
-                        <input class="form-control" id="head" name="head" placeholder="Правая граница моделирования" required type="number" value="100">
+                        <input class="form-control" id="head" name="head" placeholder="Правая граница моделирования" required type="number" value="20000">
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Рассчитать"/>
@@ -107,6 +110,8 @@
     });
     $("#impact_param").on('submit', function (e) {
         e.preventDefault();
+        let sender = $('#impact_param input[type=submit]');
+        sender.prop('disabled', true);
         let fd = new FormData(this);
         let file = $('#file_report');
         fd.append('file_report', file[0].files[0]);
@@ -120,7 +125,10 @@
                 let target = $('#image_out').empty();
                 target.append(`<img src="data:image/png;base64, ${data}" alt="Влияние параметра"  style="width: 100%"/>`)
             },
-            error: error_handler
+            error: error_handler,
+            complete: function (jqXHR, textStatus) {
+                sender.prop('disabled', false);
+            }
         });
         return false;
     });
@@ -143,13 +151,13 @@
                     for (const [key, value] of Object.entries(data)) {
                         target.append(`<tr>
 <th scope="row">
-<button type="button" class="btn btn-primary" onclick="prepareModel('${key}')">
+<button type="button" class="btn btn-primary wide-button" onclick="prepareModel('${key}')">
 Модель "${key}"
 </button>
 </th>
-<td>${value}</td>
+<td style="text-align: center; font-size: large; color:red">${value}</td>
 <th scope="row">
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#impactModal" data-model="${key}">
+<button type="button" class="btn btn-success wide-button" data-toggle="modal" data-target="#impactModal" data-model="${key}">
 Влияние параметра "${key}"
 </button>
 </th>
