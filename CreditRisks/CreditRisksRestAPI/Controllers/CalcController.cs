@@ -24,9 +24,9 @@ namespace CreditRisksRestAPI.Controllers
     {
         private readonly IPythonBackend _backend;
 
-        public CalculateController(IPythonBackend backend)
+        public CalculateController()
         {
-            _backend = backend;
+            _backend = new PythonBackend();
         }
 
         [HttpPost]
@@ -96,9 +96,9 @@ namespace CreditRisksRestAPI.Controllers
     {
         private readonly IPythonBackend _backend;
 
-        public ModelController(IPythonBackend backend)
+        public ModelController()
         {
-            _backend = backend;
+            _backend = new PythonBackend();
         }
 
         [HttpGet("{name}")]
@@ -122,9 +122,9 @@ namespace CreditRisksRestAPI.Controllers
     {
         private readonly IPythonBackend _backend;
 
-        public ImpactController(IPythonBackend backend)
+        public ImpactController()
         {
-            _backend = backend;
+            _backend = new PythonBackend();
         }
 
         [HttpPost]

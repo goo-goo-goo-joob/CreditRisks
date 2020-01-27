@@ -21,7 +21,7 @@ LOGGER = logging.getLogger(__name__)
 LISTEN_PORT = os.getenv("LISTEN_PORT", 9000)
 ONE_DAY = datetime.timedelta(days=1)
 if sys.platform.startswith('linux'):
-    _PROCESS_COUNT = multiprocessing.cpu_count()
+    _PROCESS_COUNT = int(os.getenv("PROCESS_COUNT", multiprocessing.cpu_count()))
 elif sys.platform.startswith('win32'):
     _PROCESS_COUNT = 1
 else:

@@ -15,8 +15,13 @@ namespace PythonService
         private Channel _channel;
         public CalcService.CalcServiceClient Client { get; }
 
-        public PythonBackend(string serverAddress)
+        public PythonBackend(string serverAddress = null)
         {
+            if (serverAddress is null)
+            {
+                serverAddress = Environment.GetEnvironmentVariable("PYTHON_BACKEND_ADDR");
+            }
+
             _channel = new Channel(serverAddress, ChannelCredentials.Insecure);
             Client = new CalcService.CalcServiceClient(_channel);
         }
