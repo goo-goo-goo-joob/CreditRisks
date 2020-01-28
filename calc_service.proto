@@ -5,6 +5,7 @@ package calcservice;
 service CalcService {
     rpc CalcProbability (CalcRequest) returns (CalcReply);
     rpc GetModelInfo (ModelInfoRequest) returns (ModelInfoReply);
+    rpc GetImpact (ImpactRequest) returns (ImpactReply);
 }
 
 message CalcRequest {
@@ -22,4 +23,16 @@ message ModelInfoRequest {
 
 message ModelInfoReply {
     map<string, bytes> Result = 1;
+}
+
+message ImpactRequest {
+    string ModelName = 1;
+    map<string, string> Data = 2;
+    string Feature = 3;
+    float Head = 4;
+    float Tail = 5;
+}
+
+message ImpactReply {
+    bytes Image = 1;
 }

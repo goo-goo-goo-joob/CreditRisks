@@ -1,5 +1,9 @@
+catboost==0.20.2
+cycler==0.10.0
 grpcio==1.26.0
 joblib==0.14.1
+kiwisolver==1.1.0
+matplotlib==3.1.2
 mysql-connector-python==8.0.18
 numpy==1.18.1
 pandas==0.25.3

@@ -27,8 +27,6 @@ namespace CreditRisksRestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var backendAddr = Environment.GetEnvironmentVariable("PYTHON_BACKEND_ADDR");
-            services.AddSingleton<IPythonBackend>(new PythonBackend(backendAddr));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

@@ -24,6 +24,11 @@ class CalcServiceStub(object):
         request_serializer=calc__service__pb2.ModelInfoRequest.SerializeToString,
         response_deserializer=calc__service__pb2.ModelInfoReply.FromString,
         )
+    self.GetImpact = channel.unary_unary(
+        '/calcservice.CalcService/GetImpact',
+        request_serializer=calc__service__pb2.ImpactRequest.SerializeToString,
+        response_deserializer=calc__service__pb2.ImpactReply.FromString,
+        )
 
 
 class CalcServiceServicer(object):
@@ -44,6 +49,13 @@ class CalcServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetImpact(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_CalcServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -56,6 +68,11 @@ def add_CalcServiceServicer_to_server(servicer, server):
           servicer.GetModelInfo,
           request_deserializer=calc__service__pb2.ModelInfoRequest.FromString,
           response_serializer=calc__service__pb2.ModelInfoReply.SerializeToString,
+      ),
+      'GetImpact': grpc.unary_unary_rpc_method_handler(
+          servicer.GetImpact,
+          request_deserializer=calc__service__pb2.ImpactRequest.FromString,
+          response_serializer=calc__service__pb2.ImpactReply.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

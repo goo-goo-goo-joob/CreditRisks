@@ -24,9 +24,9 @@ namespace CreditRisksRestAPI.Controllers
     {
         private readonly IPythonBackend _backend;
 
-        public CalculateController(IPythonBackend backend)
+        public CalculateController()
         {
-            _backend = backend;
+            _backend = new PythonBackend();
         }
 
         [HttpPost]
@@ -42,18 +42,16 @@ namespace CreditRisksRestAPI.Controllers
                 var pair = line.Split('\t');
                 string name = pair[0];
                 string value = pair[1];
-
+                dictPython[name] = value;
                 if (name.StartsWith("year_0_"))
                 {
                     // Данные отчтетности за текущий год
                     var parts = name.Split('_');
                     dictCSharp[String.Join('_', "Code", parts[2])] = value;
-                    dictPython[name] = value;
                 }
                 else if (name.StartsWith("year_-1_") || Array.IndexOf(new[] {"year_-1", "year_0", "region"}, name) >= 0)
                 {
                     // Данные отчетности за предыдущий год
-                    dictPython[name] = value;
                 }
                 else
                 {
@@ -86,7 +84,8 @@ namespace CreditRisksRestAPI.Controllers
             {
                 dictionary[pair.Key] = pair.Value.ToString("P2");
             }
-            dictionary["Регрессия банка"] = borrower.CalcDefault().ToString("P2");
+
+//            dictionary["Регрессия банка"] = borrower.CalcDefault().ToString("P2");
             return Content(JsonConvert.SerializeObject(dictionary), "application/json", Encoding.UTF8);
         }
     }
@@ -97,9 +96,9 @@ namespace CreditRisksRestAPI.Controllers
     {
         private readonly IPythonBackend _backend;
 
-        public ModelController(IPythonBackend backend)
+        public ModelController()
         {
-            _backend = backend;
+            _backend = new PythonBackend();
         }
 
         [HttpGet("{name}")]
@@ -114,6 +113,43 @@ namespace CreditRisksRestAPI.Controllers
             }
 
             return Content(JsonConvert.SerializeObject(result), "application/json", Encoding.UTF8);
+        }
+    }
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ImpactController : ControllerBase
+    {
+        private readonly IPythonBackend _backend;
+
+        public ImpactController()
+        {
+            _backend = new PythonBackend();
+        }
+
+        [HttpPost]
+        public ActionResult<string> Post([FromForm] CompanyFileImpact model)
+        {
+            Dictionary<string, string> dictPython = new Dictionary<string, string>();
+            TextReader tr = new StreamReader(model.FileReport.OpenReadStream());
+            string line = tr.ReadLine();
+            while (line != null)
+            {
+                var pair = line.Split('\t');
+                string name = pair[0];
+                string value = pair[1];
+
+                dictPython[name] = value;
+
+                line = tr.ReadLine();
+            }
+
+
+            var request = new ImpactRequest {ModelName = model.ModelName, Feature = model.Feature, Head = model.Head, Tail = model.Tail};
+            request.Data.Add(dictPython);
+
+            var reply = _backend.Client.GetImpact(request);
+            return Content(JsonConvert.SerializeObject(reply.Image.ToBase64()), "application/json", Encoding.UTF8);
         }
     }
 }
