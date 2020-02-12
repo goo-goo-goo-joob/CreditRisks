@@ -1,16 +1,17 @@
-﻿<p>
-    <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Пример загрузочного файла</a>
-</p>
-<form enctype="multipart/form-data" id="generate_params">
-    <div class="form-group">
+﻿<form enctype="multipart/form-data" id="generate_params">
+    <!-- <div class="form-group">
         <label for="inn">ИНН</label>
         <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
-    </div>
+    </div> -->
     <div class="form-group">
-        <label for="file_report">Файл с отчетностью</label>
-        <input id="file_report" name="file_report" required type="file">
+        <label for="file_report">Шаг 1. Загрузите отчётность компании</label>
+        <input id="file_report" name="file_report" required type="file" class="form-control-file">
     </div>
-
+    <p>
+        <p class="text-justify">Или выберете из вариатов ниже</p>
+        <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Пример загрузочного файла</a>
+    </p>
+    
     <div class="form-group">
         <input type="submit" class="btn btn-primary" value="Рассчитать"/>
     </div>
@@ -72,7 +73,7 @@
                         <input class="form-control" id="head" name="head" placeholder="Правая граница моделирования" required type="number" value="20000">
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Рассчитать"/>
+                        <input type="submit" class="btn rounded-pill btn-lg text-white" style="background-color: #db9921;" value="Рассчитать">
                     </div>
                 </form>
                 <div id="image_out">
@@ -92,7 +93,7 @@
         for (let i of features) {
             var opt = document.createElement('option');
             opt.value = i;
-            opt.innerHTML = i;
+            opt.innerHTML = i; 
             select.appendChild(opt);
         }
         select.value = "year_0_12503";
