@@ -7,13 +7,20 @@
         <label for="file_report">Шаг 1. Загрузите отчётность компании</label>
         <input id="file_report" name="file_report" required type="file" class="form-control-file">
     </div>
-    <p>
-        <p class="text-justify">Или выберете из вариатов ниже</p>
-        <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Пример загрузочного файла</a>
+    <p class="text-justify">
+        Или выберете из вариатов ниже:<br>
+        <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Примеры загрузочного файла</a>
     </p>
-    
+
+    <p class="text-justify">
+        <p>Или введите данные вручную:</p>
+        <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;">
+            Ввести данные
+        </button>
+    </p>
+
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Рассчитать"/>
+        <input type="submit" class="btn btn-lg rounded-pill text-white" style="background-color: #db9921;" value="Рассчитать"/>
     </div>
 </form>
 <div class="form-group">
@@ -116,7 +123,7 @@
             error: error_handler
         });
     }
-
+    
     $('#impactModal').on('show.bs.modal', function (e) {
         let modal = $(this);
         let sender = $(e.relatedTarget);
@@ -149,10 +156,9 @@
     });
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
-        let inn = $('#inn').val();
         let file = $('#file_report');
         let fd = new FormData(this);
-        if (inn && file)
+        if (file)
             $.ajax({
                 url: '/api/calculate',
                 data: fd,
