@@ -18,11 +18,6 @@
         </div>
     </form>
     <div id="result" class="container">
-
-    </div>
-
-    <div id="result2" class="container">
-
     </div>
 </div>
 
@@ -62,8 +57,7 @@
                     return;
                 }
                 let target = $("#result").empty();
-                let target2 = $("#result2").empty();
-                let table_print = document.getElementById("result2");
+                let table_print = document.getElementById("result");
                 let content = evt.target['result'].split('\n');
                 var dict = {};
                 var names = [];

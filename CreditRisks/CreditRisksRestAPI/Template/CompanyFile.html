@@ -245,7 +245,18 @@
 
     <div class="form-group">
         <p class="lead">Шаг 3. Получите оценку вероятности дефолта компании</p>
-        <input type="submit" class="btn rounded-pill text-white" style="background-color: #db9921;" value="    Рассчитать   "/>
+<!--        <input type="submit" class="btn rounded-pill text-white" style="background-color: #db9921;" value="    Рассчитать   "/>-->
+        <div class="container-fluid">
+            <form id="control">
+                <div class="form-group">
+                    <label for="files">Выберите файл датасета </label>
+                    <input type="file" id="files" name="file" class="form-control-file">
+                </div>
+            </form>
+            <div id="result" class="container">
+            </div>
+        </div>
+
     </div>
 </form>
 
@@ -570,5 +581,128 @@
             'year_0_63243', 'year_0_63253', 'year_0_63263', 'year_0_63303',
             'year_0_63503', 'year_0_64003']
     }
+
+</script>
+
+<script type="text/javascript">
+    function add_content_to(cl, text, tag, parent) {
+        //body = document.getElementById("output");
+        elem = document.createTextNode( text );
+        elem.className = cl;
+        parent.appendChild(elem);
+        return parent
+    }
+
+    function create_add_input(id, text, parent) {
+        //body = document.getElementById("output");
+        elem = document.createElement( "input" );
+        elem.className = 'form_control';
+        elem.type = 'text';
+        elem.id = id;
+        elem.defaultValue = text;
+        parent.appendChild(elem);
+        return parent
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#files').on('change', function (evt) {
+            let files = document.getElementById('files').files;
+            if (!files.length) {
+                alert('Please select a file!');
+                return;
+            }
+            let reader = new FileReader();
+            reader.onloadend = function (evt) {
+
+                if (evt.target["readyState"] !== FileReader.DONE) {
+                    return;
+                }
+                let target = $("#result").empty();
+                let table_print = document.getElementById("result");
+                let content = evt.target['result'].split('\n');
+                var dict = {};
+                var names = [];
+                for (let i = 0; i < content.length; i++) {
+                    if (content[i] === '') {
+                        continue;
+                    }
+                    let row = content[i].split('\t');
+                    let feat_name = row[0].split('_');
+                    if (feat_name.length === 3) {
+                        if (!(feat_name[2] in dict)) {
+                            dict[feat_name[2]] = {};
+                            names.push(feat_name[2]);
+                        }
+                        dict[feat_name[2]][feat_name[1]] = row[1];
+
+                    }
+                    // target.append(`<div class="row">${row[0]} = ${row[1]}</div>`)
+                }
+                console.log(dict);
+                console.log(names);
+                var table = document.createElement("table");
+                table.className = "table table-striped table-borderless";
+                thead = document.createElement("thead");
+                tr = document.createElement("tr");
+                th = document.createElement("th");
+                th = add_content_to("", "#", "", th);
+                tr.append(th);
+                th = document.createElement("th");
+                th = add_content_to("", "name", "", th);
+                tr.append(th);
+                th = document.createElement("th");
+                th = add_content_to("", "curr_year", "", th);
+                tr.append(th);
+                th = document.createElement("th");
+                th = add_content_to("", "last_year", "", th);
+                tr.append(th);
+                thead.append(tr);
+                table.append(thead);
+                tbody = document.createElement("tbody");
+                for (let i = 0; i < names.length; i++) {
+                    let el = dict[names[i]];
+
+                    tr = document.createElement("tr");
+                    tr.id = "raw_" + names[i];
+
+                    //<th scope="row">1</th>
+                    th = document.createElement("th");
+                    th.scope = "row";
+                    th = add_content_to("", (i + 1).toString(), "", th);
+                    tr.appendChild(th);
+
+                    td = document.createElement("td");
+                    td = add_content_to("", names[i], "", td);
+                    tr.appendChild(td);
+
+                    td = document.createElement("td");
+                    if (0 in el) {
+                        // td = add_content_to("", el[0], "", td);
+                        td = create_add_input("dt_0_" + names[i], el[0], td);
+                    } else {
+                        td = add_content_to("", "empty)", "", td);
+                    }
+                    tr.appendChild(td);
+
+                    td = document.createElement("td");
+                    if (-1 in el) {
+                        td = create_add_input("dt_-1_" + names[i], el[-1], td);
+                    } else {
+                        td = add_content_to("", "empty)", "", td);
+                        // td = create_add_input("dt_0_" + names[i], el[-1], td);
+                    }
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
+                    table.appendChild(tbody)
+                }
+                table_print.appendChild(table)
+            };
+            let blob = files[0].slice(0, files[0].size);
+            reader.readAsBinaryString(blob);
+
+        });
+    });
 
 </script>
