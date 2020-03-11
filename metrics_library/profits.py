@@ -1,3 +1,4 @@
+import warnings
 from typing import Iterable, Dict, Tuple, List
 
 import matplotlib.pyplot as plt
@@ -116,7 +117,9 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
     if lgd_space is None:
         lgd_space = default_lgd_space()
     if threshold_space is None:
-        threshold_space = default_threshold_space()
+        threshold_space = np.sort(y_score)
+        step = max(int(round(len(threshold_space) / 200)), 1)
+        threshold_space = np.append(threshold_space[::step], [threshold_space[-1]])
 
     profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
     if ax is None:
@@ -149,56 +152,9 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         plt.xlim(x_lim)
 
 
-def plt_profit_2_experimental(y_true: np.ndarray, y_score: np.ndarray,
-                              ax=None,
-                              title=None,
-                              percent_credit=None,
-                              y_lim=None,
-                              x_lim=None,
-                              percent_space=None,
-                              lgd_space=None,
-                              threshold_space=None,
-                              progress_bar=True):
-    if percent_space is None:
-        percent_space = default_percent_space()
-    if percent_credit is not None:
-        percent_space = np.append(percent_space, percent_credit)
-    if lgd_space is None:
-        lgd_space = default_lgd_space()
-    if threshold_space is None:
-        threshold_space = np.sort(np.random.choice(y_score, 500))
-
-    profits = calc_multi_profits(y_true, y_score, percent_space, lgd_space, threshold_space, progress_bar)
-    if ax is None:
-        plt.figure(figsize=(7, 7), facecolor=(1, 0.7, 0.8))
-    total_max_profit = 0.1
-    for percent in percent_space:
-        for lgd in lgd_space:
-            profit = profits[(percent, lgd)]
-            color = plt.plot(threshold_space, profit, label='{}% lgd {}%'.format(float_to_str(percent), float_to_str(lgd)))[0].get_color()
-            max_profit = max(profit)
-            total_max_profit = max(total_max_profit, max_profit)
-            if max_profit > 0:
-                plt.scatter(threshold_space[profit.index(max_profit)], max_profit, color=color, alpha=0.5)
-                plt.annotate(f'{np.round(max_profit * 100, 1)}%', (threshold_space[profit.index(max_profit)], max_profit),
-                             xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
-                             bbox=dict(boxstyle='round,pad=0.2', fc='yellow', alpha=0.3))
-    if title is None:
-        plt.title('Зависимость прибыли от параметра разбиения и процента по кредиту.\nЭкспериментальная версия')
-    else:
-        plt.title(title)
-    plt.legend(loc='best')
-    plt.grid(True)
-    plt.xlabel('Параметр разбиения принадлежности к классу')
-    plt.ylabel('Прибыль')
-    if y_lim is None:
-        plt.ylim([0, 1])
-    else:
-        plt.ylim(y_lim)
-    if x_lim is None:
-        plt.xlim([0, 1])
-    else:
-        plt.xlim(x_lim)
+def plt_profit_2_experimental(*args, **kwargs):
+    warnings.warn('Deprecated. Use plt_profit')
+    plt_profit(*args, **kwargs)
 
 
 def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
