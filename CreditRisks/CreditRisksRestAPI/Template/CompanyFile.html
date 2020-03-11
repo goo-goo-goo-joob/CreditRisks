@@ -5,238 +5,267 @@
     </div> -->
     
     <p class="lead">Шаг 1. Заполните нефинансовые показатели по компании</p>
-    <table class="table table-striped">
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Риск бизнес-модели:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="BusinessModelRisk" id="BusinessModelRisk_1" value="1">
-                    <label class="form-check-label" for="BusinessModelRisk_1">Низкий</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="BusinessModelRisk" id="BusinessModelRisk_2" value="0">
-                    <label class="form-check-label" for="BusinessModelRisk_2">Высокий</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Есть ли риск организацнонной структуры?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OrganizationStructureRisk" id="OrganizationStructureRisk_1" value="1">
-                    <label class="form-check-label" for="OrganizationStructureRisk_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OrganizationStructureRisk" id="OrganizationStructureRisk_2" value="-1">
-                    <label class="form-check-label" for="OrganizationStructureRisk_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Есть ли положительная информация по составу акционеров?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PositiveShareholders" id="PositiveShareholders_1" value="1">
-                    <label class="form-check-label" for="PositiveShareholders_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PositiveShareholders" id="PositiveShareholders_2" value="0">
-                    <label class="form-check-label" for="PositiveShareholders_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">4</th>
-            <td>Есть ли отрицательная информация по составу акционеров?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="NegativeShareholders" id="NegativeShareholders_1" value="-1">
-                    <label class="form-check-label" for="NegativeShareholders_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="NegativeShareholders" id="NegativeShareholders_2" value="0">
-                    <label class="form-check-label" for="NegativeShareholders_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">5</th>
-            <td>Вкладывают ли собственники дополнительные средства в бизнес?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="DesireToInvest" id="DesireToInvest_1" value="1">
-                    <label class="form-check-label" for="DesireToInvest_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="DesireToInvest" id="DesireToInvest_2" value="0">
-                    <label class="form-check-label" for="DesireToInvest_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">6</th>
-            <td>Изымают ли собственники дополнительные средства из бизнеса?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="WithdrawalFunds" id="WithdrawalFunds_1" value="-1">
-                    <label class="form-check-label" for="WithdrawalFunds_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="WithdrawalFunds" id="WithdrawalFunds_2" value="0">
-                    <label class="form-check-label" for="WithdrawalFunds_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">7</th>
-            <td>Наличие споров по доле в собственном капитале или активам компании между собственниками:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OwnershipConflict" id="OwnershipConflict_1" value="-1">
-                    <label class="form-check-label" for="OwnershipConflict_1">Есть</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OwnershipConflict" id="OwnershipConflict_2" value="0">
-                    <label class="form-check-label" for="OwnershipConflict_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">8</th>
-            <td>Наличие конфликтов между руководством и акционерами компании:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ManagementShareholdersConflict" id="ManagementShareholdersConflict_1" value="-1">
-                    <label class="form-check-label" for="ManagementShareholdersConflict_1">Есть</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ManagementShareholdersConflict" id="ManagementShareholdersConflict_2" value="0">
-                    <label class="form-check-label" for="ManagementShareholdersConflict_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">9</th>
-            <td>Бизнес компании сконцентрирован на одном виде продукции?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ProductConcentration" id="ProductConcentration_1" value="-1">
-                    <label class="form-check-label" for="ProductConcentration_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ProductConcentration" id="ProductConcentration_2" value="1">
-                    <label class="form-check-label" for="ProductConcentration_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">10</th>
-            <td>Есть ли у компании нерыночные преимущества, дающие особый статус или положение на рынке?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="NonMarketAdvantages" id="NonMarketAdvantages_1" value="-1">
-                    <label class="form-check-label" for="NonMarketAdvantages_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="NonMarketAdvantages" id="NonMarketAdvantages_2" value="0">
-                    <label class="form-check-label" for="NonMarketAdvantages_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">11</th>
-            <td>Наличие преимуществ при переговорах, способность диктовать условия поставщикам:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PositiveWithSuppliers" id="PositiveWithSuppliers_1" value="1">
-                    <label class="form-check-label" for="PositiveWithSuppliers_1">Есть</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PositiveWithSuppliers" id="PositiveWithSuppliers_2" value="-1">
-                    <label class="form-check-label" for="PositiveWithSuppliers_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">12</th>
-            <td>Наличие постащиков, занимающих более 20% в структуре поставок:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ConcentrationOfSuppliers" id="ConcentrationOfSuppliers_1" value="-1">
-                    <label class="form-check-label" for="ConcentrationOfSuppliers_1">Есть</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ConcentrationOfSuppliers" id="ConcentrationOfSuppliers_2" value="1">
-                    <label class="form-check-label" for="ConcentrationOfSuppliers_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">13</th>
-            <td>Наличие преимуществ при переговорах, способность диктовать условия покупателям:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PositiveWithBuyers" id="PositiveWithBuyers_1" value="1">
-                    <label class="form-check-label" for="PositiveWithBuyers_1">Есть</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PositiveWithBuyers" id="PositiveWithBuyers_2" value="-1">
-                    <label class="form-check-label" for="PositiveWithBuyers_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">14</th>
-            <td>Наличие покупателей, занимающих более 20% в структуре поставок:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ConcentrationOfBuyers" id="ConcentrationOfBuyers_1" value="-1">
-                    <label class="form-check-label" for="ConcentrationOfBuyers_1">Есть</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ConcentrationOfBuyers" id="ConcentrationOfBuyers_2" value="1">
-                    <label class="form-check-label" for="ConcentrationOfBuyers_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">15</th>
-            <td>Участие в финансировании сделки собственными средствами:</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OwnFundsTransaction" id="OwnFundsTransaction_1" value="1">
-                    <label class="form-check-label" for="OwnFundsTransaction_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OwnFundsTransaction" id="OwnFundsTransaction_2" value="-1">
-                    <label class="form-check-label" for="OwnFundsTransaction_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">16</th>
-            <td>Адекватны ли источники погашения?</td>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PaymentSources" id="PaymentSources_1" value="1">
-                    <label class="form-check-label" for="PaymentSources_1">Да</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PaymentSources" id="PaymentSources_2" value="-1">
-                    <label class="form-check-label" for="PaymentSources_2">Нет</label>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <p>
+        <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#user_input" aria-expanded="false" aria-controls="user_input">
+            Заполнить
+        </button>
+    </p>
+
+    <div class="collapse" id="user_input">
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Риск бизнес-модели:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="BusinessModelRisk" id="BusinessModelRisk_1" value="1">
+                        <label class="form-check-label" for="BusinessModelRisk_1">Низкий</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="BusinessModelRisk" id="BusinessModelRisk_2" value="0">
+                        <label class="form-check-label" for="BusinessModelRisk_2">Высокий</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Есть ли риск организацнонной структуры?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OrganizationStructureRisk" id="OrganizationStructureRisk_1" value="1">
+                        <label class="form-check-label" for="OrganizationStructureRisk_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OrganizationStructureRisk" id="OrganizationStructureRisk_2" value="-1">
+                        <label class="form-check-label" for="OrganizationStructureRisk_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Есть ли положительная информация по составу акционеров?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PositiveShareholders" id="PositiveShareholders_1" value="1">
+                        <label class="form-check-label" for="PositiveShareholders_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PositiveShareholders" id="PositiveShareholders_2" value="0">
+                        <label class="form-check-label" for="PositiveShareholders_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>Есть ли отрицательная информация по составу акционеров?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="NegativeShareholders" id="NegativeShareholders_1" value="-1">
+                        <label class="form-check-label" for="NegativeShareholders_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="NegativeShareholders" id="NegativeShareholders_2" value="0">
+                        <label class="form-check-label" for="NegativeShareholders_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td>Вкладывают ли собственники дополнительные средства в бизнес?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="DesireToInvest" id="DesireToInvest_1" value="1">
+                        <label class="form-check-label" for="DesireToInvest_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="DesireToInvest" id="DesireToInvest_2" value="0">
+                        <label class="form-check-label" for="DesireToInvest_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td>Изымают ли собственники дополнительные средства из бизнеса?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="WithdrawalFunds" id="WithdrawalFunds_1" value="-1">
+                        <label class="form-check-label" for="WithdrawalFunds_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="WithdrawalFunds" id="WithdrawalFunds_2" value="0">
+                        <label class="form-check-label" for="WithdrawalFunds_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+                <td>Наличие споров по доле в собственном капитале или активам компании между собственниками:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OwnershipConflict" id="OwnershipConflict_1" value="-1">
+                        <label class="form-check-label" for="OwnershipConflict_1">Есть</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OwnershipConflict" id="OwnershipConflict_2" value="0">
+                        <label class="form-check-label" for="OwnershipConflict_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">8</th>
+                <td>Наличие конфликтов между руководством и акционерами компании:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ManagementShareholdersConflict" id="ManagementShareholdersConflict_1" value="-1">
+                        <label class="form-check-label" for="ManagementShareholdersConflict_1">Есть</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ManagementShareholdersConflict" id="ManagementShareholdersConflict_2" value="0">
+                        <label class="form-check-label" for="ManagementShareholdersConflict_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">9</th>
+                <td>Бизнес компании сконцентрирован на одном виде продукции?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ProductConcentration" id="ProductConcentration_1" value="-1">
+                        <label class="form-check-label" for="ProductConcentration_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ProductConcentration" id="ProductConcentration_2" value="1">
+                        <label class="form-check-label" for="ProductConcentration_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">10</th>
+                <td>Есть ли у компании нерыночные преимущества, дающие особый статус или положение на рынке?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="NonMarketAdvantages" id="NonMarketAdvantages_1" value="-1">
+                        <label class="form-check-label" for="NonMarketAdvantages_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="NonMarketAdvantages" id="NonMarketAdvantages_2" value="0">
+                        <label class="form-check-label" for="NonMarketAdvantages_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">11</th>
+                <td>Наличие преимуществ при переговорах, способность диктовать условия поставщикам:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PositiveWithSuppliers" id="PositiveWithSuppliers_1" value="1">
+                        <label class="form-check-label" for="PositiveWithSuppliers_1">Есть</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PositiveWithSuppliers" id="PositiveWithSuppliers_2" value="-1">
+                        <label class="form-check-label" for="PositiveWithSuppliers_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">12</th>
+                <td>Наличие постащиков, занимающих более 20% в структуре поставок:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ConcentrationOfSuppliers" id="ConcentrationOfSuppliers_1" value="-1">
+                        <label class="form-check-label" for="ConcentrationOfSuppliers_1">Есть</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ConcentrationOfSuppliers" id="ConcentrationOfSuppliers_2" value="1">
+                        <label class="form-check-label" for="ConcentrationOfSuppliers_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">13</th>
+                <td>Наличие преимуществ при переговорах, способность диктовать условия покупателям:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PositiveWithBuyers" id="PositiveWithBuyers_1" value="1">
+                        <label class="form-check-label" for="PositiveWithBuyers_1">Есть</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PositiveWithBuyers" id="PositiveWithBuyers_2" value="-1">
+                        <label class="form-check-label" for="PositiveWithBuyers_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">14</th>
+                <td>Наличие покупателей, занимающих более 20% в структуре поставок:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ConcentrationOfBuyers" id="ConcentrationOfBuyers_1" value="-1">
+                        <label class="form-check-label" for="ConcentrationOfBuyers_1">Есть</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ConcentrationOfBuyers" id="ConcentrationOfBuyers_2" value="1">
+                        <label class="form-check-label" for="ConcentrationOfBuyers_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">15</th>
+                <td>Участие в финансировании сделки собственными средствами:</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OwnFundsTransaction" id="OwnFundsTransaction_1" value="1">
+                        <label class="form-check-label" for="OwnFundsTransaction_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="OwnFundsTransaction" id="OwnFundsTransaction_2" value="-1">
+                        <label class="form-check-label" for="OwnFundsTransaction_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">16</th>
+                <td>Адекватны ли источники погашения?</td>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PaymentSources" id="PaymentSources_1" value="1">
+                        <label class="form-check-label" for="PaymentSources_1">Да</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PaymentSources" id="PaymentSources_2" value="-1">
+                        <label class="form-check-label" for="PaymentSources_2">Нет</label>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     
     <div class="form-group">
-        <label for="file_report" class="lead">Шаг 2. Загрузите финансовую отчётность компании</label>
-        <input id="file_report" name="file_report" required type="file" class="form-control-file">
+        <!-- <label for="file_report" class="lead">Шаг 2. Загрузите финансовую отчётность компании</label>
+         <input id="file_report" name="file_report" required type="file" class="form-control-file"> -->
+
+        <form id="control">
+            <div class="form-group">
+                <label for="files" class="lead">Шаг 2. Загрузите финансовую отчётность компании </label>
+                <input type="file" id="files" name="file" class="form-control-file">
+            </div>
+        </form>
+        <p>
+            <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#parce_file" aria-expanded="false" aria-controls="parce_file">
+                Редактировать параметры
+            </button>
+        </p>
+
+        <div class="collapse" id="parce_file">
+            <div class="card card-body">
+                <div id="result" class="container">
+                </div>
+            </div>
+        </div>
+            
+        
     </div>
     <p class="lead">
         Или выберете из вариатов ниже:<br>
@@ -245,18 +274,8 @@
 
     <div class="form-group">
         <p class="lead">Шаг 3. Получите оценку вероятности дефолта компании</p>
-<!--        <input type="submit" class="btn rounded-pill text-white" style="background-color: #db9921;" value="    Рассчитать   "/>-->
-        <div class="container-fluid">
-            <form id="control">
-                <div class="form-group">
-                    <label for="files">Выберите файл датасета </label>
-                    <input type="file" id="files" name="file" class="form-control-file">
-                </div>
-            </form>
-            <div id="result" class="container">
-            </div>
-        </div>
-
+         <input type="submit" class="btn rounded-pill text-white" style="background-color: #db9921;" value="    Рассчитать   "/>
+        
     </div>
 </form>
 
