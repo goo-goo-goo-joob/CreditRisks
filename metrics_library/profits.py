@@ -1,4 +1,4 @@
-from typing import Iterable, Dict, Tuple, List
+from typing import Iterable, Dict, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -31,7 +31,7 @@ def float_to_str(f: float, precision=1) -> str:
 def calc_multi_profits(y_true: np.ndarray, y_score: np.ndarray,
                        percents: Iterable[float],
                        lgds: Iterable[float],
-                       progress_bar=False) -> Tuple[Dict[Tuple[float, float], List[float]], np.ndarray, np.ndarray]:
+                       progress_bar=False) -> Tuple[Dict[Tuple[float, float], np.ndarray], np.ndarray, np.ndarray]:
     """
     Calculate profit for different percents and lgd's
     :param y_true: true labels
@@ -51,20 +51,14 @@ def calc_multi_profits(y_true: np.ndarray, y_score: np.ndarray,
     y_score = y_score[y_score_index]
     y_true = y_true[y_score_index]
 
-    curr_ok = 0
-    curr_bad = 0
-    fp = negative_count
-    fpr = []
-    for curr_true in iterator(y_true):
-        if curr_true == 0:
-            curr_ok += 1
-            fp -= 1
-        else:
-            curr_bad += 1
-        fpr.append(fp / negative_count)
-        for percent in percents:
-            for lgd in lgds:
-                profits[(percent, lgd)].append(calc_profit(percent, lgd, curr_ok, curr_bad, negative_count))
+    curr_bad = np.cumsum(y_true)
+    curr_ok = np.cumsum((~y_true.astype(bool)).astype(np.int32))
+    fp = negative_count - curr_ok
+    fpr = fp / negative_count
+    for percent in percents:
+        for lgd in lgds:
+            profit = (percent * curr_ok - lgd * curr_bad) / (percent * negative_count)
+            profits[(percent, lgd)] = profit
     return profits, np.sort(y_score), np.array(fpr)
 
 
@@ -129,7 +123,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
             color = plt.plot(threshold_space, profit, label='{}% lgd {}%'.format(float_to_str(percent), float_to_str(lgd)))[0].get_color()
             max_profit = max(profit)
             if max_profit > 0:
-                best_profit = threshold_space[profit.index(max_profit)]
+                best_profit = threshold_space[profit.argmax()]
                 plt.scatter(best_profit, max_profit, color=color, alpha=0.5)
                 plt.annotate(f'{np.round(max_profit * 100, 1)}%', (best_profit, max_profit),
                              xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
@@ -188,7 +182,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         for lgd in lgd_space:
             profits[(percent, lgd)] = []
 
-    profits, threshold, fpr= calc_multi_profits(y_true, y_score, percent_space, lgd_space, progress_bar)
+    profits, threshold, fpr = calc_multi_profits(y_true, y_score, percent_space, lgd_space, progress_bar)
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
 
@@ -201,7 +195,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
             color = plt.plot(fpr, profits[(percent, lgd)], label='{}% lgd {}%'.format(float_to_str(percent), float_to_str(lgd)))[0].get_color()
             max_profit = max(profits[(percent, lgd)])
             if max_profit > 0:
-                best_profit = fpr[profits[(percent, lgd)].index(max_profit)]
+                best_profit = fpr[profits[(percent, lgd)].argmax()]
                 plt.scatter(best_profit, max_profit, color=color, alpha=0.5)
                 plt.annotate(f'{np.round(max_profit * 100, 1)}%', (best_profit, max_profit),
                              xytext=(3, 7), textcoords='offset points', ha='center', va='bottom', color=color,
