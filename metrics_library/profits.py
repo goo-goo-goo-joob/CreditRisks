@@ -11,37 +11,21 @@ def _empty_iterator(seq, *args, **kwargs):
         yield el
 
 
-def calc_profit(percent: float, lgd: float, tn: int, fn: int, total_negative: int) -> float:
-    """
-    Calculate profit in one case
-    :param percent: percent to calculate
-    :param lgd: LGD to calculate
-    :param tn: number of good credits, that was sponsored
-    :param fn: number of bad credits, that was sponsored
-    :param total_negative: total number of bad credits
-    :return: profit
-    """
-    return (percent * tn - lgd * fn) / (percent * total_negative)
-
-
 def float_to_str(f: float, precision=1) -> str:
     return str(np.round(f * 100, decimals=precision))
 
 
 def calc_multi_profits(y_true: np.ndarray, y_score: np.ndarray,
                        percents: Iterable[float],
-                       lgds: Iterable[float],
-                       progress_bar=False) -> Tuple[Dict[Tuple[float, float], np.ndarray], np.ndarray, np.ndarray]:
+                       lgds: Iterable[float]) -> Tuple[Dict[Tuple[float, float], np.ndarray], np.ndarray, np.ndarray]:
     """
     Calculate profit for different percents and lgd's
     :param y_true: true labels
     :param y_score: probabilities
     :param percents: percents to handle
     :param lgds: lgd to handle
-    :param progress_bar: is print progress bar while calculating
     :return: Pair: Dict with keys (percent, lgd) and values as profit; threshold
     """
-    iterator = tqdm_notebook if progress_bar else _empty_iterator
     profits = {}
     for percent in percents:
         for lgd in lgds:
@@ -81,8 +65,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
                y_lim=None,
                x_lim=None,
                percent_space=None,
-               lgd_space=None,
-               progress_bar=False):
+               lgd_space=None):
     """Draws metrics based on profit from credit to bank,
     taking the values of threshold and interest on credit.
 
@@ -104,8 +87,6 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
         The values of interest on credit to plot on graph
     lgd_space: array
         lgd to calculate
-    progress_bar: bool, default False
-        Is to draw progress bar while calculating
     """
     if percent_space is None:
         percent_space = default_percent_space()
@@ -114,7 +95,7 @@ def plt_profit(y_true: np.ndarray, y_score: np.ndarray,
     if lgd_space is None:
         lgd_space = default_lgd_space()
 
-    profits, threshold_space, _ = calc_multi_profits(y_true, y_score, percent_space, lgd_space, progress_bar)
+    profits, threshold_space, _ = calc_multi_profits(y_true, y_score, percent_space, lgd_space)
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
     for percent in percent_space:
@@ -151,8 +132,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
                       title=None,
                       percent_space=None,
                       lgd_space=None,
-                      plot_roc=True,
-                      progress_bar=False):
+                      plot_roc=True):
     """
     Plot profit rate with respect to recall
 
@@ -168,8 +148,6 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         lgd to calculate
     :param plot_roc: bool, default True
         Is to plot roc curve
-    :param progress_bar: bool, default True
-        Is to draw progress bar while calculating
     """
     if percent_space is None:
         percent_space = default_percent_space()
@@ -182,7 +160,7 @@ def plt_profit_recall(y_true: np.ndarray, y_score: np.ndarray,
         for lgd in lgd_space:
             profits[(percent, lgd)] = []
 
-    profits, threshold, fpr = calc_multi_profits(y_true, y_score, percent_space, lgd_space, progress_bar)
+    profits, threshold, fpr = calc_multi_profits(y_true, y_score, percent_space, lgd_space)
     if ax is None:
         plt.figure(figsize=(7, 7), facecolor='w')
 
