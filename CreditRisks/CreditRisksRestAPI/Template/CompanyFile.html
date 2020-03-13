@@ -4,7 +4,7 @@
         <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
     </div> -->
     
-    <p class="lead">Шаг 1. Заполните нефинансовые показатели по компании</p>
+    <p class="lead"><b>Шаг 1.</b> Заполните нефинансовые показатели по компании</p>
     <p>
         <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#user_input" aria-expanded="false" aria-controls="user_input">
             Заполнить
@@ -18,6 +18,15 @@
                 <th scope="row">1</th>
                 <td>Риск бизнес-модели:</td>
                 <td>
+                    <!-- Жёлтые кнопочки
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="options" id="option1" autocomplete="on" checked> Высокий
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="options" id="option2" autocomplete="off"> Низкий
+                        </label>
+                    </div> -->
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="BusinessModelRisk" id="BusinessModelRisk_1" value="1">
                         <label class="form-check-label" for="BusinessModelRisk_1">Низкий</label>
@@ -30,20 +39,6 @@
             </tr>
             <tr>
                 <th scope="row">2</th>
-                <td>Есть ли риск организацнонной структуры?</td>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="OrganizationStructureRisk" id="OrganizationStructureRisk_1" value="1">
-                        <label class="form-check-label" for="OrganizationStructureRisk_1">Да</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="OrganizationStructureRisk" id="OrganizationStructureRisk_2" value="-1">
-                        <label class="form-check-label" for="OrganizationStructureRisk_2">Нет</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
                 <td>Есть ли положительная информация по составу акционеров?</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -57,7 +52,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">4</th>
+                <th scope="row">3</th>
                 <td>Есть ли отрицательная информация по составу акционеров?</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -71,7 +66,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">5</th>
+                <th scope="row">4</th>
                 <td>Вкладывают ли собственники дополнительные средства в бизнес?</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -85,7 +80,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">6</th>
+                <th scope="row">5</th>
                 <td>Изымают ли собственники дополнительные средства из бизнеса?</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -99,7 +94,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">7</th>
+                <th scope="row">6</th>
                 <td>Наличие споров по доле в собственном капитале или активам компании между собственниками:</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -113,7 +108,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">8</th>
+                <th scope="row">7</th>
                 <td>Наличие конфликтов между руководством и акционерами компании:</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -127,91 +122,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">9</th>
-                <td>Бизнес компании сконцентрирован на одном виде продукции?</td>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ProductConcentration" id="ProductConcentration_1" value="-1">
-                        <label class="form-check-label" for="ProductConcentration_1">Да</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ProductConcentration" id="ProductConcentration_2" value="1">
-                        <label class="form-check-label" for="ProductConcentration_2">Нет</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">10</th>
-                <td>Есть ли у компании нерыночные преимущества, дающие особый статус или положение на рынке?</td>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="NonMarketAdvantages" id="NonMarketAdvantages_1" value="-1">
-                        <label class="form-check-label" for="NonMarketAdvantages_1">Да</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="NonMarketAdvantages" id="NonMarketAdvantages_2" value="0">
-                        <label class="form-check-label" for="NonMarketAdvantages_2">Нет</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">11</th>
-                <td>Наличие преимуществ при переговорах, способность диктовать условия поставщикам:</td>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="PositiveWithSuppliers" id="PositiveWithSuppliers_1" value="1">
-                        <label class="form-check-label" for="PositiveWithSuppliers_1">Есть</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="PositiveWithSuppliers" id="PositiveWithSuppliers_2" value="-1">
-                        <label class="form-check-label" for="PositiveWithSuppliers_2">Нет</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">12</th>
-                <td>Наличие постащиков, занимающих более 20% в структуре поставок:</td>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ConcentrationOfSuppliers" id="ConcentrationOfSuppliers_1" value="-1">
-                        <label class="form-check-label" for="ConcentrationOfSuppliers_1">Есть</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ConcentrationOfSuppliers" id="ConcentrationOfSuppliers_2" value="1">
-                        <label class="form-check-label" for="ConcentrationOfSuppliers_2">Нет</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">13</th>
-                <td>Наличие преимуществ при переговорах, способность диктовать условия покупателям:</td>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="PositiveWithBuyers" id="PositiveWithBuyers_1" value="1">
-                        <label class="form-check-label" for="PositiveWithBuyers_1">Есть</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="PositiveWithBuyers" id="PositiveWithBuyers_2" value="-1">
-                        <label class="form-check-label" for="PositiveWithBuyers_2">Нет</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">14</th>
-                <td>Наличие покупателей, занимающих более 20% в структуре поставок:</td>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ConcentrationOfBuyers" id="ConcentrationOfBuyers_1" value="-1">
-                        <label class="form-check-label" for="ConcentrationOfBuyers_1">Есть</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="ConcentrationOfBuyers" id="ConcentrationOfBuyers_2" value="1">
-                        <label class="form-check-label" for="ConcentrationOfBuyers_2">Нет</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">15</th>
+                <th scope="row">8</th>
                 <td>Участие в финансировании сделки собственными средствами:</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -225,7 +136,7 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">16</th>
+                <th scope="row">9</th>
                 <td>Адекватны ли источники погашения?</td>
                 <td>
                     <div class="form-check form-check-inline">
@@ -241,41 +152,34 @@
             </tbody>
         </table>
     </div>
-    
-    <div class="form-group">
-        <!-- <label for="file_report" class="lead">Шаг 2. Загрузите финансовую отчётность компании</label>
-         <input id="file_report" name="file_report" required type="file" class="form-control-file"> -->
 
-        <form id="control">
-            <div class="form-group">
-                <label for="files" class="lead">Шаг 2. Загрузите финансовую отчётность компании </label>
-                <input type="file" id="files" name="file" class="form-control-file">
-            </div>
-        </form>
-        <p>
-            <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#parce_file" aria-expanded="false" aria-controls="parce_file">
-                Редактировать параметры
-            </button>
-        </p>
-
-        <div class="collapse" id="parce_file">
-            <div class="card card-body">
-                <div id="result" class="container">
-                </div>
-            </div>
+    <p class="lead"><b>Шаг 2.</b> Загрузите финансовую отчётность компании</p>
+    <div class="container">
+        <div class="custom-file w-50">
+            <input type="file" class="custom-file-input" name="file" id="files" required>
+            <label class="custom-file-label" for="files" data-browse="Открыть">Выберите файл...</label>
+            <div class="invalid-feedback">Необходимо загрузить текстовый файл с фтнансовой отчётностью.</div>
         </div>
-            
-        
     </div>
+    
+    <br>
+    <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#parse_file" aria-expanded="false" aria-controls="parse_file">
+        Редактировать параметры
+    </button>
+    
+    <div class="collapse" id="parse_file">
+        <div id="result" class="container pl-0">
+        </div>
+    </div>   
+    
     <p class="lead">
         Или выберете из вариатов ниже:<br>
         <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Примеры загрузочного файла</a>
     </p>
 
     <div class="form-group">
-        <p class="lead">Шаг 3. Получите оценку вероятности дефолта компании</p>
+        <p class="lead"><b>Шаг 3.</b> Получите оценку вероятности дефолта компании</p>
          <input type="submit" class="btn rounded-pill text-white" style="background-color: #db9921;" value="    Рассчитать   "/>
-        
     </div>
 </form>
 
@@ -725,3 +629,13 @@
     });
 
 </script>
+
+<script>
+    // The name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    
+</script>
+
