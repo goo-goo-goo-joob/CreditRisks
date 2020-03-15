@@ -1,4 +1,4 @@
-# CreditRisks
+# CreditRisks #19029 Программный модуль для управления кредитными рисками банка
 
 [Website](http://credit-risks.asciishell.ru/)
 
@@ -6,12 +6,12 @@
 
 Проект #19029 Программный модуль для управления кредитными рисками банка.
 
-[PythonBackend](/PythonBackend) -- Python backend для обработки запросов на вычисления вероятности дефолта конкретного запроса.
+[PythonBackend](/PythonBackend) - Python backend для обработки запросов на вычисления вероятности дефолта конкретного запроса.
 
-[CreditRisks](/CreditRisks) -- Frontend на .Net Core для отображения пользовательского интерфейса, обработки входящих http запросов.
+[CreditRisks](/CreditRisks) - Frontend на .Net Core для отображения пользовательского интерфейса, обработки входящих http запросов.
 
-[metrics_library](/metrics_library) -- Реализация метрики прибыли и других графических инструментов.
+[metrics_library](/metrics_library) - Реализация метрики прибыли и других графических инструментов.
 
-[notebooks](/notebooks) -- основные jupyter ноутбуки для обработки данных.
+[notebooks](/notebooks) - основные jupyter ноутбуки для обработки данных.
 
-[bankrot_crawler](/bankrot_crawler) -- Описание бота для сбора данных с платформы [fedresurs](/https://bankrot.fedresurs.ru/).
+[bankrot_crawler](/bankrot_crawler) - Описание бота для сбора данных с платформы [fedresurs](/https://bankrot.fedresurs.ru/).
