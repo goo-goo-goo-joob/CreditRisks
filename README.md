@@ -14,4 +14,4 @@
 
 [notebooks](/notebooks) - основные jupyter ноутбуки для обработки данных.
 
-[bankrot_crawler](/bankrot_crawler) - Описание бота для сбора данных с платформы [fedresurs](/https://bankrot.fedresurs.ru/).
+[bankrupt_crawler](/bankrupt_crawler) - Описание бота для сбора данных с платформы [fedresurs](/https://bankrot.fedresurs.ru/).
