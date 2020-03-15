@@ -1,0 +1,22 @@
+# Notebooks
+
+Ноутбуки предназначены для работы в Google Colab
+
+### Росстат.ipynb
+
+Загрузка данных с сайте Росстата, предобработка данных, сравнение с другими ревизиями.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/Росстат.ipynb)
+
+### BigDataset.ipynb
+
+Pipeline для обработки данных Росстата и приведению к пригодному для обучения виду
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/BigDataset.ipynb)
+
+### Logistic_Regression.ipynb
+
+Pipeline логистической регрессии
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/Logistic_Regression.ipynb)
+
