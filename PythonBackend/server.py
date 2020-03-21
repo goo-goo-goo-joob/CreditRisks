@@ -180,14 +180,9 @@ RESULT_DTYPES = {'region': np.uint8, 'year_-1': np.uint16, 'year_-1_11003': np.i
                  'year_0_63243': np.int32, 'year_0_63253': np.int32, 'year_0_63263': np.int32, 'year_0_63303': np.int32,
                  'year_0_63503': np.int32, 'year_0_64003': np.int32, 'year_0_okfs': np.uint8, 'year_0_okopf': np.uint32,
                  'year_0_type': np.uint8, 'year_0_okved': str,
-                 'NonMarketAdvantages': np.float, 'ProductConcentration': np.float, 'OwnershipConflict': np.float,
+                 'OwnershipConflict': np.float,
                  'ManagementShareholdersConflict': np.float, 'OwnFundsTransaction': np.float,
-                 'WithdrawalFunds': np.float, 'DesireToInvest': np.float, 'IndustryRating': np.float,
-                 'PositiveWithSuppliers': np.float, 'ConcentrationOfBuyers': np.float,
-                 'PositiveShareholders': np.float, 'NegativeShareholders': np.float,
-                 'BusinessModelRisk': np.float, 'OrganizationStructureRisk': np.float,
-                 'ConcentrationOfSuppliers': np.float, 'PositiveWithBuyers': np.float,
-                 'MacroeconomicRisk': np.float, 'RelevantRepayment': np.float,
+                 'WithdrawalFunds': np.float, 'DesireToInvest': np.float, 'BusinessModelRisk': np.float,
                  }
 
 
