@@ -159,7 +159,7 @@
     </p>
 
     <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#parse_file" aria-expanded="false" 
-            aria-controls="parse_file" disabled>
+            aria-controls="parse_file">
         Редактировать параметры
     </button>
     
@@ -309,13 +309,11 @@
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
         let file = $('#file_report');
-        let fd = new FormData(this);
+        // let fd = new FormData(this);
         if (file)
             $.ajax({
                 url: '/api/calculate',
-                data: fd,
-                processData: false,
-                contentType: false,
+                data: {"data": JSON.stringify(getData())},
                 type: 'POST',
                 success: function (data) {
                     let target = $('#result_table');
@@ -661,9 +659,5 @@
         return d3;
     }
     
-
-    
-
-
 </script>
 

@@ -35,13 +35,14 @@ namespace CreditRisksRestAPI.Controllers
             Company obj = new Company();
             Dictionary<string, string> dictCSharp = new Dictionary<string, string>();
             Dictionary<string, string> dictPython = new Dictionary<string, string>();
-            TextReader tr = new StreamReader(model.FileReport.OpenReadStream());
-            string line = tr.ReadLine();
-            while (line != null)
+            // TextReader tr = new StreamReader(model.FileReport.OpenReadStream());
+            Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(model.Data);
+            // string line = tr.ReadLine();
+            foreach (KeyValuePair<string,string> pair in values)
             {
-                var pair = line.Split('\t');
-                string name = pair[0];
-                string value = pair[1];
+                // var pair = line.Split('\t');
+                string name = pair.Key;
+                string value = pair.Value;
                 dictPython[name] = value;
                 if (name.StartsWith("year_0_"))
                 {
@@ -59,7 +60,7 @@ namespace CreditRisksRestAPI.Controllers
                     dictCSharp[name] = value;
                 }
 
-                line = tr.ReadLine();
+                
             }
 
             foreach (var prop in obj.GetType().GetProperties())
@@ -77,7 +78,7 @@ namespace CreditRisksRestAPI.Controllers
 
             var request = new CalcRequest();
             request.Params.Add(dictPython);
-            request.INN = model.Inn ?? "";
+            // request.INN = model.Inn ?? "";
             var reply = _backend.Client.CalcProbability(request);
             var dictionary = new Dictionary<string, string>();
             foreach (KeyValuePair<string, float> pair in reply.Result)
