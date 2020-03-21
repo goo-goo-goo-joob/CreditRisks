@@ -34,7 +34,7 @@
                 <td>
                     <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
                         <label class="btn btn-warning active">
-                            <input  type="radio" name="BusinessModelRisk" id="PositiveShareholders_1" value="1" checked> Да &nbsp
+                            <input  type="radio" name="PositiveShareholders" id="PositiveShareholders_1" value="1" checked> Да &nbsp
                         </label>
                         <label class="btn btn-warning">
                             <input type="radio" name="PositiveShareholders" id="PositiveShareholders_2" value="0"> Нет
@@ -628,37 +628,41 @@
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
-    
-    function initnotFin() {
-        let notFinancial = {};
-        
-        notFinancial['MacroeconomicRisk'] = 0;
 
-        // $('.btn-group-toggle').children('.btn')
-        
-        return notFinancial
+    function getAllNotFinValues() {
+        let d5 = {};
+
+        $('.btn-group-toggle').each(function (indx) {
+            $(this).children(".btn").each(function (ind2){
+                if ($(this).prop("control").checked) {
+                    d5[$(this).prop("control").id.split('_')[0]] =$(this).prop("control").value;
+                }
+            });
+        });
+        return d5;
     }
-
-    notFinancial = initnotFin();
     
-    function getAllValues(){
+    function getAllFinValues(){
         let dict = {};
-        for (let i = 0; i < window.names.length; i++) {
-            dict["year_0_" + window.names[i]] = $("#dt_0_" + window.names[i]).val();
-            dict["year_-1_" + window.names[i]] = $("#dt_-1_" + window.names[i]).val();
+        for (let i = 0; i < names.length; i++) {
+            dict["year_0_" + names[i]] = $("#dt_0_" + names[i]).val();
+            dict["year_-1_" + names[i]] = $("#dt_-1_" + names[i]).val();
         }
         return dict;
     }
     
-    $('.btn-group-toggle').children('.btn').click(function(e){
-        if (e.target.id !== '') {
-            // console.log('here');
-            // alert('button: ' + e.target.id + e.target.value);
-            console.log(e.target.id.split('_')[0]);
-            window.notFinancial[e.target.id.split('_')[0]] =  e.target.value;
-            console.log(window.notFinancial);
+    function getData(){
+        let d1 = getAllNotFinValues();
+        let d2 = getAllFinValues();
+        let d3 = Object.assign({}, d1);
+        for (let key in d2){    
+            d3[key] = d2[key];
         }
-    });
+        return d3;
+    }
+    
+
+    
 
 
 </script>
