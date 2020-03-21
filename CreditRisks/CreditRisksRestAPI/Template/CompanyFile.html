@@ -1,4 +1,4 @@
-﻿<form enctype="multipart/form-data" id="generate_params">
+<form enctype="multipart/form-data" id="generate_params">
     <!-- <div class="form-group">
         <label for="inn">ИНН</label>
         <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
@@ -538,6 +538,7 @@
 </script>
 
 <script type="text/javascript">
+    let names = [];
     $(function () {
         $('#files').on('change', function (evt) {
             let files = document.getElementById('files').files;
@@ -554,8 +555,7 @@
                 let target = $("#result").empty();
                 let table_print = document.getElementById("result");
                 let content = evt.target['result'].split('\n');
-                var dict = {};
-                var names = [];
+                let dict = {};
                 for (let i = 0; i < content.length; i++) {
                     if (content[i] === '') {
                         continue;
@@ -646,5 +646,37 @@
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
     
+    function initnotFin() {
+        let notFinancial = {};
+        
+        notFinancial['MacroeconomicRisk'] = 0;
+
+        // $('.btn-group-toggle').children('.btn')
+        
+        return notFinancial
+    }
+
+    notFinancial = initnotFin();
+    
+    function getAllValues(){
+        let dict = {};
+        for (let i = 0; i < window.names.length; i++) {
+            dict["year_0_" + window.names[i]] = $("#dt_0_" + window.names[i]).val();
+            dict["year_-1_" + window.names[i]] = $("#dt_-1_" + window.names[i]).val();
+        }
+        return dict;
+    }
+    
+    $('.btn-group-toggle').children('.btn').click(function(e){
+        if (e.target.id !== '') {
+            // console.log('here');
+            // alert('button: ' + e.target.id + e.target.value);
+            console.log(e.target.id.split('_')[0]);
+            window.notFinancial[e.target.id.split('_')[0]] =  e.target.value;
+            console.log(window.notFinancial);
+        }
+    });
+
+
 </script>
 
