@@ -26,7 +26,8 @@
                         <label class="btn btn-warning">
                             <input type="radio" name="options" id="option2" autocomplete="off"> Низкий
                         </label>
-                    </div> -->
+                    </div>
+                    А это - как было
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="BusinessModelRisk" id="BusinessModelRisk_1" value="1">
                         <label class="form-check-label" for="BusinessModelRisk_1">Низкий</label>
@@ -34,6 +35,14 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="BusinessModelRisk" id="BusinessModelRisk_2" value="0">
                         <label class="form-check-label" for="BusinessModelRisk_2">Высокий</label>
+                    </div> -->
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input  type="radio" name="BusinessModelRisk" id="BusinessModelRisk_1" value="1" checked> Высокий
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="BusinessModelRisk" id="BusinessModelRisk_2" value="0"> Низкий
+                        </label>
                     </div>
                 </td>
             </tr>
@@ -41,13 +50,13 @@
                 <th scope="row">2</th>
                 <td>Есть ли положительная информация по составу акционеров?</td>
                 <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="PositiveShareholders" id="PositiveShareholders_1" value="1">
-                        <label class="form-check-label" for="PositiveShareholders_1">Да</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="PositiveShareholders" id="PositiveShareholders_2" value="0">
-                        <label class="form-check-label" for="PositiveShareholders_2">Нет</label>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input  type="radio" name="BusinessModelRisk" id="PositiveShareholders_1" value="1" checked> Да
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="PositiveShareholders" id="PositiveShareholders_2" value="0"> Нет
+                        </label>
                     </div>
                 </td>
             </tr>
@@ -573,13 +582,13 @@
                 th = add_content_to("", "#", "", th);
                 tr.append(th);
                 th = document.createElement("th");
-                th = add_content_to("", "name", "", th);
+                th = add_content_to("", "Наименование показателя", "", th);
                 tr.append(th);
                 th = document.createElement("th");
-                th = add_content_to("", "curr_year", "", th);
+                th = add_content_to("", "За последний год", "", th);
                 tr.append(th);
                 th = document.createElement("th");
-                th = add_content_to("", "last_year", "", th);
+                th = add_content_to("", "За предыдущий год", "", th);
                 tr.append(th);
                 thead.append(tr);
                 table.append(thead);
