@@ -1,4 +1,4 @@
-﻿<form enctype="multipart/form-data" id="generate_params">
+<form enctype="multipart/form-data" id="generate_params">
     <!-- <div class="form-group">
         <label for="inn">ИНН</label>
         <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
@@ -34,7 +34,7 @@
                 <td>
                     <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
                         <label class="btn btn-warning active">
-                            <input  type="radio" name="BusinessModelRisk" id="PositiveShareholders_1" value="1" checked> Да &nbsp
+                            <input  type="radio" name="PositiveShareholders" id="PositiveShareholders_1" value="1" checked> Да &nbsp
                         </label>
                         <label class="btn btn-warning">
                             <input type="radio" name="PositiveShareholders" id="PositiveShareholders_2" value="0"> Нет
@@ -309,13 +309,11 @@
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
         let file = $('#file_report');
-        let fd = new FormData(this);
+        // let fd = new FormData(this);
         if (file)
             $.ajax({
                 url: '/api/calculate',
-                data: fd,
-                processData: false,
-                contentType: false,
+                data: {"data": JSON.stringify(getData())},
                 type: 'POST',
                 success: function (data) {
                     let target = $('#result_table');
@@ -521,6 +519,7 @@
 </script>
 
 <script type="text/javascript">
+    let names = [];
     $(function () {
         $('#files').on('change', function (evt) {
             let files = document.getElementById('files').files;
@@ -537,8 +536,7 @@
                 let target = $("#result").empty();
                 let table_print = document.getElementById("result");
                 let content = evt.target['result'].split('\n');
-                var dict = {};
-                var names = [];
+                let dict = {};
                 for (let i = 0; i < content.length; i++) {
                     if (content[i] === '') {
                         continue;
@@ -628,6 +626,38 @@
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
+    function getAllNotFinValues() {
+        let d5 = {};
+
+        $('.btn-group-toggle').each(function (indx) {
+            $(this).children(".btn").each(function (ind2){
+                if ($(this).prop("control").checked) {
+                    d5[$(this).prop("control").id.split('_')[0]] =$(this).prop("control").value;
+                }
+            });
+        });
+        return d5;
+    }
+    
+    function getAllFinValues(){
+        let dict = {};
+        for (let i = 0; i < names.length; i++) {
+            dict["year_0_" + names[i]] = $("#dt_0_" + names[i]).val();
+            dict["year_-1_" + names[i]] = $("#dt_-1_" + names[i]).val();
+        }
+        return dict;
+    }
+    
+    function getData(){
+        let d1 = getAllNotFinValues();
+        let d2 = getAllFinValues();
+        let d3 = Object.assign({}, d1);
+        for (let key in d2){    
+            d3[key] = d2[key];
+        }
+        return d3;
+    }
     
 </script>
 
