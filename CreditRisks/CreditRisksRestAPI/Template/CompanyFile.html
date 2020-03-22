@@ -132,10 +132,10 @@
                 <td>
                     <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
                         <label class="btn btn-warning active">
-                            <input type="radio" name="PaymentSources" id="PaymentSources_1" value="1" checked> Да &nbsp
+                            <input type="radio" name="RelevantRepayment" id="RelevantRepayment_1" value="1" checked> Да &nbsp
                         </label>
                         <label class="btn btn-warning">
-                            <input type="radio" name="PaymentSources" id="PaymentSources_2" value="-1"> Нет
+                            <input type="radio" name="RelevantRepayment" id="RelevantRepayment_2" value="-1"> Нет
                         </label>
                     </div>
                 </td>
@@ -640,6 +640,7 @@
             $(this).children(".btn").each(function (ind2){
                 if ($(this).prop("control").checked) {
                     d5[$(this).prop("control").id.split('_')[0]] =$(this).prop("control").value;
+                    console.log($(this).prop("control").id.split('_')[0]);
                 }
             });
         });
@@ -660,8 +661,11 @@
         let d2 = getAllFinValues();
         let d3 = Object.assign({}, d1);
         d3['region'] = region;
-        d3['year_0'] = '2016';
-        d3['year_-1'] = '2017';
+        d3['year_0'] = '2017';
+        d3['year_-1'] = '2016';
+        // d3['RelevantRepayment'] = '1';
+        d3['MacroeconomicRisk'] = '1';
+        d3['IndustryRating'] = '1';
         for (let key in d2){    
             d3[key] = d2[key];
         }        

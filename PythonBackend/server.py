@@ -183,6 +183,8 @@ RESULT_DTYPES = {'region': np.uint8, 'year_-1': np.uint16, 'year_-1_11003': np.i
                  'OwnershipConflict': np.float,
                  'ManagementShareholdersConflict': np.float, 'OwnFundsTransaction': np.float,
                  'WithdrawalFunds': np.float, 'DesireToInvest': np.float, 'BusinessModelRisk': np.float,
+                 'PositiveShareholders': np.float, 'NegativeShareholders': np.float,
+                 'RelevantRepayment': np.float, 'MacroeconomicRisk': np.float, 'IndustryRating': np.float,
                  }
 
 
@@ -198,12 +200,16 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
 
     def _dict_to_df(self, data):
         df = pd.DataFrame.from_dict(data, orient='index').T
+        res_types = {}
         for key, dtype in RESULT_DTYPES.items():
+            if key in df.columns:
+                res_types[key] = dtype
             if dtype == np.float:
                 df[key] = df[key].str.replace(',', '.')
-        return df.astype(dtype=RESULT_DTYPES)
+        return df.astype(dtype=res_types)
 
     def CalcProbability(self, request, context):
+
         df = self._dict_to_df(request.Params)
         result = {}
         for name, model in self.models.items():
