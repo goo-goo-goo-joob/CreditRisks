@@ -520,6 +520,7 @@
 
 <script type="text/javascript">
     let names = [];
+    let region;
     $(function () {
         $('#files').on('change', function (evt) {
             let files = document.getElementById('files').files;
@@ -550,6 +551,11 @@
                         }
                         dict[feat_name[2]][feat_name[1]] = row[1];
 
+                    } else {
+                        if (row[0] === 'region'){
+                            // console.log(row[1]);
+                            region = row[1];
+                        }
                     }
                     // target.append(`<div class="row">${row[0]} = ${row[1]}</div>`)
                 }
@@ -653,9 +659,12 @@
         let d1 = getAllNotFinValues();
         let d2 = getAllFinValues();
         let d3 = Object.assign({}, d1);
+        d3['region'] = region;
+        d3['year_0'] = '2016';
+        d3['year_-1'] = '2017';
         for (let key in d2){    
             d3[key] = d2[key];
-        }
+        }        
         return d3;
     }
     
