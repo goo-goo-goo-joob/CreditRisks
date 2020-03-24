@@ -11,7 +11,6 @@ joblib==0.14.1
 kiwisolver==1.1.0
 matplotlib==3.1.2
 more-itertools==8.0.2
-mysql-connector-python==8.0.18
 numpy==1.18.1
 packaging==20.0
 pandas==0.25.3

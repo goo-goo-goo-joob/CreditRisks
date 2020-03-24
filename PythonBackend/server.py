@@ -195,11 +195,7 @@ class Handler(calc_service_pb2_grpc.CalcServiceServicer):
     models = None
 
     def __init__(self):
-        self.models = get_models(host=os.getenv("DB_HOST"),
-                                 port=int(os.getenv("DB_PORT")),
-                                 user=os.getenv("DB_USER"),
-                                 password=os.getenv("DB_PASSWORD"),
-                                 database=os.getenv("DB_DATABASE"))
+        self.models = get_models(os.getenv("MODEL_PATH"))
 
     def _dict_to_df(self, data):
         df = pd.DataFrame.from_dict(data, orient='index').T
