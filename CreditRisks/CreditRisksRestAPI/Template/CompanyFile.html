@@ -23,7 +23,7 @@
                             <input  type="radio" name="BusinessModelRisk" id="BusinessModelRisk_1" value="1" checked> Высокий
                         </label>
                         <label class="btn btn-warning">
-                            <input type="radio" name="BusinessModelRisk" id="BusinessModelRisk_2" value="0"> Низкий &nbsp
+                            <input type="radio" name="BusinessModelRisk" id="BusinessModelRisk_2" value="0"> Низкий&nbsp
                         </label>
                     </div>
                 </td>
@@ -145,7 +145,8 @@
     </div>
 
     <p class="lead"><b>Шаг 2.</b> Загрузите финансовую отчётность компании</p>
-    <div class="container">
+    
+    <div class="container pl-0">
         <div class="custom-file w-50">
             <input type="file" class="custom-file-input" name="file" id="files" required>
             <label class="custom-file-label" for="files" data-browse="Открыть">Выберите файл...</label>
@@ -158,26 +159,32 @@
         <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Примеры загрузочного файла</a>
     </p>
 
-    <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#parse_file" aria-expanded="false" 
-            aria-controls="parse_file">
+    <button type="button" class="btn btn-outline-secondary rounded-pill" id="without_file">
+        У меня нет файла
+    </button>
+    <p></p>
+
+    <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse"
+            data-target="#parse_file" aria-expanded="false" aria-controls="parse_file" id="change_params">
         Редактировать параметры
     </button>
+    <p></p>
     
     <div class="collapse" id="parse_file">
         <div id="result" class="container pl-0">
         </div>
     </div>
-    <p></p>
+    
     
     <div class="form-group">
         <p class="lead"><b>Шаг 3.</b> Получите оценку вероятности дефолта компании</p>
-         <input type="submit" class="btn rounded-pill btn-warning" value="    Рассчитать   "/>
+         <input type="submit" class="btn rounded-pill btn-warning" style="font-size: large" value="Рассчитать"/>
     </div>
 </form>
 
 <div class="form-group">
     <table class="table table-striped" id="result_table" style="display: none">
-        <caption style="caption-side: top">Расчет вероятности дефолта</caption>
+        <caption class="lead" style="caption-side: top">Результаты расчёта вероятности дефолта</caption>
         <thead>
         <tr style="text-align: center">
             <th scope="col">Название модели предсказания</th>
@@ -200,9 +207,10 @@
                 </button>
             </div>
             <div class="modal-body">
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
@@ -232,7 +240,7 @@
                         <input class="form-control" id="head" name="head" placeholder="Правая граница моделирования" required type="number" value="20000">
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn rounded-pill btn-lg text-white" style="background-color: #db9921;" value="Рассчитать">
+                        <input type="submit" class="btn btn-warning rounded-pill" value="Рассчитать">
                     </div>
                 </form>
                 <div id="image_out">
@@ -240,7 +248,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
