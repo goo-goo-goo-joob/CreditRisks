@@ -245,7 +245,8 @@
         </div>
     </div>
 </div>
-<script>
+
+<script type="text/javascript">
     function addElToSelector() {
         select = document.getElementById('feature');
         features = getFeatures();
@@ -518,11 +519,34 @@
     }
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript" >
+    const bookkeeper = {"okopf" : "ОКОПФ", "okfs" : "ОКФС", "okved" : "ОКВЭД", "type" : "Тип",
+        "1100" : "Итого внеоборотных ",
+        "1150" : "Основные средства",
+        "1200" : "ИТОГО оборотных активов",
+        "1210" : "Запасы",
+        "1230" : "Дебиторская задолженность",
+        "1250" : "Денежные средства и денежные эквиваленты",
+        "1300" : "ИТОГО капитал",
+        "1310" : "Уставный капитал (складочный капитал, уставный фонд, вклады товарищей)",
+        "1500" : "ИТОГО краткосрочных обязательств",
+        "1510" : "Краткосрочные заемные обязательства",
+        "1520" : "Краткосрочная кредиторская задолженност",
+        "1600" : "БАЛАНС (актив)",
+        "1700" : "БАЛАНС (пассив)",
+        "2110" : "Выручка",
+        "2200" : "Прибыль (убыток) от продаж",
+        "2400" : "Чистая прибыль (убыток)"};
     let names = [];
+    let usedNames = [];
     let region;
+    
+    let onlyInBook = false;//Вывод только того, что есть в словаре
+    
     $(function () {
         $('#files').on('change', function (evt) {
+            names = [];
+            usedNames = [];
             let files = document.getElementById('files').files;
             if (!files.length) {
                 alert('Please select a file!');
@@ -559,74 +583,181 @@
                     }
                     // target.append(`<div class="row">${row[0]} = ${row[1]}</div>`)
                 }
-                console.log(dict);
-                console.log(names);
-                var table = document.createElement("table");
-                table.className = "table table-striped table-borderless";
-                thead = document.createElement("thead");
-                tr = document.createElement("tr");
-                th = document.createElement("th");
-                th = add_content_to("", "#", "", th);
-                tr.append(th);
-                th = document.createElement("th");
-                th = add_content_to("", "Наименование показателя", "", th);
-                tr.append(th);
-                th = document.createElement("th");
-                th = add_content_to("", "За последний год", "", th);
-                tr.append(th);
-                th = document.createElement("th");
-                th = add_content_to("", "За предыдущий год", "", th);
-                tr.append(th);
-                thead.append(tr);
-                table.append(thead);
-                tbody = document.createElement("tbody");
-                for (let i = 0; i < names.length; i++) {
-                    let el = dict[names[i]];
 
-                    tr = document.createElement("tr");
-                    tr.id = "raw_" + names[i];
-
-                    //<th scope="row">1</th>
-                    th = document.createElement("th");
-                    th.scope = "row";
-                    th = add_content_to("", (i + 1).toString(), "", th);
-                    tr.appendChild(th);
-
-                    td = document.createElement("td");
-                    td = add_content_to("", names[i], "", td);
-                    tr.appendChild(td);
-
-                    td = document.createElement("td");
-                    if (0 in el) {
-                        // td = add_content_to("", el[0], "", td);
-                        td = create_add_input("dt_0_" + names[i], el[0], td);
-                    } else {
-                        td = add_content_to("", "empty)", "", td);
-                    }
-                    tr.appendChild(td);
-
-                    td = document.createElement("td");
-                    if (-1 in el) {
-                        td = create_add_input("dt_-1_" + names[i], el[-1], td);
-                    } else {
-                        td = add_content_to("", "empty)", "", td);
-                        // td = create_add_input("dt_0_" + names[i], el[-1], td);
-                    }
-                    tr.appendChild(td);
-                    tbody.appendChild(tr);
-                    table.appendChild(tbody)
-                }
-                table_print.appendChild(table)
+                createTable1(table_print, dict );
+                
             };
             let blob = files[0].slice(0, files[0].size);
             reader.readAsBinaryString(blob);
 
         });
     });
+    
+    function createTable1(table_print, dict ){
+        let table = document.createElement("table");
+        table.id = "finZn";
+        table.className = "table table-striped ";///table-borderless
+        let thead = document.createElement("thead");
+        let tr = document.createElement("tr");
+        let th = document.createElement("th");
+        th = add_content_to("", "#", "", th);
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "Наименование показателя", "", th);
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "За последний год", "", th);
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "За предыдущий год", "", th);
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "За год, предшествующий предыдущему", "", th);
+        tr.append(th);
+        thead.append(tr);
+        table.append(thead);
+        let tbody = document.createElement("tbody");
+        let ii = 1;
+        for (let i = 0; i < names.length; i++) {
+            // let el = dict[names[i]];
+
+            tr = document.createElement("tr");
+            tr.id = "raw_" + names[i];
+
+            //<th scope="row">1</th>
+            th = document.createElement("th");
+            th.scope = "row";
+            th = add_content_to("", (ii).toString(), "", th);
+            tr.appendChild(th);
+
+            let td = document.createElement("td");
+            
+            if (names[i].slice(0,4) in bookkeeper){
+                td = add_content_to("", bookkeeper[names[i].slice(0,4)], "", td);
+            } else {
+                if (names[i] in bookkeeper){
+                    td = add_content_to("", bookkeeper[names[i]], "", td);
+                } else {
+                    if (onlyInBook){
+                        continue;
+                    } else {
+                        td = add_content_to("", names[i].slice(0,4), "", td);
+                    }
+                }
+            }
+            tr.appendChild(td);
+            
+            tr = addZn(i, tr, dict);
+
+            if (tr === false){
+                continue;
+            }
+            
+            tbody.appendChild(tr);
+            table.appendChild(tbody);
+            ii += 1;
+        }
+        table_print.appendChild(table)
+    }
+    
+    function addZn(i, tr, dict){
+        // console.log(dict);
+        //проверка колонок оканчивающихся на 3|4
+        
+        if ((['3','4','5','6'].indexOf(names[i][0]) !== -1)||(usedNames.indexOf(names[i]) !== -1 )||(usedNames.indexOf(names[i].slice(0,4)) !== -1 )){
+            return false;
+        }
+        if (names[i].length === 5 && (names[i][4] === '3' || names[i][4] === '4')){
+            let el3 = dict[names[i].slice(0,4) + '3'];
+            let el4 = dict[names[i].slice(0,4) + '4'];
+
+            let td = document.createElement("td");
+            if (0 in el3) {
+                td = create_add_input("dt_0_" + names[i].slice(0,4), el3[0], td);
+            } else {
+                td = add_content_to("", "empty)", "", td);
+            }
+            tr.appendChild(td);
+            if (el4[0] === '0' ){
+                td = document.createElement("td");
+                if (0 in el4) {
+                    td = create_add_input("dt_-1_" + names[i].slice(0,4), el4[0], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+            } else {
+                td = document.createElement("td");
+                if (-1 in el3) {
+                    td = create_add_input("dt_-1_" + names[i].slice(0,4), el3[-1], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+            }
+
+            td = document.createElement("td");
+            if (-1 in el4) {
+                td = create_add_input("dt_-2_" + names[i].slice(0,4), el4[-1], td);
+            } else {
+                td = add_content_to("", "empty)", "", td);
+            }
+            tr.appendChild(td);
+
+            usedNames.push(names[i].slice(0,4));
+        } else {
+            if (isNaN(names[i])){
+                let el = dict[names[i]];
+                let td = document.createElement("td");
+                if (0 in el) {
+                    td = create_add_input("dt_0_" + names[i], el[0], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+
+                td = document.createElement("td");
+                if (-1 in el) {
+                    td = create_add_input("dt_-1_" + names[i], el[-1], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+
+                
+                td = document.createElement("td");
+                tr.appendChild(td);
+                usedNames.push(names[i]);
+            }
+            else{
+                let el = dict[names[i]];
+                let td = document.createElement("td");
+                if (0 in el) {
+                    td = create_add_input("dt_0_" + names[i], el[0], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+
+                td = document.createElement("td");
+
+                if (-1 in el) {
+                    td = create_add_input("dt_-1_" + names[i], el[-1], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+                td = document.createElement("td");
+                tr.appendChild(td);
+                usedNames.push(names[i]);
+            }
+        }
+        return tr;
+    }
 
 </script>
 
-<script>
+<script type="text/javascript">
     // The name of the file appear on select
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
@@ -649,9 +780,25 @@
     
     function getAllFinValues(){
         let dict = {};
-        for (let i = 0; i < names.length; i++) {
-            dict["year_0_" + names[i]] = $("#dt_0_" + names[i]).val();
-            dict["year_-1_" + names[i]] = $("#dt_-1_" + names[i]).val();
+        let val;
+        for (let i = 0; i < usedNames.length; i++) {
+            if (isNaN(usedNames[i])){
+                dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
+                dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
+            } else {
+                if (usedNames[i].length === 4) {
+                    dict["year_0_" + usedNames[i] + '3'] = $("#dt_0_" + usedNames[i]).val();
+
+                    val = $("#dt_-1_" + usedNames[i]).val();
+                    dict["year_-1_" + usedNames[i] + '3'] = val;
+                    dict["year_0_" + usedNames[i] + '4'] = val;
+
+                    dict["year_-1_" + usedNames[i] + '4'] = $("#dt_-2_" + usedNames[i]).val();
+                } else {
+                    dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
+                    dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
+                }
+            }
         }
         return dict;
     }

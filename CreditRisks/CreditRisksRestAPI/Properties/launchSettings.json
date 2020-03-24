@@ -24,7 +24,7 @@
       "applicationUrl": "http://::5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "PYTHON_BACKEND_ADDR": "10.8.0.10:9000"
+        "PYTHON_BACKEND_ADDR": "127.0.0.1:9000"
       }
     }
   }
