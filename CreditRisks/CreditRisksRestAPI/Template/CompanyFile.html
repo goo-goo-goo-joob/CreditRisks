@@ -654,10 +654,23 @@
             }
             
             tbody.appendChild(tr);
-            table.appendChild(tbody);
             ii += 1;
         }
-        table_print.appendChild(table)
+        table.appendChild(tbody);
+        table_print.appendChild(table);
+
+        // <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" aria-expanded="false" >
+        //     Заполнить
+        //     </button>
+        
+        let btn = document.createElement("button");
+        btn.className = "btn rounded-pill text-white";
+        btn.style = "background-color: #454545";
+        btn.textContent = "скачать введенные значения";
+        btn.id = "downloadData";
+        btn.onclick = downloadParams;
+
+        table_print.appendChild(btn);
     }
     
     function addZn(i, tr, dict){
@@ -818,6 +831,41 @@
         }        
         return d3;
     }
+
+    function download(data, filename, type) {
+        var file = new Blob([data], {type: type});
+        if (window.navigator.msSaveOrOpenBlob) {// IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        } else { // Others
+            var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+    }
     
+    function downloadParams(){
+        let data = getData();
+        let s = '';
+        for (let key in data){
+            s += key  + '\t' + data[key] + '\n';
+        }
+
+        let todayDate = new Date();
+        let currHours = todayDate.getHours();
+        let currMinutes = todayDate.getMinutes();
+        let currSeconds= todayDate.getSeconds();
+        let currYear = todayDate.getFullYear();
+        let currMonth = todayDate.getMonth()+1;
+        let currDay = todayDate.getDate();
+        let name = currSeconds + ":" + currMinutes + ":" + currHours + ' ' + currDay + '.'+ currMonth + '.'+ currYear + '.txt' ;
+        download(s, name, 'txt')
+    }
 </script>
 
