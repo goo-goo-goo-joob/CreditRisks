@@ -541,7 +541,7 @@
     let usedNames = [];
     let region;
     
-    let onlyInBook = false;//Вывод только того, что есть в словаре
+    let onlyInBook = true;  //Вывод только того, что есть в словаре
     
     $(function () {
         $('#files').on('change', function (evt) {
@@ -632,8 +632,9 @@
 
             let td = document.createElement("td");
             
-            if (names[i].slice(0,4) in bookkeeper){
-                td = add_content_to("", bookkeeper[names[i].slice(0,4)], "", td);
+            if ((names[i].slice(0,4) in bookkeeper) && !(isNaN(names[i]))){
+                
+                td = add_content_to("", bookkeeper[names[i].slice(0,4)] + " (" + names[i].slice(0,4) + ")", "", td);
             } else {
                 if (names[i] in bookkeeper){
                     td = add_content_to("", bookkeeper[names[i]], "", td);
@@ -664,9 +665,10 @@
         //     </button>
         
         let btn = document.createElement("button");
+        btn.type = "button";
         btn.className = "btn rounded-pill text-white";
         btn.style = "background-color: #454545";
-        btn.textContent = "скачать введенные значения";
+        btn.textContent = "Скачать введённые значения";
         btn.id = "downloadData";
         btn.onclick = downloadParams;
 
