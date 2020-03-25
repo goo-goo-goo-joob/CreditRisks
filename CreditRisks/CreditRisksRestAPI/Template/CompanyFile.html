@@ -254,6 +254,28 @@
     </div>
 </div>
 
+<div aria-hidden="true" aria-labelledby="reportModal" class="modal fade" id='reportModal' role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Расчет влияния параметра</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="reportTable">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary rounded-pill" onclick="downloadReport()"> Скачать </button>
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     function addElToSelector() {
         select = document.getElementById('feature');
@@ -341,6 +363,13 @@
 Влияние параметра "${key}"
 </button>
 </th>
+
+<th scope="row">
+<button type="button" class="btn btn-success wide-button" onclick="showReport('${key}','${value}')">
+отчет
+</button>   
+</th>
+
 </tr>`)
                     }
                 },
@@ -740,7 +769,7 @@
             th = add_content_to("", (ii).toString(), "", th);
             tr.appendChild(th);
 
-            td = document.createElement("td");
+            let td = document.createElement("td");
             
             if ((names[i].slice(0,4) in bookkeeper) && !(isNaN(names[i]))){
                 td = add_content_to("", bookkeeper[names[i].slice(0,4)] + " (" + names[i].slice(0,4) + ")", "", td);
@@ -783,6 +812,7 @@
 
         table_print.appendChild(btn);
         table_print.appendChild( document.createElement("p"));
+        
     }
     
     function addZn(i, tr, dict){
@@ -1062,3 +1092,64 @@
         
 </script>
 
+<script type="text/javascript">
+    //work with report
+    function showReport(key, value){
+        $("#reportModal").modal('show');
+        $("#reportTable").empty();
+        let reportTable = document.getElementById("reportTable");
+        reportTable.append(createReportTable(key, value));
+    }
+    
+    function createReportTable(key, value){
+        let table = document.createElement("table");
+        table.className = "table";
+
+        let thead = document.createElement("thead");
+        let tr = document.createElement("tr");
+
+        let th = document.createElement("th");
+        th = add_content_to("", "#", "", th);
+        tr.append(th);
+
+        th = document.createElement("th");
+        th = add_content_to("", "Текущая оценка рейтинга", "", th);
+        tr.append(th);
+
+        th = document.createElement("th");
+        th = add_content_to("", "Вклады показателей", "", th);
+        tr.append(th);
+        
+        thead.append(tr);
+        table.append(thead);
+        
+        let tbody = document.createElement("tbody");
+        
+        // let ii = 1;
+        for (let i = 0;i < 10; i++){
+            tr = document.createElement("tr");
+            let td = document.createElement("td");
+            td = add_content_to("", "example", "", td);
+            tr.append(td);
+
+            td = document.createElement("td");
+            td = add_content_to("", key, "", td);
+            tr.append(td);
+
+            td = document.createElement("td");
+            td = add_content_to("", value, "", td);
+            tr.append(td);
+
+            tbody.append(tr);
+        }
+        table.append(tbody);
+        return table;
+    }
+
+    function downloadReport(){
+        let report = document.getElementById("reportTable");
+        let s = report.innerHTML;
+        let name = 'report.doc';
+        download(s, name, 'doc')
+    }
+</script>
