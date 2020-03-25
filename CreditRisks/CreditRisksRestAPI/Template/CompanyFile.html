@@ -150,7 +150,7 @@
         <div class="custom-file w-50">
             <input type="file" class="custom-file-input" name="file" id="files" required>
             <label class="custom-file-label" for="files" data-browse="Открыть">Выберите файл...</label>
-            <div class="invalid-feedback">Необходимо загрузить текстовый файл с фтнансовой отчётностью.</div>
+            <div class="invalid-feedback">Необходимо загрузить текстовый файл с финансовой отчётностью.</div>
         </div>
     </div>
     
@@ -317,7 +317,7 @@
     });
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
-        let file = $('#file_report');
+        // let file = $('#file_report');
         // let fd = new FormData(this);
         if (haveData)
             $.ajax({
@@ -639,6 +639,7 @@
                 haveData = true;
                 $('#change_params').css('display', 'inline-block');
                 setUnEnabled(); 
+                $("#without_file").hide();
                 
             };
             let blob = files[0].slice(0, files[0].size);
@@ -912,20 +913,33 @@
         haveData = true;
         $('#change_params').css('display', 'inline-block');
         setUnEnabled();
+        $("#without_file").hide();
+        $('#files').removeAttr('required');
     }
     
     function getRelevantColumns(){
-        return [ "year_0_okopf", "year_-1_okopf", "year_0_okfs",
-            "year_-1_okfs", "year_0_okved", "year_-1_okved", "year_0_type", "year_-1_type", "year_0_11503", "year_-1_11503",
-            "year_0_11504", "year_-1_11504", "year_0_11003", "year_-1_11003", "year_0_11004", "year_-1_11004", "year_0_12103",
-            "year_-1_12103", "year_0_12104", "year_-1_12104", "year_0_12303", "year_-1_12303", "year_0_12304", "year_-1_12304",
-            "year_0_12503", "year_-1_12503", "year_0_12504", "year_-1_12504", "year_0_12003", "year_-1_12003", "year_0_12004",
-            "year_-1_12004", "year_0_16003", "year_-1_16003", "year_0_16004", "year_-1_16004", "year_0_13103", "year_-1_13103",
-            "year_0_13104", "year_-1_13104", "year_0_13003", "year_-1_13003", "year_0_13004", "year_-1_13004", "year_0_15103",
-            "year_-1_15103", "year_0_15104", "year_-1_15104", "year_0_15203", "year_-1_15203", "year_0_15204", "year_-1_15204",
-            "year_0_15003", "year_-1_15003", "year_0_15004", "year_-1_15004", "year_0_17003", "year_-1_17003", "year_0_17004",
-            "year_-1_17004", "year_0_21103", "year_-1_21103", "year_0_21104", "year_-1_21104", "year_0_22003",
-            "year_-1_22003", "year_0_22004", "year_-1_22004", "year_0_24003", "year_-1_24003", "year_0_24004", "year_-1_24004"]
+        let out =  [ "year_0_okopf", "year_-1_okopf", "year_0_okfs",
+            "year_-1_okfs", "year_0_okved", "year_-1_okved", "year_0_type", "year_-1_type"];
+        
+        for (let key in bookkeeper){
+            if (!(isNaN(key))){
+                out.push("year_0_" + key + '3');
+                out.push("year_-1_" + key + '3');
+                out.push("year_0_" + key + '4');
+                out.push("year_-1_" + key + '4');
+            }
+        }
+        return out
+            // ["year_0_11503", "year_-1_11503",
+            // "year_0_11504", "year_-1_11504", "year_0_11003", "year_-1_11003", "year_0_11004", "year_-1_11004", "year_0_12103",
+            // "year_-1_12103", "year_0_12104", "year_-1_12104", "year_0_12303", "year_-1_12303", "year_0_12304", "year_-1_12304",
+            // "year_0_12503", "year_-1_12503", "year_0_12504", "year_-1_12504", "year_0_12003", "year_-1_12003", "year_0_12004",
+            // "year_-1_12004", "year_0_16003", "year_-1_16003", "year_0_16004", "year_-1_16004", "year_0_13103", "year_-1_13103",
+            // "year_0_13104", "year_-1_13104", "year_0_13003", "year_-1_13003", "year_0_13004", "year_-1_13004", "year_0_15103",
+            // "year_-1_15103", "year_0_15104", "year_-1_15104", "year_0_15203", "year_-1_15203", "year_0_15204", "year_-1_15204",
+            // "year_0_15003", "year_-1_15003", "year_0_15004", "year_-1_15004", "year_0_17003", "year_-1_17003", "year_0_17004",
+            // "year_-1_17004", "year_0_21103", "year_-1_21103", "year_0_21104", "year_-1_21104", "year_0_22003",
+            // "year_-1_22003", "year_0_22004", "year_-1_22004", "year_0_24003", "year_-1_24003", "year_0_24004", "year_-1_24004"]
     }
 
     function setUnEnabled(){
