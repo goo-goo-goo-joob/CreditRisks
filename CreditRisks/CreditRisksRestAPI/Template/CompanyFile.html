@@ -538,8 +538,17 @@
 <script type="text/javascript">
     function add_content_to(cl, text, tag, parent) {
         //body = document.getElementById("output");
-        elem = document.createTextNode( text );
+        let elem = document.createTextNode( text );
         elem.className = cl;
+        parent.appendChild(elem);
+        return parent
+    }
+
+    function add_content_2(cl, text, tag, parent) {
+        //body = document.getElementById("output");
+        let elem = document.createElement( tag );
+        elem.className = cl;
+        elem.textContent = text;
         parent.appendChild(elem);
         return parent
     }
@@ -1005,6 +1014,19 @@
         });
         return d5;
     }
+
+    function getAllNotFinTexts() {
+        let d5 = {};
+        $('.btn-group-toggle').each(function (indx) {
+            $(this).children(".btn").each(function (ind2) {
+                if ($(this).prop("control").checked) {
+                    d5[$(this).prop("control").id.split('_')[0]] = $(this).text();
+                    // console.log($(this).prop("control").id.split('_')[0])
+                }
+            });
+        });
+        return d5;
+    }
     
     function getAllFinValues(){
         let dict = {};
@@ -1067,12 +1089,7 @@
     
     function downloadParams(){
 
-        function format_ch(ch){
-            if (ch < 10){
-                return '0' + ch;
-            }
-            return '' + ch;
-        }
+        
         let data = getData();
         let s = '';
         for (let key in data){
@@ -1089,7 +1106,13 @@
         let name = currYear + '-' + currMonth + '-'  + currDay + ' ' + currHours + '.' + currMinutes + '.' + currSeconds + '.txt' ;
         download(s, name, 'txt')
     }
-        
+
+    function format_ch(ch){
+        if (ch < 10){
+            return '0' + ch;
+        }
+        return '' + ch;
+    }
 </script>
 
 <script type="text/javascript">
@@ -1101,55 +1124,260 @@
         reportTable.append(createReportTable(key, value));
     }
     
+    function createTrR(c1,c2,c3, bold){
+        let tr = document.createElement("tr");
+        
+        let td = document.createElement("td");
+        if (bold){
+            td = add_content_2("", c1, "b", td);
+        } else {
+            td = add_content_to("", c1, "", td);
+            td.style = "padding-left: 30px";
+        }
+        tr.append(td);
+
+        td = document.createElement("td");
+        td = add_content_to("", c2, "", td);
+        tr.append(td);
+
+        td = document.createElement("td");
+        td = add_content_to("", c3, "", td);
+        tr.append(td);
+        return tr;
+    }
+    
     function createReportTable(key, value){
+         
         let table = document.createElement("table");
         table.className = "table";
+        table.width = "100%";
+        let caption = document.createElement("caption");
+        caption.innerHTML = "<b>Заклюючение о присвоении рейтинга (" + key + ")</b>";
+        caption.style = "caption-side: top;";
+        table.append(caption);
 
         let thead = document.createElement("thead");
         let tr = document.createElement("tr");
 
         let th = document.createElement("th");
         th = add_content_to("", "#", "", th);
-        tr.append(th);
+        // th.className = "th";
+        tr.append(th);  
 
         th = document.createElement("th");
         th = add_content_to("", "Текущая оценка рейтинга", "", th);
         tr.append(th);
 
         th = document.createElement("th");
+        // th.className = "th";
         th = add_content_to("", "Вклады показателей", "", th);
         tr.append(th);
         
         thead.append(tr);
         table.append(thead);
         
+        let notFinTexts = getAllNotFinTexts();
+        
         let tbody = document.createElement("tbody");
         
-        // let ii = 1;
-        for (let i = 0;i < 10; i++){
-            tr = document.createElement("tr");
-            let td = document.createElement("td");
-            td = add_content_to("", "example", "", td);
-            tr.append(td);
+        //Дата присвоения рейтинга
+        if (true){
+            let todayDate = new Date();
+            let currYear = format_ch(todayDate.getFullYear());
+            let currMonth = format_ch(todayDate.getMonth()+1);
+            let currDay = format_ch(todayDate.getDate());
 
-            td = document.createElement("td");
-            td = add_content_to("", key, "", td);
-            tr.append(td);
-
-            td = document.createElement("td");
-            td = add_content_to("", value, "", td);
-            tr.append(td);
-
-            tbody.append(tr);
+            tbody.append(createTrR("Дата присвоения рейтинга",currDay + "." + currMonth + "." + currYear,"", true));
         }
+
+        //Уровень макроэкономического риска
+        tbody.append(createTrR("Уровень макроэкономического риска","","", true));
+
+        //Фамилия И.О. сотрудника, присвоившего рейтинг
+        tbody.append(createTrR("Фамилия И.О. сотрудника, присвоившего рейтинг","","", true));
+        
+        //ИНН заемщика
+        tbody.append(createTrR("ИНН заемщика","","", true));
+
+        //Филиал, Заемщик
+        tbody.append(createTrR("Филиал, Заемщик","","", true));
+        
+        //Система налогообложения
+        tbody.append(createTrR("Система налогообложения","","", true));
+
+        //Отрасль
+        tbody.append(createTrR("Отрасль","","", true));
+
+        //Бизнес модель
+        tbody.append(createTrR("Бизнес модель","","", true));
+
+        //Увеличение долга в случае одобрения сделки (в тыс. руб.)
+        tbody.append(createTrR("Увеличение долга в случае одобрения сделки (в тыс. руб.)","","", true));
+
+        //Финансовые показатели кредитного риска
+        tbody.append(createTrR("Финансовые показатели кредитного риска","","", true));
+        
+        //Чистая прибыль к макс(выручка; долг)
+        tbody.append(createTrR("Чистая прибыль к макс(выручка; долг)","","", false));
+
+        //Финансовый долг к выручке
+        tbody.append(createTrR("Финансовый долг к выручке","","", false));
+
+        //Денежные соедства к краткосрочным обязательствам
+        tbody.append(createTrR("Денежные соедства к краткосрочным обязательствам","","", false));
+        
+        //Оценка организационной структуры
+        tbody.append(createTrR("Оценка организационной структуры","","", true));
+        
+        //Является заемщик основной организационной структурой и основным балансодержателем?
+        tbody.append(createTrR("Является заемщик основной организационной структурой и основным балансодержателем?","","", false));
+        
+        //Риски качества управления
+        tbody.append(createTrR("Риски качества управления","","", true));
+        
+        //Положительная информация по составу акционеров
+        tbody.append(createTrR("Положительная информация по составу акционеров",notFinTexts["PositiveShareholders"],"", false));
+
+        //Отрицательная информация по составу акционеров
+        tbody.append(createTrR("Отрицательная информация по составу акционеров",notFinTexts["NegativeShareholders"],"", false));
+
+        //Желание/возможность вкладывать дополнительные средства в бизнес
+        tbody.append(createTrR("Желание/возможность вкладывать дополнительные средства в бизнес",notFinTexts['DesireToInvest'],"", false));
+
+        //Изъятие собственником средств из бизнеса
+        tbody.append(createTrR("Изъятие собственником средств из бизнеса",notFinTexts["WithdrawalFunds"],"", false));
+
+        //Наличие конфликтов между собственниками
+        tbody.append(createTrR("Наличие конфликтов между собственниками",notFinTexts["OwnershipConflict"],"", false));
+
+        //Наличие конфликтов между руководством и акционерами компании
+        tbody.append(createTrR("Наличие конфликтов между руководством и акционерами компании",notFinTexts["ManagementShareholdersConflict"],"", false));
+
+        //Бизнес риски
+        tbody.append(createTrR("Бизнес риски","","", true));
+
+        //Высокая продуктовая концентрация
+        tbody.append(createTrR("Высокая продуктовая концентрация","","", false));
+
+        //Наличие у компании нерыночных преимуществ, дающих особый статус
+        tbody.append(createTrR("Наличие у компании нерыночных преимуществ, дающих особый статус","","", false));
+
+        //Сильная переговорная позиция с поставщиками
+        tbody.append(createTrR("Сильная переговорная позиция с поставщиками","","", false));
+
+        //Концентрация поставщиков
+        tbody.append(createTrR("Концентрация поставщиков","","", false));
+
+        //Сильная переговорная позиция с покупателями
+        tbody.append(createTrR("Сильная переговорная позиция с покупателями","","", false));
+
+        //Концентрация покупателей
+        tbody.append(createTrR("Концентрация покупателей","","", false));
+
+        //Рейтинг сделки
+        tbody.append(createTrR("Рейтинг сделки","","", true));
+
+        //Участие в финансировании сделки собственными средствами
+        tbody.append(createTrR("Участие в финансировании сделки собственными средствами",notFinTexts["OwnFundsTransaction"],"", false));
+
+        //Адекватность источников погашения
+        tbody.append(createTrR("Адекватность источников погашения",notFinTexts["RelevantRepayment"],"", false));
+
+        //Базовая вероятность дефолта
+        tbody.append(createTrR("Базовая вероятность дефолта",value,"", true));
+
+        //Базовый рейтинг
+        tbody.append(createTrR("Базовый рейтинг",getRating(value),"", true));
+        
+        //Корректировка рейтинга
+        tbody.append(createTrR("Корректировка рейтинга","","", true));
+        
+        //Причина корректировки рейтинга
+        tbody.append(createTrR("Причина корректировки рейтинга","","", true));
+
+        //Скоррекированная вероятность дефолта
+        tbody.append(createTrR("Скоррекированная вероятность дефолта","","", true));
+
+        //Скоррекированный рейтинг
+        tbody.append(createTrR("Скоррекированный рейтинг","","", true));
+
+        //Скоррекированный вероятность дефолта с учетом экономического цикла
+        tbody.append(createTrR("Скоррекированная вероятность дефолта с учетом экономического цикла","","", true));
+        
+        // for (let i = 0;i < 10; i++){
+        //     tr = document.createElement("tr");
+        //     let td = document.createElement("td");
+        //     td = add_content_to("", "example", "", td);
+        //     tr.append(td);
+        //
+        //     td = document.createElement("td");
+        //     td = add_content_to("", key, "", td);
+        //     tr.append(td);
+        //
+        //     td = document.createElement("td");
+        //     td = add_content_to("", value, "", td);
+        //     tr.append(td);
+        //
+        //     tbody.append(tr);
+        // }
+        
         table.append(tbody);
         return table;
     }
 
     function downloadReport(){
         let report = document.getElementById("reportTable");
+        let prefix = '<!DOCTYPE html> <html lang="en"> <head>     <meta charset="UTF-8">    <title>Title</title> ';
+        let postfix = "</body> </html>";
+        let css = "<style> table {border-collapse: collapse;} td, th {border: 1px solid;}</style></head> <body>";
         let s = report.innerHTML;
         let name = 'report.doc';
-        download(s, name, 'doc')
+        download(prefix + css + s + postfix, name, 'doc')
     }
+    
+    function getRating(value){
+        let ratings = getRatings();
+        let flValue = parseFloat(value.replace(',', '.'));
+        let last = 0.00;
+        for (let key in ratings){
+            if (flValue < key){
+                break;
+            }
+            last = key;
+        }
+        return ratings[last];
+    }
+    
+    function getRatings(){
+        return {
+            0.00 : "AAA",
+            0.02 : "AA+",
+            0.03 : "AA",
+            0.04 : "AA-",
+            0.06 : "A+",
+            0.08 : "A",
+            0.13 : "A-",
+            0.18 : "BBB+",
+            0.27 : "BBB",
+            0.40 : "BBB-",
+            0.59 : "BB+",
+            0.87 : "BB",
+            1.29 : "BB-",
+            1.90 : "B+",
+            3.33 : "B",
+            5.29 : "B-",
+            7.73 : "CCC+",
+            10.65 : "CCC",
+            14.05 : "CCC-",
+            17.93 : "CC+",
+            22.29 : "CC",
+            27.13 : "CC-",
+            32.45 : "C+",
+            38.25 : "C",
+            44.53 : "C-",
+            51.29 : "SD",
+            99.999 : "D"
+        };
+    }
+    
 </script>
