@@ -20,3 +20,14 @@ Pipeline логистической регрессии
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/Logistic_Regression.ipynb)
 
+### Logistic_Regression_Final_Run.ipynb
+
+Pipeline финальной модели логистической регрессии и обучение для прода
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/Logistic_Regression_Final_Run.ipynb)
+
+### Logistic_Regression_Features_Overfitter.ipynb
+
+Поиск переобученных признаков
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/Logistic_Regression_Features_Overfitter.ipynb)
