@@ -1,4 +1,7 @@
-from calc_model import RandomModel
+import pickle
+
+import numpy as np
+import pandas as pd
 
 
 def f():
@@ -9,9 +12,10 @@ def test_function():
     assert f() == 0
 
 
-def test_random_model():
-    with open('test_data/data.zip', 'rb') as f:
-        m = RandomModel('Binomial random generator', f)
-        for i in range(100):
-            proba = m.predict_proba(None)
-            assert 0 <= proba <= 1
+def test_model():
+    with open('test_data/data.pkl', 'rb') as f:
+        clf = pickle.load(f)
+    for i in range(100):
+        df = pd.DataFrame(np.random.random((1, len(clf.cols))), columns=clf.cols)
+        proba = clf.predict_proba(df)
+        assert 0 <= proba <= 1
