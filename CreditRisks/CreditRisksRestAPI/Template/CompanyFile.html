@@ -4,10 +4,35 @@
         <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
     </div> -->
     
-    <p class="lead"><b>Шаг 1.</b> Заполните нефинансовые показатели по компании</p>
+    <p class="lead"><b>Шаг 1.</b> Загрузите данные</p>
+
+    <div class="container pl-0">
+        <div class="custom-file w-50">
+            <input type="file" class="custom-file-input" name="file" id="files" required>
+            <label class="custom-file-label" for="files" data-browse="Открыть">Выберите файл...</label>
+            <div class="invalid-feedback">Необходимо загрузить текстовый файл с финансовой отчётностью.</div>
+        </div>
+    </div>
+
+    <p class="lead">
+        Или выберете из вариатов ниже:<br>
+        <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Примеры загрузочного файла</a>
+    </p>
+
+    <button type="button" class="btn btn-outline-secondary rounded-pill" id="without_file" onclick="defaultTable()">
+        У меня нет файла
+    </button>
+    <p></p>
+
+    <p class="lead"><b>Шаг 2.</b> Редактирование параметров</p>
+
+    <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> Загрузите данные.
+    </div>
+    
     <p>
-        <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" data-toggle="collapse" data-target="#user_input" aria-expanded="false" aria-controls="user_input">
-            Заполнить
+        <button type="button" id="changeNFParams" class="btn rounded-pill text-white" style="background-color: #454545;display: none;" data-toggle="collapse" data-target="#user_input" aria-expanded="false" aria-controls="user_input">
+            Редактировать нефинансовые показатели
         </button>
     </p>
 
@@ -143,31 +168,13 @@
             </tbody>
         </table>
     </div>
-
-    <p class="lead"><b>Шаг 2.</b> Загрузите финансовую отчётность компании</p>
     
-    <div class="container pl-0">
-        <div class="custom-file w-50">
-            <input type="file" class="custom-file-input" name="file" id="files" required>
-            <label class="custom-file-label" for="files" data-browse="Открыть">Выберите файл...</label>
-            <div class="invalid-feedback">Необходимо загрузить текстовый файл с финансовой отчётностью.</div>
-        </div>
-    </div>
-    
-    <p class="lead">
-        Или выберете из вариатов ниже:<br>
-        <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Примеры загрузочного файла</a>
-    </p>
-
-    <button type="button" class="btn btn-outline-secondary rounded-pill" id="without_file" onclick="defaultTable()">
-        У меня нет файла
-    </button>
     <p></p>
-
     <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;display: none;" data-toggle="collapse"
             data-target="#parse_file" aria-expanded="false" aria-controls="parse_file" id="change_params">
-        Редактировать параметры
+        Редактировать финансовые показатели
     </button>
+
     <p></p>
     
     <div class="collapse" id="parse_file">
@@ -175,10 +182,14 @@
         </div>
     </div>
     
-    
     <div class="form-group">
         <p class="lead"><b>Шаг 3.</b> Получите оценку вероятности дефолта компании</p>
-         <input type="submit" class="btn rounded-pill btn-warning" style="font-size: large" value="Рассчитать"/>
+        
+        <div class="alert alert-warning" role="alert">
+            <strong>Warning!</strong> Загрузите данные.
+        </div>
+        
+        <input type="submit" id="calculate" class="btn rounded-pill btn-warning" style="font-size: large;display: none;" value="Рассчитать"/>
     </div>
 </form>
 
@@ -615,6 +626,9 @@
     let year_0;
     let haveData = false;
     
+    let vvv = 300;
+    let vvvh = NaN;
+    
     let onlyInBook = true;  //Вывод только того, что есть в словаре
     let drawYear = true; //Отрисовывать строчку с годом
     let drawRegion = true; //Отрисовывать строску с регионом
@@ -675,9 +689,13 @@
 
                 createTable1(table_print, dict );
                 haveData = true;
-                $('#change_params').css('display', 'inline-block');
-                setUnEnabled(); 
-                $("#without_file").hide();
+                // $('#changeNFParams').css('display', 'inline-block');
+                $('#changeNFParams').show(vvv);
+                $('#change_params').show(vvv);
+                $('#calculate').show(vvv);
+                $('.alert-warning').hide(vvv);
+                setUnEnabled();     
+                $("#without_file").hide(vvvh);
                 
             };
             let blob = files[0].slice(0, files[0].size);
@@ -950,9 +968,12 @@
         createTable1(table_print, dict );
         
         haveData = true;
-        $('#change_params').css('display', 'inline-block');
+        $('#change_params').show(vvv);
+        $('#calculate').show(vvv);
+        $('.alert-warning').hide(vvv);
+        $('#changeNFParams').show(vvv);
         setUnEnabled();
-        $("#without_file").hide();
+        $("#without_file").hide(vvvh);
         $('#files').removeAttr('required');
     }
     
