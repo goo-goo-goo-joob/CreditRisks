@@ -1,27 +1,18 @@
-import io
-import zipfile
+import typing
 
 import pandas as pd
 
 
 class AbstractModel(object):
-    name = None
-
-    def __init__(self, name: str, file_stream: io.BytesIO):
+    def __init__(self, name: str, plots: typing.Dict[str, bytes]):
         """
-        Load model from a file
+        Load model info
 
-        :param name: model dump
-        :param file_stream: byte stream with model data
+        :param name: model name
+        :param plots: Dict of saved images
         """
         self.name = name
-        self.plots = {}
-        with zipfile.ZipFile(file_stream) as zfile:
-            for file in zfile.filelist:
-                if file.filename.startswith('plots/') and file.file_size > 0:
-                    file_name = file.filename.split('/')[1].split('.')[0]
-                    with zfile.open(file) as f:
-                        self.plots[file_name] = f.read()
+        self.plots = plots
 
     def predict_proba(self, item: pd.DataFrame) -> float:
         """
