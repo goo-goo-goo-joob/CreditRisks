@@ -15,7 +15,7 @@ import pandas as pd
 import calc_service_pb2
 import calc_service_pb2_grpc
 import feature_impact
-from calc_model import get_models
+from loader import get_models
 
 LOGGER = logging.getLogger(__name__)
 LISTEN_PORT = os.getenv("LISTEN_PORT", 9000)
