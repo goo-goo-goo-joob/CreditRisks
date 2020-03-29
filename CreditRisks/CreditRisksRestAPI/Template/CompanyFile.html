@@ -1,23 +1,201 @@
-﻿<p>
-    <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Пример загрузочного файла</a>
-</p>
 <form enctype="multipart/form-data" id="generate_params">
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="inn">ИНН</label>
         <input class="form-control" id="inn" name="inn" placeholder="ИНН" required type="text">
-    </div>
-    <div class="form-group">
-        <label for="file_report">Файл с отчетностью</label>
-        <input id="file_report" name="file_report" required type="file">
+    </div> -->
+    
+    <p class="lead"><b>Шаг 1.</b> Загрузите данные</p>
+
+    <div class="container pl-0">
+        <div class="custom-file w-50">
+            <input type="file" class="custom-file-input" name="file" id="files" required>
+            <label class="custom-file-label" for="files" data-browse="Открыть">Выберите файл...</label>
+            <div class="invalid-feedback">Необходимо загрузить текстовый файл с финансовой отчётностью.</div>
+        </div>
     </div>
 
+    <p class="lead">
+        Или выберете из вариатов ниже:<br>
+        <a href="https://yadi.sk/d/6AsNf7CqWiGFww" target="_blank">Примеры загрузочного файла</a>
+    </p>
+
+    <button type="button" class="btn btn-outline-secondary rounded-pill" id="without_file" onclick="defaultTable()">
+        У меня нет файла
+    </button>
+    <p></p>
+
+    <p class="lead"><b>Шаг 2.</b> Редактирование параметров</p>
+
+    <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> Загрузите данные.
+    </div>
+    
+    <p>
+        <button type="button" id="changeNFParams" class="btn rounded-pill text-white" style="background-color: #454545;display: none;" data-toggle="collapse" data-target="#user_input" aria-expanded="false" aria-controls="user_input">
+            Редактировать нефинансовые показатели
+        </button>
+    </p>
+
+    <div class="collapse" id="user_input">
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Риск бизнес-модели:</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input  type="radio" name="BusinessModelRisk" id="BusinessModelRisk_1" value="1" checked> Высокий
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="BusinessModelRisk" id="BusinessModelRisk_2" value="0"> Низкий&nbsp
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Есть ли положительная информация по составу акционеров?</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input  type="radio" name="PositiveShareholders" id="PositiveShareholders_1" value="1" checked> Да &nbsp
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="PositiveShareholders" id="PositiveShareholders_2" value="0"> Нет
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Есть ли отрицательная информация по составу акционеров?</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="NegativeShareholders" id="NegativeShareholders_1" value="-1" checked> Да &nbsp
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="NegativeShareholders" id="NegativeShareholders_2" value="0"> Нет
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>Вкладывают ли собственники дополнительные средства в бизнес?</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="DesireToInvest" id="DesireToInvest_1" value="1" checked> Да &nbsp
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="DesireToInvest" id="DesireToInvest_2" value="0"> Нет
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td>Изымают ли собственники дополнительные средства из бизнеса?</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="WithdrawalFunds" id="WithdrawalFunds_1" value="-1" checked> Да &nbsp
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="WithdrawalFunds" id="WithdrawalFunds_2" value="0"> Нет
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td>Наличие споров по доле в собственном капитале или активам компании между собственниками:</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="OwnershipConflict" id="OwnershipConflict_1" value="-1" checked> Есть
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="OwnershipConflict" id="OwnershipConflict_2" value="0"> Нет &nbsp
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+                <td>Наличие конфликтов между руководством и акционерами компании:</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="ManagementShareholdersConflict" id="ManagementShareholdersConflict_1" value="-1" checked> Есть
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="ManagementShareholdersConflict" id="ManagementShareholdersConflict_2" value="0"> Нет &nbsp
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">8</th>
+                <td>Участие в финансировании сделки собственными средствами:</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="OwnFundsTransaction" id="OwnFundsTransaction_1" value="1" checked> Да &nbsp
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="OwnFundsTransaction" id="OwnFundsTransaction_2" value="-1"> Нет
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">9</th>
+                <td>Адекватны ли источники погашения?</td>
+                <td>
+                    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="RelevantRepayment" id="RelevantRepayment_1" value="1" checked> Да &nbsp
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="RelevantRepayment" id="RelevantRepayment_2" value="-1"> Нет
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <p></p>
+    <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;display: none;" data-toggle="collapse"
+            data-target="#parse_file" aria-expanded="false" aria-controls="parse_file" id="change_params">
+        Редактировать финансовые показатели
+    </button>
+
+    <p></p>
+    
+    <div class="collapse" id="parse_file">
+        <div id="result" class="container pl-0">
+        </div>
+    </div>
+    
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Рассчитать"/>
+        <p class="lead"><b>Шаг 3.</b> Получите оценку вероятности дефолта компании</p>
+        
+        <div class="alert alert-warning" role="alert">
+            <strong>Warning!</strong> Загрузите данные.
+        </div>
+        
+        <input type="submit" id="calculate" class="btn rounded-pill btn-warning" style="font-size: large;display: none;" value="Рассчитать"/>
     </div>
 </form>
+
 <div class="form-group">
     <table class="table table-striped" id="result_table" style="display: none">
-        <caption style="caption-side: top">Расчет вероятности дефолта</caption>
+        <caption class="lead" style="caption-side: top">Результаты расчёта вероятности дефолта</caption>
         <thead>
         <tr style="text-align: center">
             <th scope="col">Название модели предсказания</th>
@@ -40,9 +218,10 @@
                 </button>
             </div>
             <div class="modal-body">
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
@@ -72,7 +251,7 @@
                         <input class="form-control" id="head" name="head" placeholder="Правая граница моделирования" required type="number" value="20000">
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Рассчитать"/>
+                        <input type="submit" class="btn btn-warning rounded-pill" value="Рассчитать">
                     </div>
                 </form>
                 <div id="image_out">
@@ -80,19 +259,42 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
 </div>
-<script>
+
+<div aria-hidden="true" aria-labelledby="reportModal" class="modal fade" id='reportModal' role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Расчет влияния параметра</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="reportTable">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary rounded-pill" onclick="downloadReport()"> Скачать </button>
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
     function addElToSelector() {
         select = document.getElementById('feature');
         features = getFeatures();
         for (let i of features) {
             var opt = document.createElement('option');
             opt.value = i;
-            opt.innerHTML = i;
+            opt.innerHTML = i; 
             select.appendChild(opt);
         }
         select.value = "year_0_12503";
@@ -115,7 +317,7 @@
             error: error_handler
         });
     }
-
+    
     $('#impactModal').on('show.bs.modal', function (e) {
         let modal = $(this);
         let sender = $(e.relatedTarget);
@@ -148,15 +350,12 @@
     });
     $("#generate_params").on('submit', function (e) {
         e.preventDefault();
-        let inn = $('#inn').val();
-        let file = $('#file_report');
-        let fd = new FormData(this);
-        if (inn && file)
+        // let file = $('#file_report');
+        // let fd = new FormData(this);
+        if (haveData)
             $.ajax({
                 url: '/api/calculate',
-                data: fd,
-                processData: false,
-                contentType: false,
+                data: {"data": JSON.stringify(getData())},
                 type: 'POST',
                 success: function (data) {
                     let target = $('#result_table');
@@ -175,6 +374,13 @@
 Влияние параметра "${key}"
 </button>
 </th>
+
+<th scope="row">
+<button type="button" class="btn btn-success wide-button" onclick="showReport('${key}','${value}')">
+отчет
+</button>   
+</th>
+
 </tr>`)
                     }
                 },
@@ -338,4 +544,861 @@
             'year_0_63503', 'year_0_64003']
     }
 
+</script>
+
+<script type="text/javascript">
+    function add_content_to(cl, text, tag, parent) {
+        //body = document.getElementById("output");
+        let elem = document.createTextNode( text );
+        elem.className = cl;
+        parent.appendChild(elem);
+        return parent
+    }
+
+    function add_content_2(cl, text, tag, parent) {
+        //body = document.getElementById("output");
+        let elem = document.createElement( tag );
+        elem.className = cl;
+        elem.textContent = text;
+        parent.appendChild(elem);
+        return parent
+    }
+
+    function create_add_input(id, text, parent) {
+        //body = document.getElementById("output");
+        elem = document.createElement( "input" );
+        elem.className = 'form-control form-control-sm';
+        elem.type = 'text';
+        elem.id = id;
+        elem.defaultValue = text;
+        parent.appendChild(elem);
+        return parent
+    }
+</script>
+
+<script type="text/javascript" >
+    const bookkeeper = {"okopf" : "ОКОПФ", "okfs" : "ОКФС", "okved" : "ОКВЭД", "type" : "Тип", "region" : "Регион",
+        "1100" : "Итого внеоборотных ",
+        "1150" : "Основные средства",
+        "1200" : "ИТОГО оборотных активов",
+        "1210" : "Запасы",
+        "1230" : "Дебиторская задолженность",
+        "1250" : "Денежные средства и денежные эквиваленты",
+        "1300" : "ИТОГО капитал",
+        "1310" : "Уставный капитал (складочный капитал, уставный фонд, вклады товарищей)",
+        "1400" : "ИТОГО долгосрочных обязательств",
+        "1500" : "ИТОГО краткосрочных обязательств",
+        "1510" : "Краткосрочные заемные обязательства",
+        "1520" : "Краткосрочная кредиторская задолженность",
+        "1600" : "БАЛАНС (актив)",
+        "1700" : "БАЛАНС (пассив)",
+        "2100" : "Валовая прибыль (убыток)",
+        "2110" : "Выручка",
+        "2120" : "Себестоимость продаж",
+        "2200" : "Прибыль (убыток) от продаж",
+        "2300" : "Прибыль (убыток) до налогообложения",
+        "2400" : "Чистая прибыль (убыток)",
+        "financialDebt" : "Финансовый долг",
+        "CreditLeverage" : "Кредитное плечо",
+        "FinancialIndependence" : "Финансовая независимость",
+        "DebtBurden" : "Долговая нагрузка",
+        "CoverageDebtWithAccumulatedProfit" : "Покрытие финансового долга накопленной прибылью",
+        "ReturnAssetsNetProfit" : "Рентабельность активов по чистой прибыли",
+        "ReturnAssetsOperatingProfit" : "Рентабельность активов по операционной прибыли",
+        "OperatingMargin" : "Операционная рентабельность",
+        "NetProfitMargin" : "Рентабельность деятельности по чистой прибыли",
+        "LiabilityCoverageOperatingProfit" : "Покрытие обязательств операционной прибылью",
+        "OperatingProfitFinancialDebtRatio" : "Соотношение операционной прибыли и финансового долга",
+        "FinancialDebtRevenueRatio" : "Соотношение финансового долшга и выручки",
+        "CurrentLiquidity" : "Текущая ликвидность",
+        "QuickLiquidity" : "Быстрая ликвидность",
+        "InstantLiquidity" : "Мгновенная ликвидность",
+        "LevelOfOperatingAssets" : "Уровень работающих активов",
+        "turnoverDebtorDebt" : "Оборачиваемость дебитерской задолженности",
+        "turnoverReserves" : "Оборачиваемость запасов",
+        "turnoverCreditDebt" : "Оборачиваемость кредиторской задолженности (дни)",
+        "FinancialCycle" :  "Финансовый цикл",
+        "AssetTurnover" : "Оборачиваемость активов"};
+    
+    let names = [];
+    let usedNames = [];
+    let region;
+    let year_0;
+    let haveData = false;
+    
+    let vvv = 300;
+    let vvvh = NaN;
+    
+    let onlyInBook = true;  //Вывод только того, что есть в словаре
+    let drawYear = true; //Отрисовывать строчку с годом
+    let drawRegion = true; //Отрисовывать строску с регионом
+    let changeNotFin = true; //Менять нефинансовые показатели согласно загруженному файлу
+    
+    $(function () {
+        $('#files').on('change', function (evt) {
+            let files = document.getElementById('files').files;
+            if (!files.length) {
+                alert('Please select a file!');
+                return;
+            }
+            let reader = new FileReader();
+            reader.onloadend = function (evt) {
+
+                if (evt.target["readyState"] !== FileReader.DONE) {
+                    return;
+                }
+                names = [];
+                usedNames = [];
+                let target = $("#result").empty();
+                let table_print = document.getElementById("result");
+                let content = evt.target['result'].split('\n');
+                let dict = {};
+                for (let i = 0; i < content.length; i++) {
+                    if (content[i] === '') {
+                        continue;
+                    }
+                    let row = content[i].split('\t');
+                    let feat_name = row[0].split('_');
+                    if (feat_name.length === 3) {
+                        if (!(feat_name[2] in dict)) {
+                            dict[feat_name[2]] = {};
+                            names.push(feat_name[2]);
+                        }
+                        dict[feat_name[2]][feat_name[1]] = row[1];
+
+                    } else {
+                        if (row[0] === 'region'){
+                            region = row[1];
+                        }
+                        if (row[0] === 'year_0'){
+                            year_0 = row[1];
+                        }
+                        if (changeNotFin && $("input").is("#" + row[0] +"_1")){
+                            let z2 = $("#" + row[0] +"_2").val();
+                            if (z2 === row[1]){
+                                $('#' + row[0] + '_2').prop('checked', true).parent().addClass('active');
+                                $('#' + row[0] + '_1').removeAttr('checked').prop('checked', false).parent().removeClass('active');   
+                            } else {
+                                $('#' + row[0] + '_1').prop('checked', true).parent().addClass('active');
+                                $('#' + row[0] + '_2').removeAttr('checked').prop('checked', false).parent().removeClass('active');
+                            }
+                        }
+                    }
+                    // target.append(`<div class="row">${row[0]} = ${row[1]}</div>`)
+                }
+
+                createTable1(table_print, dict );
+                haveData = true;
+                // $('#changeNFParams').css('display', 'inline-block');
+                $('#changeNFParams').show(vvv);
+                $('#change_params').show(vvv);
+                $('#calculate').show(vvv);
+                $('.alert-warning').hide(vvv);
+                setUnEnabled();     
+                $("#without_file").hide(vvvh);
+                
+            };
+            let blob = files[0].slice(0, files[0].size);
+            reader.readAsBinaryString(blob);
+
+        });
+    });
+    
+    function createTable1(table_print, dict ){
+        let table = document.createElement("table");
+        table.id = "finZn";
+        table.className = "table table-striped ";///table-borderless
+        let thead = document.createElement("thead");
+        let tr = document.createElement("tr");
+        let th = document.createElement("th");
+        th = add_content_to("", "#", "", th);
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "Наименование показателя", "", th);
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "За последний год", "", th);
+        th.style = "width: 20%;";
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "За предыдущий год", "", th);
+        th.style = "width: 20%;";
+        tr.append(th);
+        th = document.createElement("th");
+        th = add_content_to("", "За год, предшествующий предыдущему", "", th);
+        th.style = "width: 20%;";
+        tr.append(th);
+        thead.append(tr);
+        table.append(thead);
+        let tbody = document.createElement("tbody");
+        let ii = 1;
+        //add year
+        if (drawYear) {
+            tr = document.createElement("tr");
+            tr.id = "raw_year";
+
+            th = document.createElement("th");
+            th.scope = "row";
+            th = add_content_to("", (ii).toString(), "", th);
+            ii += 1;
+            tr.appendChild(th);
+
+            let td = document.createElement("td");
+            td = add_content_to("", 'Год', "", td);
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td = create_add_input("dt_0_" + "year", year_0, td);
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td = create_add_input("dt_-1_" + "year", parseInt(year_0) - 1, td);
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td = create_add_input("dt_-2_" + "year", parseInt(year_0) - 2, td);
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+        }
+        if (drawRegion){
+            tr = document.createElement("tr");
+            tr.id = "raw_region";
+    
+            th = document.createElement("th");
+            th.scope = "row";
+            th = add_content_to("", (ii).toString(), "", th);
+            ii += 1;
+            tr.appendChild(th);
+    
+            let td = document.createElement("td");
+            td = add_content_to("", 'Регион', "", td);
+            tr.appendChild(td);
+    
+            td = document.createElement("td");
+            td = create_add_input("dt_0_" + "region", region, td);
+            tr.appendChild(td);
+    
+            td = document.createElement("td");
+            tr.appendChild(td);
+            td = document.createElement("td");
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+        }
+        for (let i = 0; i < names.length; i++) {
+            // let el = dict[names[i]];
+
+            tr = document.createElement("tr");
+            tr.id = "raw_" + names[i];
+
+            //<th scope="row">1</th>
+            th = document.createElement("th");
+            th.scope = "row";
+            th = add_content_to("", (ii).toString(), "", th);
+            tr.appendChild(th);
+
+            let td = document.createElement("td");
+            
+            if ((names[i].slice(0,4) in bookkeeper) && !(isNaN(names[i]))){
+                td = add_content_to("", bookkeeper[names[i].slice(0,4)] + " (" + names[i].slice(0,4) + ")", "", td);
+            } else {
+                if (names[i] in bookkeeper){
+                    td = add_content_to("", bookkeeper[names[i]], "", td);
+                } else {
+                    if (onlyInBook){
+                        continue;
+                    } else {
+                        td = add_content_to("", names[i].slice(0,4), "", td);
+                    }
+                }
+            }
+            tr.appendChild(td);
+            
+            tr = addZn(i, tr, dict);
+
+            if (tr === false){
+                continue;
+            }
+            
+            tbody.appendChild(tr);
+            ii += 1;
+        }
+        table.appendChild(tbody);
+        table_print.appendChild(table);
+
+        // <button type="button" class="btn rounded-pill text-white" style="background-color: #454545;" aria-expanded="false" >
+        //     Заполнить
+        //     </button>
+        
+        let btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn rounded-pill text-white";
+        btn.style = "background-color: #454545";
+        btn.textContent = "Скачать введённые значения";
+        btn.id = "downloadData";
+        btn.onclick = downloadParams;
+
+        table_print.appendChild(btn);
+        table_print.appendChild( document.createElement("p"));
+        
+    }
+    
+    function addZn(i, tr, dict){
+        // console.log(dict);
+        //проверка колонок оканчивающихся на 3|4
+        
+        if ((['3','4','5','6'].indexOf(names[i][0]) !== -1)||(usedNames.indexOf(names[i]) !== -1 )||(usedNames.indexOf(names[i].slice(0,4)) !== -1 )){
+            return false;
+        }
+        if (names[i].length === 5 && (names[i][4] === '3' || names[i][4] === '4')){
+            let el3 = dict[names[i].slice(0,4) + '3'];
+            let el4 = dict[names[i].slice(0,4) + '4'];
+
+            let td = document.createElement("td");
+            if (0 in el3) {
+                td = create_add_input("dt_0_" + names[i].slice(0,4), el3[0], td);
+            } else {
+                td = add_content_to("", "empty)", "", td);
+            }
+            tr.appendChild(td);
+            if (el4[0] === '0' ){
+                td = document.createElement("td");
+                if (0 in el4) {
+                    td = create_add_input("dt_-1_" + names[i].slice(0,4), el4[0], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+            } else {
+                td = document.createElement("td");
+                if (-1 in el3) {
+                    td = create_add_input("dt_-1_" + names[i].slice(0,4), el3[-1], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+            }
+
+            td = document.createElement("td");
+            if (-1 in el4) {
+                td = create_add_input("dt_-2_" + names[i].slice(0,4), el4[-1], td);
+            } else {
+                td = add_content_to("", "empty)", "", td);
+            }
+            tr.appendChild(td);
+
+            usedNames.push(names[i].slice(0,4));
+        } else {
+            if (isNaN(names[i])){
+                let el = dict[names[i]];
+                let td = document.createElement("td");
+                if (0 in el) {
+                    td = create_add_input("dt_0_" + names[i], el[0], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+
+                td = document.createElement("td");
+                if (-1 in el) {
+                    td = create_add_input("dt_-1_" + names[i], el[-1], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+
+                
+                td = document.createElement("td");
+                tr.appendChild(td);
+                usedNames.push(names[i]);
+            }
+            else{
+                let el = dict[names[i]];
+                let td = document.createElement("td");
+                if (0 in el) {
+                    td = create_add_input("dt_0_" + names[i], el[0], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+
+                td = document.createElement("td");
+
+                if (-1 in el) {
+                    td = create_add_input("dt_-1_" + names[i], el[-1], td);
+                } else {
+                    td = add_content_to("", "empty)", "", td);
+                }
+                tr.appendChild(td);
+                td = document.createElement("td");
+                tr.appendChild(td);
+                usedNames.push(names[i]);
+            }
+        }
+        return tr;
+    }
+    
+    function defaultTable()  {
+        names = [];
+        usedNames = [];
+        year_0 = 2019;
+        region = 0;
+                
+        $("#result").empty();
+        let table_print = document.getElementById("result");
+        let content = getRelevantColumns();
+        let dict = {};
+        for (let i = 0; i < content.length; i++) {
+            let feat_name = content[i].split('_');
+            if (feat_name.length === 3) {
+                if (!(feat_name[2] in dict)) {
+                    dict[feat_name[2]] = {};
+                    names.push(feat_name[2]);
+                }
+                dict[feat_name[2]][feat_name[1]] = '0';
+
+            } else {
+                if (content[i] === 'region'){
+                    // console.log(row[1]);
+                    region = '0';
+                }
+            }
+            // target.append(`<div class="row">${row[0]} = ${row[1]}</div>`)
+        }
+
+        createTable1(table_print, dict );
+        
+        haveData = true;
+        $('#change_params').show(vvv);
+        $('#calculate').show(vvv);
+        $('.alert-warning').hide(vvv);
+        $('#changeNFParams').show(vvv);
+        setUnEnabled();
+        $("#without_file").hide(vvvh);
+        $('#files').removeAttr('required');
+    }
+    
+    function getRelevantColumns(){
+        let out =  [ "year_0_okopf", "year_-1_okopf", "year_0_okfs",
+            "year_-1_okfs", "year_0_okved", "year_-1_okved", "year_0_type", "year_-1_type"];
+        
+        for (let key in bookkeeper){
+            if (!(isNaN(key))){
+                out.push("year_0_" + key + '3');
+                out.push("year_-1_" + key + '3');
+                out.push("year_0_" + key + '4');
+                out.push("year_-1_" + key + '4');
+            }
+        }
+        return out
+            // ["year_0_11503", "year_-1_11503",
+            // "year_0_11504", "year_-1_11504", "year_0_11003", "year_-1_11003", "year_0_11004", "year_-1_11004", "year_0_12103",
+            // "year_-1_12103", "year_0_12104", "year_-1_12104", "year_0_12303", "year_-1_12303", "year_0_12304", "year_-1_12304",
+            // "year_0_12503", "year_-1_12503", "year_0_12504", "year_-1_12504", "year_0_12003", "year_-1_12003", "year_0_12004",
+            // "year_-1_12004", "year_0_16003", "year_-1_16003", "year_0_16004", "year_-1_16004", "year_0_13103", "year_-1_13103",
+            // "year_0_13104", "year_-1_13104", "year_0_13003", "year_-1_13003", "year_0_13004", "year_-1_13004", "year_0_15103",
+            // "year_-1_15103", "year_0_15104", "year_-1_15104", "year_0_15203", "year_-1_15203", "year_0_15204", "year_-1_15204",
+            // "year_0_15003", "year_-1_15003", "year_0_15004", "year_-1_15004", "year_0_17003", "year_-1_17003", "year_0_17004",
+            // "year_-1_17004", "year_0_21103", "year_-1_21103", "year_0_21104", "year_-1_21104", "year_0_22003",
+            // "year_-1_22003", "year_0_22004", "year_-1_22004", "year_0_24003", "year_-1_24003", "year_0_24004", "year_-1_24004"]
+    }
+
+    function setUnEnabled(){
+        $('#dt_0_year').attr("onchange","changeYear()");
+        $('#dt_-1_year').attr("readonly",true);
+        $('#dt_-2_year').attr("readonly",true);
+    }
+
+    function changeYear() {
+        let year = parseInt($('#dt_0_year').val());
+        $('#dt_-1_year').val(year - 1);
+        $('#dt_-2_year').val(year - 2);
+    }
+</script>
+
+<script type="text/javascript">
+    // The name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    function getAllNotFinValues() {
+        let d5 = {};
+
+        $('.btn-group-toggle').each(function (indx) {
+            $(this).children(".btn").each(function (ind2){
+                if ($(this).prop("control").checked) {
+                    d5[$(this).prop("control").id.split('_')[0]] =$(this).prop("control").value;
+                    // console.log($(this).prop("control").id.split('_')[0]);
+                }
+            });
+        });
+        return d5;
+    }
+
+    function getAllNotFinTexts() {
+        let d5 = {};
+        $('.btn-group-toggle').each(function (indx) {
+            $(this).children(".btn").each(function (ind2) {
+                if ($(this).prop("control").checked) {
+                    d5[$(this).prop("control").id.split('_')[0]] = $(this).text();
+                    // console.log($(this).prop("control").id.split('_')[0])
+                }
+            });
+        });
+        return d5;
+    }
+    
+    function getAllFinValues(){
+        let dict = {};
+        let val;
+        for (let i = 0; i < usedNames.length; i++) {
+            if (isNaN(usedNames[i])){
+                dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
+                dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
+            } else {
+                if (usedNames[i].length === 4) {
+                    dict["year_0_" + usedNames[i] + '3'] = $("#dt_0_" + usedNames[i]).val();
+
+                    val = $("#dt_-1_" + usedNames[i]).val();
+                    dict["year_-1_" + usedNames[i] + '3'] = val;
+                    dict["year_0_" + usedNames[i] + '4'] = val;
+
+                    dict["year_-1_" + usedNames[i] + '4'] = $("#dt_-2_" + usedNames[i]).val();
+                } else {
+                    dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
+                    dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
+                }
+            }
+        }
+        return dict;
+    }
+    
+    function getData(){
+        let d1 = getAllNotFinValues();
+        let d2 = getAllFinValues();
+        let d3 = Object.assign({}, d1);
+        d3['region'] =  $("#dt_0_region").val();
+        d3['year_0'] = $("#dt_0_year").val();
+        d3['year_-1'] = $("#dt_-1_year").val();
+        // d3['RelevantRepayment'] = '1';
+        d3['MacroeconomicRisk'] = '1';
+        d3['IndustryRating'] = '1';
+        for (let key in d2){    
+            d3[key] = d2[key];
+        }        
+        return d3;
+    }
+
+    function download(data, filename, type) {
+        var file = new Blob([data], {type: type});
+        if (window.navigator.msSaveOrOpenBlob) {// IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        } else { // Others
+            var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+    }
+    
+    function downloadParams(){
+
+        
+        let data = getData();
+        let s = '';
+        for (let key in data){
+            s += key  + '\t' + data[key] + '\n';
+        }
+
+        let todayDate = new Date();
+        let currHours = format_ch(todayDate.getHours());
+        let currMinutes = format_ch(todayDate.getMinutes());
+        let currSeconds= format_ch(todayDate.getSeconds());
+        let currYear = format_ch(todayDate.getFullYear());
+        let currMonth = format_ch(todayDate.getMonth()+1);
+        let currDay = format_ch(todayDate.getDate());
+        let name = currYear + '-' + currMonth + '-'  + currDay + ' ' + currHours + '.' + currMinutes + '.' + currSeconds + '.txt' ;
+        download(s, name, 'txt')
+    }
+
+    function format_ch(ch){
+        if (ch < 10){
+            return '0' + ch;
+        }
+        return '' + ch;
+    }
+</script>
+
+<script type="text/javascript">
+    //work with report
+    function showReport(key, value){
+        $("#reportModal").modal('show');
+        $("#reportTable").empty();
+        let reportTable = document.getElementById("reportTable");
+        reportTable.append(createReportTable(key, value));
+    }
+    
+    function createTrR(c1,c2,c3, bold){
+        let tr = document.createElement("tr");
+        
+        let td = document.createElement("td");
+        if (bold){
+            td = add_content_2("", c1, "b", td);
+        } else {
+            td = add_content_to("", c1, "", td);
+            td.style = "padding-left: 30px";
+        }
+        tr.append(td);
+
+        td = document.createElement("td");
+        td = add_content_to("", c2, "", td);
+        tr.append(td);
+
+        td = document.createElement("td");
+        td = add_content_to("", c3, "", td);
+        tr.append(td);
+        return tr;
+    }
+    
+    function createReportTable(key, value){
+         
+        let table = document.createElement("table");
+        table.className = "table";
+        table.width = "100%";
+        let caption = document.createElement("caption");
+        caption.innerHTML = "<b>Заклюючение о присвоении рейтинга (" + key + ")</b>";
+        caption.style = "caption-side: top;";
+        table.append(caption);
+
+        let thead = document.createElement("thead");
+        let tr = document.createElement("tr");
+
+        let th = document.createElement("th");
+        th = add_content_to("", "#", "", th);
+        // th.className = "th";
+        tr.append(th);  
+
+        th = document.createElement("th");
+        th = add_content_to("", "Текущая оценка рейтинга", "", th);
+        tr.append(th);
+
+        th = document.createElement("th");
+        // th.className = "th";
+        th = add_content_to("", "Вклады показателей", "", th);
+        tr.append(th);
+        
+        thead.append(tr);
+        table.append(thead);
+        
+        let notFinTexts = getAllNotFinTexts();
+        
+        let tbody = document.createElement("tbody");
+        
+        //Дата присвоения рейтинга
+        if (true){
+            let todayDate = new Date();
+            let currYear = format_ch(todayDate.getFullYear());
+            let currMonth = format_ch(todayDate.getMonth()+1);
+            let currDay = format_ch(todayDate.getDate());
+
+            tbody.append(createTrR("Дата присвоения рейтинга",currDay + "." + currMonth + "." + currYear,"", true));
+        }
+
+        //Уровень макроэкономического риска
+        tbody.append(createTrR("Уровень макроэкономического риска","","", true));
+
+        //Фамилия И.О. сотрудника, присвоившего рейтинг
+        tbody.append(createTrR("Фамилия И.О. сотрудника, присвоившего рейтинг","","", true));
+        
+        //ИНН заемщика
+        tbody.append(createTrR("ИНН заемщика","","", true));
+
+        //Филиал, Заемщик
+        tbody.append(createTrR("Филиал, Заемщик","","", true));
+        
+        //Система налогообложения
+        tbody.append(createTrR("Система налогообложения","","", true));
+
+        //Отрасль
+        tbody.append(createTrR("Отрасль","","", true));
+
+        //Бизнес модель
+        tbody.append(createTrR("Бизнес модель","","", true));
+
+        //Увеличение долга в случае одобрения сделки (в тыс. руб.)
+        tbody.append(createTrR("Увеличение долга в случае одобрения сделки (в тыс. руб.)","","", true));
+
+        //Финансовые показатели кредитного риска
+        tbody.append(createTrR("Финансовые показатели кредитного риска","","", true));
+        
+        //Чистая прибыль к макс(выручка; долг)
+        tbody.append(createTrR("Чистая прибыль к макс(выручка; долг)","","", false));
+
+        //Финансовый долг к выручке
+        tbody.append(createTrR("Финансовый долг к выручке","","", false));
+
+        //Денежные соедства к краткосрочным обязательствам
+        tbody.append(createTrR("Денежные соедства к краткосрочным обязательствам","","", false));
+        
+        //Оценка организационной структуры
+        tbody.append(createTrR("Оценка организационной структуры","","", true));
+        
+        //Является заемщик основной организационной структурой и основным балансодержателем?
+        tbody.append(createTrR("Является заемщик основной организационной структурой и основным балансодержателем?","","", false));
+        
+        //Риски качества управления
+        tbody.append(createTrR("Риски качества управления","","", true));
+        
+        //Положительная информация по составу акционеров
+        tbody.append(createTrR("Положительная информация по составу акционеров",notFinTexts["PositiveShareholders"],"", false));
+
+        //Отрицательная информация по составу акционеров
+        tbody.append(createTrR("Отрицательная информация по составу акционеров",notFinTexts["NegativeShareholders"],"", false));
+
+        //Желание/возможность вкладывать дополнительные средства в бизнес
+        tbody.append(createTrR("Желание/возможность вкладывать дополнительные средства в бизнес",notFinTexts['DesireToInvest'],"", false));
+
+        //Изъятие собственником средств из бизнеса
+        tbody.append(createTrR("Изъятие собственником средств из бизнеса",notFinTexts["WithdrawalFunds"],"", false));
+
+        //Наличие конфликтов между собственниками
+        tbody.append(createTrR("Наличие конфликтов между собственниками",notFinTexts["OwnershipConflict"],"", false));
+
+        //Наличие конфликтов между руководством и акционерами компании
+        tbody.append(createTrR("Наличие конфликтов между руководством и акционерами компании",notFinTexts["ManagementShareholdersConflict"],"", false));
+
+        //Бизнес риски
+        tbody.append(createTrR("Бизнес риски","","", true));
+
+        //Высокая продуктовая концентрация
+        tbody.append(createTrR("Высокая продуктовая концентрация","","", false));
+
+        //Наличие у компании нерыночных преимуществ, дающих особый статус
+        tbody.append(createTrR("Наличие у компании нерыночных преимуществ, дающих особый статус","","", false));
+
+        //Сильная переговорная позиция с поставщиками
+        tbody.append(createTrR("Сильная переговорная позиция с поставщиками","","", false));
+
+        //Концентрация поставщиков
+        tbody.append(createTrR("Концентрация поставщиков","","", false));
+
+        //Сильная переговорная позиция с покупателями
+        tbody.append(createTrR("Сильная переговорная позиция с покупателями","","", false));
+
+        //Концентрация покупателей
+        tbody.append(createTrR("Концентрация покупателей","","", false));
+
+        //Рейтинг сделки
+        tbody.append(createTrR("Рейтинг сделки","","", true));
+
+        //Участие в финансировании сделки собственными средствами
+        tbody.append(createTrR("Участие в финансировании сделки собственными средствами",notFinTexts["OwnFundsTransaction"],"", false));
+
+        //Адекватность источников погашения
+        tbody.append(createTrR("Адекватность источников погашения",notFinTexts["RelevantRepayment"],"", false));
+
+        //Базовая вероятность дефолта
+        tbody.append(createTrR("Базовая вероятность дефолта",value,"", true));
+
+        //Базовый рейтинг
+        tbody.append(createTrR("Базовый рейтинг",getRating(value),"", true));
+        
+        //Корректировка рейтинга
+        tbody.append(createTrR("Корректировка рейтинга","","", true));
+        
+        //Причина корректировки рейтинга
+        tbody.append(createTrR("Причина корректировки рейтинга","","", true));
+
+        //Скоррекированная вероятность дефолта
+        tbody.append(createTrR("Скоррекированная вероятность дефолта","","", true));
+
+        //Скоррекированный рейтинг
+        tbody.append(createTrR("Скоррекированный рейтинг","","", true));
+
+        //Скоррекированный вероятность дефолта с учетом экономического цикла
+        tbody.append(createTrR("Скоррекированная вероятность дефолта с учетом экономического цикла","","", true));
+        
+        // for (let i = 0;i < 10; i++){
+        //     tr = document.createElement("tr");
+        //     let td = document.createElement("td");
+        //     td = add_content_to("", "example", "", td);
+        //     tr.append(td);
+        //
+        //     td = document.createElement("td");
+        //     td = add_content_to("", key, "", td);
+        //     tr.append(td);
+        //
+        //     td = document.createElement("td");
+        //     td = add_content_to("", value, "", td);
+        //     tr.append(td);
+        //
+        //     tbody.append(tr);
+        // }
+        
+        table.append(tbody);
+        return table;
+    }
+
+    function downloadReport(){
+        let report = document.getElementById("reportTable");
+        let prefix = '<!DOCTYPE html> <html lang="en"> <head>     <meta charset="UTF-8">    <title>Title</title> ';
+        let postfix = "</body> </html>";
+        let css = "<style> table {border-collapse: collapse;} td, th {border: 1px solid;}</style></head> <body>";
+        let s = report.innerHTML;
+        let name = 'report.doc';
+        download(prefix + css + s + postfix, name, 'doc')
+    }
+    
+    function getRating(value){
+        let ratings = getRatings();
+        let flValue = parseFloat(value.replace(',', '.'));
+        let last = 0.00;
+        for (let key in ratings){
+            if (flValue < key){
+                break;
+            }
+            last = key;
+        }
+        return ratings[last];
+    }
+    
+    function getRatings(){
+        return {
+            0.00 : "AAA",
+            0.02 : "AA+",
+            0.03 : "AA",
+            0.04 : "AA-",
+            0.06 : "A+",
+            0.08 : "A",
+            0.13 : "A-",
+            0.18 : "BBB+",
+            0.27 : "BBB",
+            0.40 : "BBB-",
+            0.59 : "BB+",
+            0.87 : "BB",
+            1.29 : "BB-",
+            1.90 : "B+",
+            3.33 : "B",
+            5.29 : "B-",
+            7.73 : "CCC+",
+            10.65 : "CCC",
+            14.05 : "CCC-",
+            17.93 : "CC+",
+            22.29 : "CC",
+            27.13 : "CC-",
+            32.45 : "C+",
+            38.25 : "C",
+            44.53 : "C-",
+            51.29 : "SD",
+            99.999 : "D"
+        };
+    }
+    
 </script>
