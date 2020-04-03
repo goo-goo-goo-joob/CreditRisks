@@ -5,7 +5,7 @@ from catboost import CatBoostClassifier
 from .abstract_model import AbstractModel
 
 
-class CatBModel(AbstractModel):
+class CatBoostModel(AbstractModel):
     def __init__(self, name, plots, cols, cb):
         super().__init__(name, plots)
         assert isinstance(cols, np.ndarray)
