@@ -1053,24 +1053,16 @@
 
     function getAllFinValues() {
         let dict = {};
-        let val;
         for (let i = 0; i < usedNames.length; i++) {
-            if (isNaN(usedNames[i])) {
+            if (usedNames[i].length === 4) {
+                dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
+
+                dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
+
+                dict["year_-2_" + usedNames[i]] = $("#dt_-2_" + usedNames[i]).val();
+            } else {
                 dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
                 dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
-            } else {
-                if (usedNames[i].length === 4) {
-                    dict["year_0_" + usedNames[i] + '3'] = $("#dt_0_" + usedNames[i]).val();
-
-                    val = $("#dt_-1_" + usedNames[i]).val();
-                    dict["year_-1_" + usedNames[i] + '3'] = val;
-                    dict["year_0_" + usedNames[i] + '4'] = val;
-
-                    dict["year_-1_" + usedNames[i] + '4'] = $("#dt_-2_" + usedNames[i]).val();
-                } else {
-                    dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
-                    dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
-                }
             }
         }
         return dict;

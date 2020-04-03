@@ -52,7 +52,8 @@ class BankModel(AbstractModel):
         self.weight_pairs = weight_pairs
 
     def __calc_col(self, x: pd.Series):
-        w_pair = self.weight_pairs[x.name]
+        name = x.name.split('_')[-1]
+        w_pair = self.weight_pairs[name]
         return w_pair.calc(x)
 
     def predict_proba(self, item: pd.DataFrame) -> Union[float, np.ndarray]:

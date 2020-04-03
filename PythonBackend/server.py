@@ -29,6 +29,7 @@ _MODEL_PATH = os.getenv("MODEL_PATH")
 class Handler(calc_service_pb2_grpc.CalcServiceServicer):
     def __init__(self):
         self.calc_handler = CalcHandler(_MODEL_PATH)
+        print("SERVER READY")
 
     def CalcProbability(self, request, context):
         result = self.calc_handler.calc_probability(request.Params)
@@ -53,8 +54,6 @@ def _wait_forever(server):
 
 def _run_server(bind_address):
     """Start a server in a subprocess."""
-    innerlogger = logging.getLogger('worker')
-    innerlogger.info(f'Logging a random number 10')
     LOGGER.info('Starting new server.')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=_PROCESS_COUNT), options=(('grpc.so_reuseport', 1),))
     calc_service_pb2_grpc.add_CalcServiceServicer_to_server(Handler(), server)
