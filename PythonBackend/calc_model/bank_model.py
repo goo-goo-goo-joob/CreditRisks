@@ -56,10 +56,6 @@ class BankModel(AbstractModel):
         return w_pair.calc(x)
 
     def predict_proba(self, item: pd.DataFrame) -> Union[float, np.ndarray]:
-        item['financialDebt'] = item[['year_0_15003', 'year_0_14003', 'year_0_12503']].sum(axis=1)
-        item['NetProfitMargin'] = item['year_0_24003'] / item[['year_0_21103', 'financialDebt']].max(axis=1)
-        item['FinancialDebtRevenueRatio'] = item['financialDebt'] / item['year_0_21103']
-        item['InstantLiquidity'] = item['year_0_12503'] / item['year_0_15003']
         item['managementScore'] = item[['PositiveShareholders',
                                         'NegativeShareholders',
                                         'DesireToInvest',
@@ -71,9 +67,9 @@ class BankModel(AbstractModel):
                             self.__calc_col(item['MacroeconomicRisk']) +
                             self.__calc_col(item['IndustryRating']) +
                             self.__calc_col(item['BusinessModelRisk']) +
-                            self.__calc_col(item['NetProfitMargin']) +
-                            self.__calc_col(item['FinancialDebtRevenueRatio']) +
-                            self.__calc_col(item['InstantLiquidity']) +
+                            self.__calc_col(item['year_0_NetProfitMargin']) +
+                            self.__calc_col(item['year_0_FinancialDebtRevenueRatio']) +
+                            self.__calc_col(item['year_0_InstantLiquidity']) +
                             self.__calc_col(item['managementScore']) +
                             self.__calc_col(item['DealRatio']), self.calibration_alpha, self.calibration_beta)
         if len(proba) == 1:
