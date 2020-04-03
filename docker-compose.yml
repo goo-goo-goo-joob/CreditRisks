@@ -1,0 +1,25 @@
+version: '3'
+services:
+  sharp-app:
+    image: "docker-hub.asciishell.ru/alex/creditrisks/netcore-frontend:${IMAGE_TAG}"
+    env_file: docker.env
+    ports:
+      - "8002:8080"
+    restart: always
+    depends_on:
+      - python-app
+    networks:
+      - risk-network
+
+  python-app:
+    image: "docker-hub.asciishell.ru/alex/creditrisks/python-backend:${IMAGE_TAG}"
+    env_file: docker.env
+    restart: always
+    networks:
+      - risk-network
+    volumes:
+      - ./models:/usr/src/app/models/
+
+networks:
+  risk-network:
+    driver: "bridge"
