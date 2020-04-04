@@ -31,3 +31,15 @@ Pipeline финальной модели логистической регрес
 Поиск переобученных признаков
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/Logistic_Regression_Features_Overfitter.ipynb)
+
+### lr_fit.ipynb
+
+Обучение линейной регрессии, подсчет метрик и сохранении в файл для прода
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/lr_fit.ipynb)
+
+### cb_fit.ipynb
+
+Обучение градиентного бустинга, подсчет метрик и сохранении в файл для прода
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/cb_fit.ipynb)
