@@ -270,7 +270,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Расчет влияния параметра</h5>
+                <h5 class="modal-title">Отчет</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -329,13 +329,12 @@
         e.preventDefault();
         let sender = $('#impact_param input[type=submit]');
         sender.prop('disabled', true);
-        let fd  = JSON.stringify(getData());
         // let fd = new FormData(this);
         // let file = $('#file_report');
         // fd.append('file_report', file[0].files[0]);
         $.ajax({
             url: '/api/impact',
-            data: {"file_report": fd,
+            data: {"file_report":  JSON.stringify(getData(true)),
                 "model_name": $("#impact_param").children().val(),
                 "feature": getSelectedFeature(),
                 "head": $("#head").val(),
@@ -359,7 +358,7 @@
         if (haveData)
             $.ajax({
                 url: '/api/calculate',
-                data: {"data": JSON.stringify(getData())},
+                data: {"data": JSON.stringify(getData(true))},
                 type: 'POST',
                 success: function (data) {
                     let target = $('#result_table');
@@ -925,7 +924,7 @@
         return d5;
     }
 
-    function getAllFinValues() {
+    function getAllFinValues(lastVersion) {
         let dict = {};
         for (let i = 0; i < usedNames.length; i++) {
             if (isNaN(usedNames[i])){
@@ -933,11 +932,20 @@
                 dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
             }else{
                 if (usedNames[i].length === 4) {
-                    dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
-    
-                    dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
-    
-                    dict["year_-2_" + usedNames[i]] = $("#dt_-2_" + usedNames[i]).val();
+                    if (lastVersion) {
+                        dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
+
+                        dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
+
+                        dict["year_-2_" + usedNames[i]] = $("#dt_-2_" + usedNames[i]).val();
+                    } else {
+                        dict["year_0_" + usedNames[i] + '3'] = $("#dt_0_" + usedNames[i]).val();
+
+                        dict["year_-1_" + usedNames[i] + '4'] = $("#dt_-1_" + usedNames[i]).val();
+                        dict["year_0_" + usedNames[i] + '3'] = $("#dt_-1_" + usedNames[i]).val();
+
+                        dict["year_-1_" + usedNames[i] + '4'] = $("#dt_-2_" + usedNames[i]).val();
+                    }
                 } else {
                     dict["year_0_" + usedNames[i]] = $("#dt_0_" + usedNames[i]).val();
                     dict["year_-1_" + usedNames[i]] = $("#dt_-1_" + usedNames[i]).val();
@@ -947,9 +955,9 @@
         return dict;
     }
 
-    function getData() {
+    function getData(lastVersion) {
         let d1 = getAllNotFinValues();
-        let d2 = getAllFinValues();
+        let d2 = getAllFinValues(lastVersion);
         let d3 = Object.assign({}, d1);
         d3['region'] = $("#dt_0_region").val();
         d3['year_0'] = $("#dt_0_year").val();
@@ -980,16 +988,8 @@
             }, 0);
         }
     }
-
-    function downloadParams() {
-
-
-        let data = getData();
-        let s = '';
-        for (let key in data) {
-            s += key + '\t' + data[key] + '\n';
-        }
-
+    
+    function getDate(){
         let todayDate = new Date();
         let currHours = format_ch(todayDate.getHours());
         let currMinutes = format_ch(todayDate.getMinutes());
@@ -997,7 +997,19 @@
         let currYear = format_ch(todayDate.getFullYear());
         let currMonth = format_ch(todayDate.getMonth() + 1);
         let currDay = format_ch(todayDate.getDate());
-        let name = currYear + '-' + currMonth + '-' + currDay + ' ' + currHours + '.' + currMinutes + '.' + currSeconds + '.txt';
+        return currYear + '-' + currMonth + '-' + currDay + ' ' + currHours + '.' + currMinutes + '.' + currSeconds
+    }
+
+    function downloadParams() {
+
+
+        let data = getData(false);
+        let s = '';
+        for (let key in data) {
+            s += key + '\t' + data[key] + '\n';
+        }
+
+        let name = getDate + '.txt';
         download(s, name, 'txt')
     }
 
@@ -1046,7 +1058,7 @@
         table.className = "table";
         table.width = "100%";
         let caption = document.createElement("caption");
-        caption.innerHTML = "<b>Заклюючение о присвоении рейтинга (" + key + ")</b>";
+        caption.innerHTML = "<b>Заключение о присвоении рейтинга (" + key + ")</b>";
         caption.style = "caption-side: top;";
         table.append(caption);
 
@@ -1225,7 +1237,7 @@
         let postfix = "</body> </html>";
         let css = "<style> table {border-collapse: collapse;} td, th {border: 1px solid;}</style></head> <body>";
         let s = report.innerHTML;
-        let name = 'report.doc';
+        let name = 'report_' + getDate() + '.doc';
         download(prefix + css + s + postfix, name, 'doc')
     }
 
