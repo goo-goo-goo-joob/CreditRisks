@@ -5,7 +5,7 @@ namespace CreditRisksRestAPI.Models
 {
     public class CompanyFileImpact
     {
-        [FromForm(Name = "file_report")] public IFormFile FileReport { get; set; }
+        [FromForm(Name = "file_report")] public string Data { get; set; }
         [FromForm(Name = "model_name")] public string ModelName { get; set; }
         [FromForm(Name = "feature")] public string Feature { get; set; }
         [FromForm(Name = "head")] public float Head { get; set; }

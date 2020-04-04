@@ -131,23 +131,24 @@ namespace CreditRisksRestAPI.Controllers
         [HttpPost]
         public ActionResult<string> Post([FromForm] CompanyFileImpact model)
         {
-            Dictionary<string, string> dictPython = new Dictionary<string, string>();
-            TextReader tr = new StreamReader(model.FileReport.OpenReadStream());
-            string line = tr.ReadLine();
-            while (line != null)
-            {
-                var pair = line.Split('\t');
-                string name = pair[0];
-                string value = pair[1];
-
-                dictPython[name] = value;
-
-                line = tr.ReadLine();
-            }
+            // Dictionary<string, string> dictPython = new Dictionary<string, string>();
+            // TextReader tr = new StreamReader(model.FileReport.OpenReadStream());
+            Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(model.Data);
+            // string line = tr.ReadLine();
+            // while (line != null)
+            // {
+            //     var pair = line.Split('\t');
+            //     string name = pair[0];
+            //     string value = pair[1];
+            //
+            //     dictPython[name] = value;
+            //
+            //     line = tr.ReadLine();
+            // }
 
 
             var request = new ImpactRequest {ModelName = model.ModelName, Feature = model.Feature, Head = model.Head, Tail = model.Tail};
-            request.Data.Add(dictPython);
+            request.Data.Add(values);
 
             var reply = _backend.Client.GetImpact(request);
             return Content(JsonConvert.SerializeObject(reply.Image.ToBase64()), "application/json", Encoding.UTF8);
