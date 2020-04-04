@@ -30,8 +30,8 @@ def prnt(mas, sm, logx, feature):
     plt.grid(True)
     plt.xlabel('Значение параметра', fontsize=16)
     plt.ylabel('Вероятность дефолта', fontsize=16)
-    #plt.ylim([0, 1])
-    #plt.title(feature, fontsize=20)
+    # plt.ylim([0, 1])
+    # plt.title(feature, fontsize=20)
 
 
 def plt_graph_to_base64(model, data, head, tail, feature):
