@@ -9,8 +9,6 @@ from feature_generation import add_features
 
 RESULT_DTYPES = {'BusinessModelRisk': np.int32,
                  'DesireToInvest': np.int32,
-                 'IndustryRating': np.int32,
-                 'MacroeconomicRisk': np.int32,
                  'ManagementShareholdersConflict': np.int32,
                  'NegativeShareholders': np.int32,
                  'OwnFundsTransaction': np.int32,
@@ -103,7 +101,7 @@ def dict_to_df(data):
             res_types[key] = dtype
         if dtype == np.float:
             df[key] = df[key].str.replace(',', '.')
-    return df.astype(dtype=res_types)
+    return df[res_types.keys()].astype(dtype=res_types)
 
 
 class CalcHandler:
