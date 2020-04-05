@@ -926,7 +926,7 @@
     function changeYearInImpact(year) {
         $('#feature_year').empty();
         let select = document.getElementById('feature_year');
-        
+
         let opt = document.createElement('option');
         opt.value = 0;
         opt.innerHTML = year;
@@ -941,7 +941,7 @@
         opt.value = -2;
         opt.innerHTML = year - 2;
         select.appendChild(opt);
-        
+
         select.value = "0";
     }
 </script>
@@ -1018,9 +1018,6 @@
         d3['region'] = $("#dt_0_region").val();
         d3['year_0'] = $("#dt_0_year").val();
         d3['year_-1'] = $("#dt_-1_year").val();
-        // d3['RelevantRepayment'] = '1';
-        d3['MacroeconomicRisk'] = '1';
-        d3['IndustryRating'] = '1';
         for (let key in d2) {
             d3[key] = d2[key];
         }
