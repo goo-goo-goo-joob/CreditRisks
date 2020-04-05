@@ -7,10 +7,8 @@ import pandas as pd
 import feature_impact
 from feature_generation import add_features
 
-RESULT_DTYPES = {'BusinessModelRisk': np.int32,
-                 'DesireToInvest': np.int32,
+RESULT_DTYPES = {'DesireToInvest': np.int32,
                  'IndustryRating': np.int32,
-                 'MacroeconomicRisk': np.int32,
                  'ManagementShareholdersConflict': np.int32,
                  'NegativeShareholders': np.int32,
                  'OwnFundsTransaction': np.int32,
