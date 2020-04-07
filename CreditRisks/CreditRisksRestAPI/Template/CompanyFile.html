@@ -1079,7 +1079,7 @@
 <script type="text/javascript">
     //work with report
     
-    let thirdColumnDrawing = false; // Отрисовывать 3 колонку
+    let thirdColumnDrawing = true; // Отрисовывать 3 колонку
     
     function showReport(key, value) {
         $("#reportModal").modal('show');
@@ -1193,7 +1193,8 @@
         tbody.append(createTrR("Финансовый долг к выручке", "", "", false));
         
         //Денежные соедства к краткосрочным обязательствам
-        tbody.append(createTrR("Денежные средства к краткосрочным обязательствам", getFraction($("#dt_0_1250").val(), $("#dt_0_1500").val()), "", false));
+        //tbody.append(createTrR("Денежные средства к краткосрочным обязательствам", getFraction($("#dt_0_1250").val(), $("#dt_0_1500").val()), "", false));
+		tbody.append(createTrR("Денежные средства к краткосрочным обязательствам", "", "", false));
 
         //Оценка организационной структуры
         tbody.append(createTrR("Оценка организационной структуры", "", "", true));
