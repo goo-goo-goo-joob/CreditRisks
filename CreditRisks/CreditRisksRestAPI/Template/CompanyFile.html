@@ -214,6 +214,7 @@
             <th scope="col">Название модели предсказания</th>
             <th scope="col">Вероятность дефолта</th>
             <th scope="col">Влияние параметров</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -273,7 +274,7 @@
                     <div class="form-group">
                         <label for="head">Правая граница моделирования</label>
                         <input class="form-control" id="head" name="head" placeholder="Правая граница моделирования"
-                               required type="number" value="20000">
+                               required type="number" value="1000">
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-warning rounded-pill" value="Рассчитать">
@@ -289,7 +290,6 @@
         </div>
     </div>
 </div>
-
 <div aria-hidden="true" aria-labelledby="reportModal" class="modal fade" id='reportModal' role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -311,7 +311,6 @@
         </div>
     </div>
 </div>
-
 
 <script type="text/javascript">
     function addElToSelector() {
@@ -1062,7 +1061,7 @@
             s += key + '\t' + data[key] + '\n';
         }
 
-        let name = getDate + '.txt';
+        let name = getDate() + '.txt';
         download(s, name, 'txt')
     }
 
@@ -1076,6 +1075,9 @@
 
 <script type="text/javascript">
     //work with report
+    
+    let thirdColumnDrawing = true; // Отрисовывать 3 колонку
+    
     function showReport(key, value) {
         $("#reportModal").modal('show');
         $("#reportTable").empty();
@@ -1099,9 +1101,11 @@
         td = add_content_to("", c2, "", td);
         tr.append(td);
 
-        td = document.createElement("td");
-        td = add_content_to("", c3, "", td);
-        tr.append(td);
+        if (thirdColumnDrawing) {
+            td = document.createElement("td");
+            td = add_content_to("", c3, "", td);
+            tr.append(td);
+        }
         return tr;
     }
 
@@ -1127,10 +1131,11 @@
         th = add_content_to("", "Текущая оценка рейтинга", "", th);
         tr.append(th);
 
-        th = document.createElement("th");
-        // th.className = "th";
-        th = add_content_to("", "Вклады показателей", "", th);
-        tr.append(th);
+        if (thirdColumnDrawing){
+            th = document.createElement("th");
+            th = add_content_to("", "Вклады показателей", "", th);
+            tr.append(th);
+        }
 
         thead.append(tr);
         table.append(thead);
@@ -1165,10 +1170,10 @@
         tbody.append(createTrR("Система налогообложения", "", "", true));
 
         //Отрасль
-        tbody.append(createTrR("Отрасль", "", "", true));
+        tbody.append(createTrR("Отрасль", $("#dt_0_okved").val(), "", true));
 
         //Бизнес модель
-        tbody.append(createTrR("Бизнес модель", "", "", true));
+        tbody.append(createTrR("Бизнес-модель", "", "", true));
 
         //Увеличение долга в случае одобрения сделки (в тыс. руб.)
         tbody.append(createTrR("Увеличение долга в случае одобрения сделки (в тыс. руб.)", "", "", true));
@@ -1177,13 +1182,16 @@
         tbody.append(createTrR("Финансовые показатели кредитного риска", "", "", true));
 
         //Чистая прибыль к макс(выручка; долг)
+        // tbody.append(createTrR("Чистая прибыль к макс(выручка; долг)", getFraction($("#dt_0_1250").val(), $("#dt_0_1500").val()), "", false));
         tbody.append(createTrR("Чистая прибыль к макс(выручка; долг)", "", "", false));
 
         //Финансовый долг к выручке
+        // tbody.append(createTrR("Финансовый долг к выручке", getFraction($("#dt_0_1250").val(), $("#dt_0_2110").val()), "", false));
         tbody.append(createTrR("Финансовый долг к выручке", "", "", false));
-
+        
         //Денежные соедства к краткосрочным обязательствам
-        tbody.append(createTrR("Денежные соедства к краткосрочным обязательствам", "", "", false));
+        //tbody.append(createTrR("Денежные средства к краткосрочным обязательствам", getFraction($("#dt_0_1250").val(), $("#dt_0_1500").val()), "", false));
+		tbody.append(createTrR("Денежные средства к краткосрочным обязательствам", "", "", false));
 
         //Оценка организационной структуры
         tbody.append(createTrR("Оценка организационной структуры", "", "", true));
@@ -1263,25 +1271,17 @@
         //Скоррекированный вероятность дефолта с учетом экономического цикла
         tbody.append(createTrR("Скоррекированная вероятность дефолта с учетом экономического цикла", "", "", true));
 
-        // for (let i = 0;i < 10; i++){
-        //     tr = document.createElement("tr");
-        //     let td = document.createElement("td");
-        //     td = add_content_to("", "example", "", td);
-        //     tr.append(td);
-        //
-        //     td = document.createElement("td");
-        //     td = add_content_to("", key, "", td);
-        //     tr.append(td);
-        //
-        //     td = document.createElement("td");
-        //     td = add_content_to("", value, "", td);
-        //     tr.append(td);
-        //
-        //     tbody.append(tr);
-        // }
-
         table.append(tbody);
         return table;
+    }
+    
+    function getFraction(a,b){
+        if (b === '0'){
+            return "inf"
+        }
+        let af = parseFloat(a);
+        let bf = parseFloat(b);
+        return (af/bf).toFixed(5)
     }
 
     function downloadReport() {
