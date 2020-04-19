@@ -43,3 +43,15 @@ Pipeline финальной модели логистической регрес
 Обучение градиентного бустинга, подсчет метрик и сохранении в файл для прода
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/cb_fit.ipynb)
+
+### lstm_fit.ipynb
+
+Обучение альтернативной модели: нейронная сеть с lstm слоем
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/lstm_fit.ipynb)
+
+### series_fit.ipynb
+
+Обучение альтернативной модели на временных рядах (библиотека Prophet)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/goo-goo-goo-joob/CreditRisks/blob/master/notebooks/series_fit.ipynb)
