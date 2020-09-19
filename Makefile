@@ -1,5 +1,5 @@
-DOCKER_REGISTRY = docker-hub.asciishell.ru
-DOCKER_IMAGE = $(DOCKER_REGISTRY)/alex/creditrisks
+DOCKER_REGISTRY = hub.asciishell.ru
+DOCKER_IMAGE = $(DOCKER_REGISTRY)/creditrisks
 APP_NAME ?= app
 
 ifeq ($(TRAVIS_BRANCH), master)
@@ -16,11 +16,14 @@ all:
 	$(info $$APP_NAME is [$(APP_NAME)])
 	$(info $$DOCKER_TAG is [$(DOCKER_TAG)])
 
+.PHONY: docker-push
+docker-push:
+	docker tag $(APP_NAME) $(DOCKER_IMAGE)/$(APP_NAME):$(DOCKER_TAG)
+	docker push $(DOCKER_IMAGE)/$(APP_NAME):$(DOCKER_TAG)
 .PHONY: docker-deploy
 docker-deploy:
 	docker login $(DOCKER_REGISTRY) --username $(USERNAME) -p $(TOKEN)
-	docker tag $(APP_NAME) $(DOCKER_IMAGE)/$(APP_NAME):$(DOCKER_TAG)
-	docker push $(DOCKER_IMAGE)/$(APP_NAME):$(DOCKER_TAG)
+	make docker-push
 	docker logout
 
 .PHONY: docker-deploy-ci

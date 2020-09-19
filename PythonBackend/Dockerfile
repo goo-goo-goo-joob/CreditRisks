@@ -1,9 +1,14 @@
-FROM python:3.7.5-slim
-WORKDIR /usr/src/app
+FROM snakepacker/python:all as builder
 
+RUN python3.7 -m venv /usr/share/python3/app
+RUN /usr/share/python3/app/bin/pip install -U pip
+
+COPY ./PythonBackend/requirements.txt /mnt/
+RUN /usr/share/python3/app/bin/pip install -Ur /mnt/requirements.txt
+
+FROM snakepacker/python:3.7 as api
+
+COPY --from=builder /usr/share/python3/app /usr/share/python3/app
 COPY ./PythonBackend .
-RUN apt-get update && apt-get -qq -y install curl && apt-get -qq -y install --reinstall build-essential python3-dev libffi-dev gcc
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt --no-binary grpcio
 
-CMD [ "python", "./server.py" ]
+CMD [ "/usr/share/python3/app/bin/python", "./server.py" ]
