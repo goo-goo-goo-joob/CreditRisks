@@ -60,8 +60,8 @@ docker-compose up -d
 ```
 
 # License
-© @AsciiShell (Aleksey Podchezertsev), 
-  @goo-goo-goo-joob (Mariia Samodelkina), 
-  @andrsolo21 (Andrey Solodyankin),
-  @apremizova (Anna Remizova), 2020. 
+© [Aleksey Podchezertsev](https://github.com/AsciiShell),
+  [Mariia Samodelkina](https://github.com/goo-goo-goo-joob),
+  [Andrey Solodyankin](https://github.com/andrsolo21),
+  [Anna Remizova](https://github.com/apremizova), 2020. 
 Licensed under the Apache License, Version 2.0. See LICENSE file for more details.
