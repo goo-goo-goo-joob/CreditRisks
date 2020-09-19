@@ -58,3 +58,10 @@ MODEL_PATH=/usr/src/app/models/
 ```bash
 docker-compose up -d
 ```
+
+# License
+© @AsciiShell (Aleksey Podchezertsev), 
+  @goo-goo-goo-joob (Mariia Samodelkina), 
+  @andrsolo21 (Andrey Solodyankin),
+  @apremizova (Anna Remizova), 2020. 
+Licensed under the Apache License, Version 2.0. See LICENSE file for more details.
