@@ -5,7 +5,7 @@ category-encoders==2.1.0
 colorama==0.4.3
 cycler==0.10.0
 graphviz==0.13.2
-grpcio==1.28.0rc3
+grpcio==1.53.0
 grpcio-tools==1.27.2
 importlib-metadata==1.6.0
 joblib==0.14.1
